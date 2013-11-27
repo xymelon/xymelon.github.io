@@ -79,7 +79,7 @@
             </footer><!-- /.post-info -->
             <div class="entry-content">
               <h3>特殊文件权限：SUID,SGID,SBIT</h3>
-<p><strong>SUID</strong>：当s这个标志出现在<em>文件拥有者</em>权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。</p>
+<p><strong>SUID</strong>：当s这个标志出现在<strong>文件拥有者</strong>权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。</p>
 <ol>
 <li>SUID权限仅对二进制程序（binary program）有效；</li>
 <li>执行者对于该程序需要具有x的可执行权限；</li>
@@ -87,13 +87,13 @@
 <li>执行者将具有该拥有者（owner）的权限。</li>
 </ol>
 <p>简单的说就是具有x权限的执行者（groups/others）在执行过程中会具有拥有者(owner)的权限。</p>
-<p><strong>SGID</strong>：当s这个标志出现在<em>群组权限</em>的x权限上时，如【-rwx--s--x】,此时被称为Set GID,简称为SGID的特殊权限，可对文件和目录有效。对目录设定SGID权限后，具有如下功能：</p>
+<p><strong>SGID</strong>：当s这个标志出现在<strong>群组权限</strong>的x权限上时，如【-rwx--s--x】,此时被称为Set GID,简称为SGID的特殊权限，可对文件和目录有效。对目录设定SGID权限后，具有如下功能：</p>
 <ol>
 <li>用户对于此目录具有r与x的权限时，该用户能够进入此目录；</li>
 <li>用户在此目录下的有效群组（effective group）将会变成该目录的群组；</li>
 <li>用途：若用户在此目录下具有w的权限（可新建文件），则使用者所建立的新文件的群组与此目录的群组相同。</li>
 </ol>
-<p><strong>SBIT(Sticky Bit)</strong>：当t这个标志出现在<em>其他权限</em>的x权限上时，如【drwxrwxrwt】，只对目录有效，对于目录作用如下：</p>
+<p><strong>SBIT(Sticky Bit)</strong>：当t这个标志出现在<strong>其他权限</strong>的x权限上时，如【drwxrwxrwt】，只对目录有效，对于目录作用如下：</p>
 <ol>
 <li>当用户对于此目录具有w,x的权限，亦即具有写入的权限时；</li>
 <li>当用户在该目录下建立文件和目录时，仅有自己与root才有权力删除该文件。</li>
@@ -135,12 +135,12 @@
 
 <h4>Tags</h4>
 	<ul>
+	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github.html">github</a></li>
+	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+	    <li class="tag-4"><a href="http://www.xycoding.com/tag/blog.html">blog</a></li>
+	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/publishing.html">publishing</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
-	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github.html">github</a></li>
-	    <li class="tag-4"><a href="http://www.xycoding.com/tag/blog.html">blog</a></li>
 </ul>
 
 
