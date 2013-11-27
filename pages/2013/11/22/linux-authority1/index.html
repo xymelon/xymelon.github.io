@@ -78,19 +78,19 @@
               </address>
             </footer><!-- /.post-info -->
             <div class="entry-content">
-              <h4>权限对于文件</h4>
+              <h3>权限对于文件</h3>
 <ol>
 <li>r(read):可读，如读取文本内容</li>
 <li>w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）</li>
 <li>x(execute):可被系统执行</li>
 </ol>
-<h4>权限对于目录</h4>
+<h3>权限对于目录</h3>
 <ol>
 <li>r(read contents in directory):可查询该目录下包含哪些文件</li>
 <li>w(modify contents of directory):可对该目录下的子目录和文件进行增、删、更名、移位</li>
 <li>x(access directory):可进入该目录</li>
 </ol>
-<h4>经典范例</h4>
+<h3>经典范例</h3>
 <p>假设有个帐号名为cow，它对目录/home/cow/具有rwx权限。若在此目录下有个test的文件，该文件权限如下：</p>
 <div class="highlight"><pre><span class="n">rwx</span><span class="o">------</span> <span class="mi">1</span> <span class="n">root</span>  <span class="n">root</span>  <span class="mi">4365</span> <span class="n">Sep</span> <span class="mi">19</span> <span class="mi">23</span><span class="o">:</span><span class="mi">20</span> <span class="n">test</span>
 </pre></div>
@@ -101,7 +101,7 @@
 <blockquote>
 <p>如题，cow对此文件来说是[others]身份，因此对于该文件它没有任何权限。但是该文件位于其home目录下，它对于home目录具有rwx完整权限，因此对于test这个文件来说，它是可以删除的。</p>
 </blockquote>
-<h4>默认权限</h4>
+<h3>默认权限</h3>
 <ul>
 <li>文件：-rw-rw-rw-（666）</li>
 <li>目录：drwxrwxrwx(777)</li>
@@ -149,11 +149,11 @@
 
 <h4>Tags</h4>
 	<ul>
-	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/publishing.html">publishing</a></li>
-	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github.html">github</a></li>
+	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
 	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github.html">github</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/blog.html">blog</a></li>
 </ul>
 
