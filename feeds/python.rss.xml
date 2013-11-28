@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Xu Yang</title><link>http://www.xycoding.com/</link><description>Coding The World</description><atom:link href="http://www.xycoding.com/feeds/python.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 21 Nov 2013 11:21:00 +0800</lastBuildDate><item><title>使用Pelican和GitHub Pages搭建个人博客</title><link>http://www.xycoding.com/pages/2013/11/21/create-blog/</link><description>&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直以来都希望拥有属于自己的个人博客，随性发点信息，写点技术感想，记录自己的生活，重要的是不受广告的影响、不被河蟹、不会担心有一天被莫名其妙地消失。作为一名技术渣硕，抛弃拿来主义，勇于摸索，踏出第一步，不再纸上谈兵，从现在开始。&lt;/p&gt;
+&lt;p&gt;本博客是在windows下搭建完成。不过这和linux下是类似的，因为搭建过程是在git bash中进行，git bash的命令风格是仿linux的。
+&lt;/p&gt;
+&lt;h3&gt;知识储备&lt;/h3&gt;
+&lt;p&gt;搭建博客的工具选用了基于python的pelican，相比wordpress等其它工具来说，它比较轻盈并有很多令人兴奋的特性，再配合免费无限制的github pages，近乎完美。搭建过程中涉及如下技术知识，不过你不必害怕，只是使用它们的开源框架而已，并不需要自己编码，点击可以了解它们是如何的强大，当然你也可以略过它们，后面遇到时再进行了解。&lt;br/&gt;
+假如你不能打开它们，原因你懂的，请爬墙解决~&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="https://github.com/"&gt;github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pages.github.com/"&gt;github pages&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://git-scm.com/"&gt;git&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.python.org/"&gt;python&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi"&gt;pip&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.getpelican.com/"&gt;pelican&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;下载安装&lt;/h3&gt;
+&lt;p&gt;请点击下载以下内容，本文会一步一步介绍如何安装，不着急，慢慢来。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://www.python.org/getit/"&gt;python3下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/distribute#downloads"&gt;pip下载&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;独立域名&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用优惠码（百度一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
+&lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
+&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;感想&lt;/h3&gt;
+&lt;p&gt;这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。但不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">xuyang</dc:creator><pubDate>Thu, 21 Nov 2013 11:21:00 +0800</pubDate><guid>tag:www.xycoding.com,2013-11-21:pages/2013/11/21/create-blog/</guid><category>github pages</category><category>pelican</category></item></channel></rss>
