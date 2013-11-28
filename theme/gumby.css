@@ -7126,13 +7126,13 @@ footer#credits .socbtns {
     line-height: 1.2;
     padding: 5px 0;
     background-color: #000;
-    color: #cccccc;
+    color: #fff;
     font-size: 12px;
     text-align: center;
     position: fixed;
     _position: absolute;
     right: 10px;
-    bottom: 150px;
+    bottom: 130px;
     _bottom: "auto";
     cursor: pointer;
     opacity: .6;
