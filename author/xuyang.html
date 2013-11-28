@@ -49,9 +49,9 @@
               <ul class="columns">
                 <li><a href="http://www.xycoding.com">Home</a></li>
 
-                <li><a href="archives.html">Archives</a></li>
-                <li><a href="categories.html">Categories</a></li>
-                <li><a href="tags.html">Tags</a></li>
+                <li><a href="/archives.html">Archives</a></li>
+                <li><a href="/categories.html">Categories</a></li>
+                <li><a href="/tags.html">Tags</a></li>
 
               </ul>
             </div>
@@ -70,7 +70,7 @@
 				                <footer class="post-info">
 				                    <abbr class="published" title="2013-11-22T23:10:00"> 周五 22 十一月 2013 </abbr>
 <address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/xuyang.html">xuyang</a></address>				                </footer><!-- /.post-info -->
-				                <div class="entry-content"> <h3>特殊文件权限：SUID,SGID,SBIT</h3>
+				                <div class="entry-content"> <p><strong>特殊文件权限：SUID,SGID,SBIT</strong></p>
 <p><strong>SUID</strong>：当s这个标志出现在<strong>文件拥有者</strong>权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。</p>
 <ol>
 <li>SUID权限仅对二进制程序（binary program）有效；</li>
@@ -103,19 +103,19 @@
 				                <footer class="post-info">
 				                    <abbr class="published" title="2013-11-22T20:01:00"> 周五 22 十一月 2013 </abbr>
 <address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/xuyang.html">xuyang</a></address>				                </footer><!-- /.post-info -->
-				                <div class="entry-content"> <h3>权限对于文件</h3>
+				                <div class="entry-content"> <p><strong>权限对于文件</strong></p>
 <ol>
 <li>r(read):可读，如读取文本内容</li>
 <li>w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）</li>
 <li>x(execute):可被系统执行</li>
 </ol>
-<h3>权限对于目录</h3>
+<p><strong>权限对于目录</strong></p>
 <ol>
 <li>r(read contents in directory):可查询该目录下包含哪些文件</li>
 <li>w(modify contents of directory):可对该目录下的子目录和文件进行增、删、更名、移位</li>
 <li>x(access directory):可进入该目录</li>
 </ol>
-<h3>经典范例</h3>
+<p><strong>经典范例</strong></p>
 <p>假设有个帐号名为cow，它对目录/home/cow/具有rwx权限。若在此目录下有个test的文件，该文件权限如下：</p>
 <div class="highlight"><pre><span class="n">rwx</span><span class="o">------</span> <span class="mi">1</span> <span class="n">root</span>  <span class="n">root</span>  <span class="mi">4365</span> <span class="n">Sep</span> <span class="mi">19 ...</span></pre></div> </div><!-- /.entry-content -->
 
@@ -161,9 +161,9 @@
 <h4>Pages</h4>
 
  <ul>
-      <li><a href="archives.html">Archives</a></li>
-      <li><a href="categories.html">Categories</a></li>
-      <li><a href="tags.html">Tags</a></li>
+      <li><a href="/archives.html">Archives</a></li>
+      <li><a href="/categories.html">Categories</a></li>
+      <li><a href="/tags.html">Tags</a></li>
   </ul>
 
 <h4>Categories</h4>
@@ -175,22 +175,24 @@
 
 <h4>Tags</h4>
 	<ul>
-	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
+	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
 	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
 </ul>
 
 
-<nav class="widget">
-  <h4>Social</h4>
-  <ul>
-    <li><a href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
-    <li><a href="http://weibo.com/u/1989085547">新浪微博</a></li>
-    <li><a href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
-    <li><a href="http://user.qzone.qq.com/541959443">QZONE</a></li>
-  </ul>
-</nav>
+<div class="social">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
+		<li><a href="http://weibo.com/u/1989085547">微博</a></li>
+		<li><a href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
+		<li><a href="http://user.qzone.qq.com/541959443">QZONE</a></li>
+	  </ul>
+	</nav>
+</div>
 
 </div> </div><!-- /.row -->
 
