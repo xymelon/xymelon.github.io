@@ -147,8 +147,8 @@
 	<ul>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
 	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
-	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 </ul>
 
 
@@ -222,6 +222,22 @@
   <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
   <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
   <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
-
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
 </body>
 </html>
