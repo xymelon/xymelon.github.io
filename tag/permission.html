@@ -78,12 +78,7 @@
 <li>本权限尽在执行该程序的过程中有效（run-time）；</li>
 <li>执行者将具有该拥有者（owner）的权限。</li>
 </ol>
-<p>简单的说就是具有x权限的执行者（groups/others）在执行过程中会具有拥有者(owner)的权限。</p>
-<p><strong>SGID</strong>：当s这个标志出现在<strong>群组权限</strong>的x权限上时，如【-rwx--s--x】,此时被称为Set GID,简称为SGID的特殊权限，可对文件和目录有效。对目录设定SGID权限后，具有如下功能：</p>
-<ol>
-<li>用户对于此目录具有r与x的权限时，该用户能够进入此目录；</li>
-<li>用户在此目录下的有效群组（effective group）将会变成该目录的群组；</li>
-<li>用途：若用户在此目录下具有w的权限 ...</li></ol> </div><!-- /.entry-content -->
+ </div><!-- /.entry-content -->
 
 								<div class="medium primary btn"><a href="http://www.xycoding.com/pages/2013/11/22/linux-authority2/" rel="bookmark" title="Permalink to Linux学习笔记——权限管理(2)">Read more <i class="icon-arrow-right"></i></a></div>
 
@@ -109,15 +104,7 @@
 <li>w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）</li>
 <li>x(execute):可被系统执行</li>
 </ol>
-<p><strong>权限对于目录</strong></p>
-<ol>
-<li>r(read contents in directory):可查询该目录下包含哪些文件</li>
-<li>w(modify contents of directory):可对该目录下的子目录和文件进行增、删、更名、移位</li>
-<li>x(access directory):可进入该目录</li>
-</ol>
-<p><strong>经典范例</strong></p>
-<p>假设有个帐号名为cow，它对目录/home/cow/具有rwx权限。若在此目录下有个test的文件，该文件权限如下：</p>
-<div class="highlight"><pre><span class="n">rwx</span><span class="o">------</span> <span class="mi">1</span> <span class="n">root</span>  <span class="n">root</span>  <span class="mi">4365</span> <span class="n">Sep</span> <span class="mi">19 ...</span></pre></div> </div><!-- /.entry-content -->
+ </div><!-- /.entry-content -->
 
 								<div class="medium primary btn"><a href="http://www.xycoding.com/pages/2013/11/22/linux-authority1/" rel="bookmark" title="Permalink to Linux学习笔记——权限管理(1)">Read more <i class="icon-arrow-right"></i></a></div>
 
@@ -155,9 +142,9 @@
 
 <h4>Tags</h4>
 	<ul>
+	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
 	    <li class="tag-1"><a href="http://www.xycoding.com/tag/permission.html">permission</a></li>
-	    <li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 	    <li class="tag-4"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 </ul>
 
