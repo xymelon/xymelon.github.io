@@ -7120,9 +7120,5 @@ footer#credits .socbtns {
 .social a[href*='douban.com']:before {content: url('./icons/douban.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='user.qzone.qq.com']:before {content: url('./icons/qzone.png'); margin-right: 2px; vertical-align: -3px;}
 
-/* footer */
-.footimg {background: url(./icons/xy.jpg) top center no-repeat;}
-
-
 
 
