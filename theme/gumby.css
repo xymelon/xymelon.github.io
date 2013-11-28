@@ -7096,7 +7096,7 @@ footer#credits .socbtns {
   padding-bottom: 200px;
 }
 
-
+/*2013-11-28 by cow*/
 /* Styling for Social */
 .social a[href*='activestate.com']:before {content: url('./icons/activestate.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='atom.xml']:before {content: url('./icons/rss.png'); margin-right: 2px; vertical-align: -3px;}
@@ -7119,6 +7119,10 @@ footer#credits .socbtns {
 .social a[href*='t.qq.com']:before {content: url('./icons/qqweibo.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='douban.com']:before {content: url('./icons/douban.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='user.qzone.qq.com']:before {content: url('./icons/qzone.png'); margin-right: 2px; vertical-align: -3px;}
+
+/* footer */
+.footimg {background: url(./icons/xy.jpg) top center no-repeat;}
+
 
 
 
