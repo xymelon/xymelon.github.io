@@ -7115,7 +7115,7 @@ footer#credits .socbtns {
 .social a[href*='stackoverflow.com']:before {content: url('./icons/stackoverflow.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='twitter.com']:before {content: url('./icons/twitter.png'); margin-right: 2px; vertical-align: -3px;}
 
-.social a[href*='weibo.com']:before {content: url('./icons/weibo.png'); margin-right: 2px; vertical-align: -3px;}
+.social a[href*='weibo.com']:before {content: url('./icons/weibo.png'); margin-right: 2px; vertical-align: -3px;width:16px;height:16px;}
 .social a[href*='t.qq.com']:before {content: url('./icons/qqweibo.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='douban.com']:before {content: url('./icons/douban.png'); margin-right: 2px; vertical-align: -3px;}
 .social a[href*='user.qzone.qq.com']:before {content: url('./icons/qzone.png'); margin-right: 2px; vertical-align: -3px;}
