@@ -7147,10 +7147,14 @@ footer#credits .socbtns {
     margin: 5px 0px 10px 0px;
     min-height: 15px;
 }
+.sidebarbg a{
+	padding-left: 10px;
+}
 .sidebarbg a:hover{
 	display: block;
 	background-color: #EEEEEE;
 	text-decoration: none;
+	padding-left: 10px;
 }
 
 
