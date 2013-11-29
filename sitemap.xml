@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.xycoding.com/index.html</loc>
-<lastmod>2013-11-29T11:59:23-00:00</lastmod>
+<lastmod>2013-11-29T12:22:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.xycoding.com/archives.html</loc>
-<lastmod>2013-11-29T11:59:23-00:00</lastmod>
+<lastmod>2013-11-29T12:22:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.xycoding.com/tags.html</loc>
-<lastmod>2013-11-29T11:59:23-00:00</lastmod>
+<lastmod>2013-11-29T12:22:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.xycoding.com/categories.html</loc>
-<lastmod>2013-11-29T11:59:23-00:00</lastmod>
+<lastmod>2013-11-29T12:22:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -60,8 +60,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.xycoding.com/tag/github-pages.html</loc>
-<lastmod>2013-11-27T12:11:00-00:00</lastmod>
+<loc>http://www.xycoding.com/tag/linux.html</loc>
+<lastmod>2013-11-22T23:10:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -74,8 +74,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.xycoding.com/tag/linux.html</loc>
-<lastmod>2013-11-22T23:10:00-00:00</lastmod>
+<loc>http://www.xycoding.com/tag/github-pages.html</loc>
+<lastmod>2013-11-27T12:11:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
