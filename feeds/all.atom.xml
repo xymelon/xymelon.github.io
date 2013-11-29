@@ -125,7 +125,7 @@
 
 &lt;h3&gt;书写博文&lt;/h3&gt;
 &lt;p&gt;完成上述博客主体搭建后，使用markdownpad创建一个&lt;code&gt;.md&lt;/code&gt;文件，保存于&lt;code&gt;content&lt;/code&gt;文件夹中。博文格式如下所示&lt;/p&gt;
-&lt;p&gt;&lt;img alt="markdown" src="images/markdown.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="markdown" src="/images/markdown.png" /&gt;&lt;/p&gt;
 &lt;p&gt;图中左侧是我们书写的markdown格式的源文件，右边则是即使预览效果，很棒吧~
 至于源文件顶部&lt;code&gt;Title,Date,Category等&lt;/code&gt;内容则是必须的，具体可参见&lt;a href="http://docs.getpelican.com/en/3.3.0/getting_started.html#writing-content-using-pelican"&gt;文档&lt;/a&gt;，它们各自意义如下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
@@ -139,9 +139,9 @@
 
 
 &lt;p&gt;写完后，回到&lt;code&gt;blog&lt;/code&gt;目录下，执行&lt;code&gt;make html&lt;/code&gt;命令进行博客的生成&lt;/p&gt;
-&lt;p&gt;&lt;img alt="makehtml" src="images/makehtml.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="makehtml" src="/images/makehtml.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;make html&lt;/code&gt;命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行图中第二行的pelican命令。接着执行&lt;code&gt;make serve&lt;/code&gt;开启测试服务器&lt;/p&gt;
-&lt;p&gt;&lt;img alt="makeserve" src="images/makeserve.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="makeserve" src="/images/makeserve.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;make serve&lt;/code&gt;命令也可由上图中第二行替代，在浏览器中输入&lt;code&gt;http://localhost:8000&lt;/code&gt;即可看到博文效果。&lt;/p&gt;
 &lt;h3&gt;主题选择&lt;/h3&gt;
 &lt;p&gt;回到&lt;code&gt;blog&lt;/code&gt;目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个&lt;a href="http://pelicanthemes.com/"&gt;网页&lt;/a&gt;进行查看。不过如今pelican又新出了很多主题，所以你还可以看看&lt;a href="https://github.com/getpelican/pelican-themes"&gt;pelican官方主题&lt;/a&gt;开源库。&lt;/p&gt;
@@ -174,7 +174,7 @@
 
 &lt;p&gt;熟悉git的同学肯定知道上述命令表达的是什么意思吧，如果你还不甚了解，没关系，先照做或者看看git的&lt;a href="http://www.git-scm.com/book/zh"&gt;官方文档&lt;/a&gt;。上述命令很长，如果你比较熟悉了，可以修改Makefile文件进行一键上传~&lt;/p&gt;
 &lt;p&gt;最后打开浏览器输入github pages的二级域名，效果如下&lt;/p&gt;
-&lt;p&gt;&lt;img alt="article" src="images/article.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="article" src="/images/article.png" /&gt;&lt;/p&gt;
 &lt;p&gt;目前为止，还算比较成功。从上图可以看出，书写源文件的&lt;code&gt;Title,Date,Category,Slug等&lt;/code&gt;内容每个都有其的用武之处，具体你可以慢慢了解。&lt;/p&gt;
 &lt;h3&gt;TODO&lt;/h3&gt;
 &lt;p&gt;目前来说，博客的基本使用已经可以了，不过我们依然可以对其进行完善。接下来的一篇文章我会介绍以下几个方面&lt;/p&gt;
@@ -186,11 +186,4 @@
 &lt;/ol&gt;
 &lt;h3&gt;感想&lt;/h3&gt;
 &lt;p&gt;这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。&lt;/p&gt;
-&lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;
-&lt;h3&gt;独立域名&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用优惠码（百度一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
-&lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
-&lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
-&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry></feed>
+&lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry></feed>
