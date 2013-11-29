@@ -72,7 +72,7 @@
 
 
 &lt;h3&gt;pelican插件&lt;/h3&gt;
-&lt;p&gt;插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了&lt;code&gt;sitemap,summary,neighbors&lt;/code&gt;等插件。首先，和主题一样，选择一个文件夹，去&lt;a href="https://github.com/getpelican/pelican-plugins"&gt;pelican插件开源库&lt;/a&gt;clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。&lt;/p&gt;
+&lt;p&gt;插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了&lt;code&gt;sitemap&lt;/code&gt;,&lt;code&gt;summary&lt;/code&gt;,&lt;code&gt;neighbors&lt;/code&gt;等插件。首先，和主题一样，选择一个文件夹，去&lt;a href="https://github.com/getpelican/pelican-plugins"&gt;pelican插件开源库&lt;/a&gt;clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//clone插件&lt;/span&gt;
 &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="nl"&gt;https:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/getpelican/pelican-plugins&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
