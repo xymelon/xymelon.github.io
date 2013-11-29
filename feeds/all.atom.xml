@@ -110,7 +110,7 @@
 
 
 &lt;p&gt;pelican-quickstart执行命令后，会提示输入博客的配置项，除了少数几个必填以外，其它都可以选择默认，而且都可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;文件中进行更改，所以你可以随意选择，如下图~&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pelican-quickstart" src="images/pelican-quickstart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pelican-quickstart" src="/images/pelican-quickstart.png" /&gt;&lt;/p&gt;
 &lt;p&gt;命令成功执行后，会出现pelican的框架，如下所示&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;                &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;存放输入的&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="err"&gt;或&lt;/span&gt;&lt;span class="n"&gt;RST&lt;/span&gt;&lt;span class="err"&gt;源文件&lt;/span&gt;
