@@ -165,17 +165,25 @@
 
 
 <p>写完后，回到<code>blog</code>目录下，执行<code>make html</code>命令进行博客的生成</p>
-<p><img alt="makehtml" src="/images/makehtml.jpg" /></p>
-<p><code>make html</code>命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行图中第二行的pelican命令。接着执行<code>make serve</code>开启测试服务器</p>
-<p><img alt="makeserve" src="/images/makeserve.jpg" /></p>
-<p><code>make serve</code>命令也可由上图中第二行替代，在浏览器中输入<code>http://localhost:8000</code>即可看到博文效果。</p>
+<div class="highlight"><pre><span class="n">make</span> <span class="n">html</span>
+<span class="p">(</span><span class="n">pelican</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">content</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">output</span> <span class="o">-</span><span class="n">s</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">pelicanconfg</span><span class="p">.</span><span class="n">py</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>make html</code>命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行<code>make serve</code>开启测试服务器</p>
+<div class="highlight"><pre><span class="n">make</span> <span class="n">serve</span>
+<span class="p">(</span><span class="n">cd</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">content</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pelican</span><span class="p">.</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>make serve</code>命令也可由第二行替代，在浏览器中输入<code>http://localhost:8000</code>即可看到博文效果。</p>
 <h3>主题选择</h3>
-<p>回到<code>blog</code>目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个<a href="http://pelicanthemes.com/">网页</a>进行查看。不过如今pelican又新出了很多主题，所以你还可以看看<a href="https://github.com/getpelican/pelican-themes">pelican官方主题</a>开源库。</p>
+<p>回到<code>blog</code>目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个<a href="http://pelicanthemes.com/">网页</a>进行查看。不过如今pelican又新出了很多主题，所以你需看看<a href="https://github.com/getpelican/pelican-themes">pelican主题开源库</a>。</p>
 <div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/getpelican/pelican-themes.git</span>
 </pre></div>
 
 
-<p>打开<code>pelicanconf.py</code>配置文件，更改或添加<code>THEME设置</code>为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
+<p>打开<code>pelicanconf.py</code>配置文件，更改或添加<code>THEME</code>为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
 <div class="highlight"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pelican</span><span class="o">-</span><span class="n">themes</span><span class="o">/</span><span class="n">gum</span><span class="err">&#39;</span>
 </pre></div>
 
@@ -213,6 +221,9 @@
 <h3>感想</h3>
 <p>这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。</p>
 <p>最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~</p>
+<hr />
+<p>博客源码地址：<a href="https://github.com/cowfighting/cowfighting.github.io">https://github.com/cowfighting/cowfighting.github.io</a></p>
+<p>博客主题地址：<a href="https://github.com/cowfighting/xycoding-gum">https://github.com/cowfighting/xycoding-gum</a></p>
             </div><!-- /.entry-content -->
 			
 			
@@ -264,9 +275,9 @@
 	<h4>Tags</h4>
 		<ul>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 		</ul>
 </div>
 

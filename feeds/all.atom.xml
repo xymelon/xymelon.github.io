@@ -139,17 +139,25 @@
 
 
 &lt;p&gt;写完后，回到&lt;code&gt;blog&lt;/code&gt;目录下，执行&lt;code&gt;make html&lt;/code&gt;命令进行博客的生成&lt;/p&gt;
-&lt;p&gt;&lt;img alt="makehtml" src="/images/makehtml.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;make html&lt;/code&gt;命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行图中第二行的pelican命令。接着执行&lt;code&gt;make serve&lt;/code&gt;开启测试服务器&lt;/p&gt;
-&lt;p&gt;&lt;img alt="makeserve" src="/images/makeserve.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;make serve&lt;/code&gt;命令也可由上图中第二行替代，在浏览器中输入&lt;code&gt;http://localhost:8000&lt;/code&gt;即可看到博文效果。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelicanconfg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;make html&lt;/code&gt;命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行&lt;code&gt;make serve&lt;/code&gt;开启测试服务器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;make serve&lt;/code&gt;命令也可由第二行替代，在浏览器中输入&lt;code&gt;http://localhost:8000&lt;/code&gt;即可看到博文效果。&lt;/p&gt;
 &lt;h3&gt;主题选择&lt;/h3&gt;
-&lt;p&gt;回到&lt;code&gt;blog&lt;/code&gt;目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个&lt;a href="http://pelicanthemes.com/"&gt;网页&lt;/a&gt;进行查看。不过如今pelican又新出了很多主题，所以你还可以看看&lt;a href="https://github.com/getpelican/pelican-themes"&gt;pelican官方主题&lt;/a&gt;开源库。&lt;/p&gt;
+&lt;p&gt;回到&lt;code&gt;blog&lt;/code&gt;目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个&lt;a href="http://pelicanthemes.com/"&gt;网页&lt;/a&gt;进行查看。不过如今pelican又新出了很多主题，所以你需看看&lt;a href="https://github.com/getpelican/pelican-themes"&gt;pelican主题开源库&lt;/a&gt;。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/getpelican/pelican-themes.git&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，更改或添加&lt;code&gt;THEME设置&lt;/code&gt;为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，更改或添加&lt;code&gt;THEME&lt;/code&gt;为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;themes&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gum&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -186,4 +194,7 @@
 &lt;/ol&gt;
 &lt;h3&gt;感想&lt;/h3&gt;
 &lt;p&gt;这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。&lt;/p&gt;
-&lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry></feed>
+&lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry></feed>
