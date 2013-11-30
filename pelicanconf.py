@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'xuyang'
+AUTHOR = u'Cow'
 
-SITENAME = u'Xu Yang'
+SITENAME = u'Coding Our World'
 SITEURL = 'http://www.xycoding.com'
-SITESUBTITLE = 'Coding The World'
+SITESUBTITLE = 'Life is not fair -- Get used to it!'
 MENUITEMS = (
     ('Archives', '/archives.html'),
     ('Categories', '/categories.html'),
@@ -14,6 +14,7 @@ MENUITEMS = (
     ('Random Article', '/random.html'),
 )
 
+#DEFAULT_METADATA = (('yeah', 'it is'),)
 TIMEZONE = 'Asia/Shanghai'
 
 GITHUB_URL = 'https://github.com/cowfighting'
@@ -21,9 +22,9 @@ FACEBOOK_URL = 'https://www.facebook.com/yang.xu.96558061'
 GOOGLEPLUS_URL = 'https://plus.google.com/u/0/117263032165097338865'
 TWITTER_URL = 'https://twitter.com/xuyangfighting'
 
-DEFAULT_LANG = 'en'
+DEFAULT_LANG = 'zh'
 
-DEFAULT_PAGINATION = 5
+DEFAULT_PAGINATION = 4
 
 THEME = 'xycoding-gum'
 
