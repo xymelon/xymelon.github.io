@@ -34,9 +34,23 @@ GOOGLE_ANALYTICS_ID = 'UA-46026074-1'
 
 GOOGLE_ANALYTICS_SITENAME = 'www.xycoding.com'
 
-ARTICLE_URL = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
+ARTICLE_URL = 'articles/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
+ARTICLE_SAVE_AS = 'articles/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 
-ARTICLE_SAVE_AS = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
+PAGE_URL = 'pages/{slug}.html'
+PAGE_SAVE_AS = 'pages/{slug}.html'
+
+CATEGORIES_URL = 'functions/categories.html'
+CATEGORIES_SAVE_AS = 'functions/categories.html'
+
+TAGS_URL = 'functions/tags.html'
+TAGS_SAVE_AS = 'functions/tags.html'
+
+ARCHIVES_URL = 'functions/archives.html'
+ARCHIVES_SAVE_AS = 'functions/archives.html'
+
+AUTHORS_URL = 'functions/authors.html'
+AUTHORS_SAVE_AS = 'functions/authors.html'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
