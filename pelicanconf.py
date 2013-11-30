@@ -8,10 +8,10 @@ SITENAME = u'Coding Our World'
 SITEURL = 'http://www.xycoding.com'
 SITESUBTITLE = 'Life is not fair -- Get used to it!'
 MENUITEMS = (
-    ('Archives', '/archives.html'),
-    ('Categories', '/categories.html'),
-    ('Tags', '/tags.html'),
-    ('Random Article', '/random.html'),
+    ('Archives', '/functions/archives.html'),
+    ('Categories', '/functions/categories.html'),
+    ('Tags', '/functions/tags.html'),
+    ('Random Article', '/functions/random.html'),
 )
 
 #DEFAULT_METADATA = (('yeah', 'it is'),)
@@ -37,8 +37,8 @@ GOOGLE_ANALYTICS_SITENAME = 'www.xycoding.com'
 ARTICLE_URL = 'articles/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'articles/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 
-PAGE_URL = 'pages/{slug}.html'
-PAGE_SAVE_AS = 'pages/{slug}.html'
+#PAGE_URL = 'pages/{slug}.html'
+#PAGE_SAVE_AS = 'pages/{slug}.html'
 
 CATEGORIES_URL = 'functions/categories.html'
 CATEGORIES_SAVE_AS = 'functions/categories.html'
@@ -94,7 +94,7 @@ SITEMAP = {
         'pages': 'monthly'
     }
 }
-RANDOM = 'random.html'
+RANDOM = 'functions/random.html'
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
