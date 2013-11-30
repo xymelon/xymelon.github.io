@@ -7,11 +7,14 @@ AUTHOR = u'Cow'
 SITENAME = u'Coding Our World'
 SITEURL = 'http://www.xycoding.com'
 SITESUBTITLE = 'Life is not fair -- Get used to it!'
+
+#DISPLAY_PAGES_ON_MENU = True
+#DISPLAY_CATEGORIES_ON_MENU = True
 MENUITEMS = (
-    ('Archives', '/functions/archives.html'),
     ('Categories', '/functions/categories.html'),
     ('Tags', '/functions/tags.html'),
-    ('Random Article', '/functions/random.html'),
+    ('Archives', '/functions/archives.html'),
+    ('Random Article', '/functions/random.html'),    
 )
 
 #DEFAULT_METADATA = (('yeah', 'it is'),)
@@ -80,7 +83,7 @@ LINKS = (
 
 # plugins
 PLUGIN_PATH = 'pelican-plugins'
-PLUGINS = ['summary','sitemap','random_article','neighbors']
+PLUGINS = ['summary','sitemap','random_article','neighbors','global_license']
 SITEMAP = {
     'format': 'xml',
     'priorities': {
@@ -95,6 +98,7 @@ SITEMAP = {
     }
 }
 RANDOM = 'functions/random.html'
+LICENSE = '码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a>'
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
