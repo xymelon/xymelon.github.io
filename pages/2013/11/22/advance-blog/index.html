@@ -89,7 +89,7 @@
             <div class="entry-content">
               <h3>独立域名</h3>
 <ol>
-<li>在<a href="http://www.godaddy.com/">godaddy</a>上购买域名，推荐使用优惠码（百度一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。</li>
+<li>在<a href="http://www.godaddy.com/">godaddy</a>上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。</li>
 <li>购买成功后，需要将DNS服务解析转回到国内，推荐使用<a href="https://www.dnspod.cn/">DNSPod</a>，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击<a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;tsid=42">Godaddy注册商域名修改DNS地址</a>。</li>
 <li>完成第二步后，需注册<a href="https://www.dnspod.cn/">DNSPod</a>，请点击<a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/">学会使用DNSPod，仅需三步</a>，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">Setting up a custom domain with Pages</a>，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。</li>
 <li>最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。
@@ -113,6 +113,20 @@
 <p>打开<code>pelicanconf.py</code>配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。</p>
 <div class="highlight"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pelican</span><span class="o">-</span><span class="n">plugins</span><span class="err">&#39;</span>     <span class="c1">//设置路径</span>
 <span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">summary</span><span class="sc">&#39;,&#39;</span><span class="n">sitemap</span><span class="sc">&#39;,&#39;</span><span class="n">neighbors</span><span class="err">&#39;</span><span class="p">]</span> <span class="c1">//选用插件</span>
+
+<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="err">&#39;</span><span class="n">format</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">xml</span><span class="err">&#39;</span><span class="p">,</span>
+    <span class="err">&#39;</span><span class="n">priorities</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="err">&#39;</span><span class="n">articles</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.7</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">indexes</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">pages</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.5</span>
+    <span class="p">},</span>
+    <span class="err">&#39;</span><span class="n">changefreqs</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="err">&#39;</span><span class="n">articles</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">monthly</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">indexes</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">daily</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">pages</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">monthly</span><span class="err">&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 
@@ -122,6 +136,8 @@
 </pre></div>
 
 
+<h3>最后</h3>
+<p>博客到此为此基本介绍完毕，以后想起什么再补充吧。其实我对现在这个主题还有不满意的地方，比如<code>key words，description</code>等没有地方设置，这对搜索引擎不友好；还有左边栏没有热门文章等~接下来再慢慢完善。</p>
 <hr />
 <p>博客源码地址：<a href="https://github.com/cowfighting/cowfighting.github.io">https://github.com/cowfighting/cowfighting.github.io</a></p>
 <p>博客主题地址：<a href="https://github.com/cowfighting/xycoding-gum">https://github.com/cowfighting/xycoding-gum</a></p>

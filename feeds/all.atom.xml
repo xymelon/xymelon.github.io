@@ -57,7 +57,7 @@
 &lt;p&gt;建立目录时默认权限：（drwxrwxrwx）(d----w--w-) = (drwxr-xr-x)&lt;/p&gt;
 &lt;/blockquote&gt;</summary><category term="linux"></category><category term="权限管理"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇</title><link href="http://www.xycoding.com/pages/2013/11/22/advance-blog/" rel="alternate"></link><updated>2013-11-22T08:00:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:pages/2013/11/22/advance-blog/</id><summary type="html">&lt;h3&gt;独立域名&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用优惠码（百度一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
+&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
 &lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
 &lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
 &lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。
@@ -81,6 +81,20 @@
 &lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;PLUGIN_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;plugins&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;     &lt;span class="c1"&gt;//设置路径&lt;/span&gt;
 &lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;summary&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;sitemap&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;//选用插件&lt;/span&gt;
+
+&lt;span class="n"&gt;SITEMAP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;priorities&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;indexes&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;changefreqs&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;monthly&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;indexes&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;daily&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;monthly&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -90,6 +104,8 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h3&gt;最后&lt;/h3&gt;
+&lt;p&gt;博客到此为此基本介绍完毕，以后想起什么再补充吧。其实我对现在这个主题还有不满意的地方，比如&lt;code&gt;key words，description&lt;/code&gt;等没有地方设置，这对搜索引擎不友好；还有左边栏没有热门文章等~接下来再慢慢完善。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</title><link href="http://www.xycoding.com/pages/2013/11/21/create-blog/" rel="alternate"></link><updated>2013-11-21T11:21:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-21:pages/2013/11/21/create-blog/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
