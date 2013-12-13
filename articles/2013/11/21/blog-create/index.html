@@ -1,0 +1,406 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+        <title>使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		
+        <meta charset="utf-8" />
+        <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/pygment.css" />
+
+        <script src="http://www.xycoding.com/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+              <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-46026074-1', 'www.xycoding.com');
+                ga('send', 'pageview');
+
+              </script>
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+<!-- Fork me on github -->
+<a target="_blank" href="https://github.com/cowfighting">
+	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
+</a>
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="http://www.xycoding.com">Coding Our World <strong>Life is not fair -- Get used to it!</strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
+					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+				<li><a href="/functions/archives.html">Archives</a></li>
+				<li><a href="/functions/random.html">Random Article</a></li>
+				<!--
+					<li><a href="/functions/categories.html">Categories</a></li>
+					<li><a href="/functions/tags.html">Tags</a></li>
+					<li><a href="/functions/archives.html">Archives</a></li>
+					<li><a href="/functions/random.html">Random Article</a></li>
+				
+				-->
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" rel="bookmark"
+                   title="Permalink to 使用Pelican和GitHub Pages搭建个人博客 —— 基础篇">使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <!--
+			  <abbr class="published" title="2013-11-21T11:21:00">
+                周四 21 十一月 2013
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+              </address>
+			  -->
+			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
+				周四 21 十一月 2013
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
+	
+			  </address>
+			  <hr />			  
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <h3>前言</h3>
+<p>一直以来都希望拥有属于自己的个人博客，随性发点信息，写点技术感想，记录自己的生活，重要的是不受广告的影响、不被河蟹、不会担心有一天被莫名其妙地消失。作为一名技术渣硕，抛弃拿来主义，勇于摸索，踏出第一步，不再纸上谈兵，从现在开始。</p>
+<p>本博客是在windows下搭建完成。不过这和linux下是类似的，因为搭建过程是在git bash中进行，git bash的命令风格是仿linux的。
+</p>
+<h3>知识储备</h3>
+<p>搭建博客的工具选用了基于python的pelican，相比wordpress等其它工具来说，它比较轻盈并有很多令人兴奋的<a href="http://docs.getpelican.com/en/3.3.0/#features">特性</a>，再配合免费无限制的github pages，近乎完美。搭建过程中涉及如下技术知识，不过你不必害怕，只是使用它们的开源框架而已，并不需要自己编码，点击可以了解它们是如何的强大，当然你也可以略过它们，后面遇到时再进行了解。<br/>
+假如你不能打开它们，原因你懂的，请爬墙解决~</p>
+<blockquote>
+<p><a href="https://github.com/">github</a></p>
+<p><a href="http://pages.github.com/">github pages</a></p>
+<p><a href="http://git-scm.com/">git</a></p>
+<p><a href="http://www.python.org/">python</a></p>
+<p><a href="https://pypi.python.org/pypi">pip</a></p>
+<p><a href="http://blog.getpelican.com/">pelican</a></p>
+<p><a href="http://daringfireball.net/projects/markdown/syntax">markdown</a></p>
+<p><a href="http://markdownpad.com/">markdownpad</a></p>
+</blockquote>
+<h3>下载安装</h3>
+<p>请点击下载以下内容，本文会一步一步介绍如何安装，不着急，慢慢来。</p>
+<blockquote>
+<p><a href="http://www.python.org/getit/">python3下载</a></p>
+<p><a href="http://msysgit.github.io/">git下载</a> </p>
+<p><a href="https://pypi.python.org/pypi/distribute#downloads">pip下载</a></p>
+<p><a href="http://markdownpad.com/">markdownpad下载</a></p>
+<p><a href="http://www.equation.com/servlet/equation.cmd?fa=make">window下make下载</a> </p>
+</blockquote>
+<ol>
+<li>安装python，这个就不用多说了吧~</li>
+<li>安装git，简单。git bash使用教程请参见<a href="http://www.git-scm.com/book/zh">官方文档</a>~ </li>
+<li>将python安装文件夹中scripts和make.exe加入环境变量。</li>
+<li>安装pip，具体可以看<a href="http://www.pip-installer.org/en/latest/installing.html">官网介绍</a>，或者<a href="http://tech.crandom.com/2011/10/21/python3_pip.html">Windows环境在python3装pip</a>。</li>
+<li>
+<p>安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见<a href="http://daringfireball.net/projects/markdown/syntax">markdown教程</a>和<a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html">REST教程</a>。</p>
+<div class="highlight"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">pelican</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">markdown</span>
+</pre></div>
+
+
+</li>
+</ol>
+<h3>主体搭建</h3>
+<p>打开git bash，进入一个自己喜欢的文件夹（注意文件夹名最好不为空，因为后续make html命令会出错），执行以下命令</p>
+<div class="highlight"><pre><span class="n">mkdir</span> <span class="n">blog</span> <span class="c1">//创建文件夹，名称可根据自己喜欢定</span>
+<span class="n">cd</span> <span class="n">blog</span>
+<span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span>
+</pre></div>
+
+
+<p>pelican-quickstart执行命令后，会提示输入博客的配置项，除了少数几个必填以外，其它都可以选择默认，而且都可以在<code>pelicanconf.py</code>文件中进行更改，所以你可以随意选择，如下图~</p>
+<p><img alt="pelican-quickstart" src="/images/pelican-quickstart.png" /></p>
+<p>命令成功执行后，会出现pelican的框架，如下所示</p>
+<div class="highlight"><pre><span class="n">blog</span><span class="o">/</span>
+<span class="err">├──</span> <span class="n">content</span>                <span class="err">#</span> <span class="err">存放输入的</span><span class="n">markdown</span><span class="err">或</span><span class="n">RST</span><span class="err">源文件</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="p">(</span><span class="n">pages</span><span class="p">)</span>            <span class="err">#</span> <span class="err">存放手工创建的静态页面，可选</span>
+<span class="err">├──</span> <span class="n">output</span>                 <span class="err">#</span> <span class="err">存放最终生成的静态博客</span>
+<span class="err">├──</span> <span class="n">develop_server</span><span class="p">.</span><span class="n">sh</span>      <span class="err">#</span> <span class="err">测试服务器</span>
+<span class="err">├──</span> <span class="n">Makefile</span>               <span class="err">#</span> <span class="err">管理博客的</span><span class="n">Makefile</span>
+<span class="err">├──</span> <span class="n">pelicanconf</span><span class="p">.</span><span class="n">py</span>         <span class="err">#</span> <span class="err">配置文件</span>
+<span class="err">└──</span> <span class="n">publishconf</span><span class="p">.</span><span class="n">py</span>         <span class="err">#</span> <span class="err">发布文件，可删除</span>
+</pre></div>
+
+
+<h3>书写博文</h3>
+<p>完成上述博客主体搭建后，使用markdownpad创建一个<code>.md</code>文件，保存于<code>content</code>文件夹中。博文格式如下所示</p>
+<p><img alt="markdown" src="/images/markdown.png" /></p>
+<p>图中左侧是我们书写的markdown格式的源文件，右边则是即使预览效果，很棒吧~
+至于源文件顶部<code>Title,Date,Category等</code>内容则是必须的，具体可参见<a href="http://docs.getpelican.com/en/3.3.0/getting_started.html#writing-content-using-pelican">文档</a>，它们各自意义如下</p>
+<div class="highlight"><pre><span class="n">Title</span><span class="o">:</span> <span class="err">文章标题</span>
+<span class="n">Date</span><span class="o">:</span> <span class="err">创建日期</span>
+<span class="n">Modified</span><span class="o">:</span> <span class="err">修改日期</span>
+<span class="n">Category</span><span class="o">:</span> <span class="err">文章分类，标志本文处于该分类下</span>
+<span class="n">Tags</span><span class="o">:</span> <span class="err">文章标签，标志本文处于该标签下</span>
+<span class="n">Slug</span><span class="o">:</span> <span class="n">URL</span><span class="err">中该文章的链接地址</span>
+<span class="n">Author</span><span class="o">:</span> <span class="err">作者</span>
+</pre></div>
+
+
+<p>写完后，回到<code>blog</code>目录下，执行<code>make html</code>命令进行博客的生成</p>
+<div class="highlight"><pre><span class="n">make</span> <span class="n">html</span>
+<span class="p">(</span><span class="n">pelican</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">content</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">output</span> <span class="o">-</span><span class="n">s</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">pelicanconfg</span><span class="p">.</span><span class="n">py</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>make html</code>命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行<code>make serve</code>开启测试服务器</p>
+<div class="highlight"><pre><span class="n">make</span> <span class="n">serve</span>
+<span class="p">(</span><span class="n">cd</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">content</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pelican</span><span class="p">.</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>make serve</code>命令也可由第二行替代，在浏览器中输入<code>http://localhost:8000</code>即可看到博文效果。</p>
+<h3>主题选择</h3>
+<p>回到<code>blog</code>目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个<a href="http://pelicanthemes.com/">网页</a>进行查看。不过如今pelican又新出了很多主题，所以你需看看<a href="https://github.com/getpelican/pelican-themes">pelican主题开源库</a>。</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/getpelican/pelican-themes.git</span>
+</pre></div>
+
+
+<p>打开<code>pelicanconf.py</code>配置文件，更改或添加<code>THEME</code>为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
+<div class="highlight"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pelican</span><span class="o">-</span><span class="n">themes</span><span class="o">/</span><span class="n">gum</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<h3>添加评论系统</h3>
+<p>开启个人博客的原因在于分享知识，分享就需要交流，评论模块当然少不了。在<a href="https://disqus.com/">Disqus</a>上申请帐号，按照流程Disqus会分配给你站点的Shortname，记牢Shortname，如果忘了请进入admin/settings中查看。然后同理，在<code>pelicanconf.py</code>添加</p>
+<div class="highlight"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="n">Shortname</span>
+</pre></div>
+
+
+<h3>博文发布</h3>
+<p>经过以上的折腾，离成功只差最后一步呢。写好的博文总要找个站点发布吧，本文基于github pages，当然你也可以选择你熟悉的站点服务器。具体步骤如<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">官方教程</a>，非常简单。按照官方教程，你就拥有一个二级域名和一个<a href="https://github.com/cowfighting/cowfighting.github.io">版本库</a>，比如我的<a href="http://cowfighting.github.com/">http://cowfighting.github.com/</a>，当然现在访问会出现跳转，这在后面独立域名章节会介绍。</p>
+<p>进入上一章节所示的<code>output</code>目录下，依次执行以下命令</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">init</span>
+<span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/cowfighting/cowfighting.github.io</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">first</span> <span class="n">blog</span><span class="err">&#39;</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
+
+
+<p>熟悉git的同学肯定知道上述命令表达的是什么意思吧，如果你还不甚了解，没关系，先照做或者看看git的<a href="http://www.git-scm.com/book/zh">官方文档</a>。上述命令很长，如果你比较熟悉了，可以修改Makefile文件进行一键上传~</p>
+<p>最后打开浏览器输入github pages的二级域名，效果如下</p>
+<p><img alt="article" src="/images/article.png" /></p>
+<p>目前为止，还算比较成功。从上图可以看出，书写源文件的<code>Title,Date,Category,Slug等</code>内容每个都有其的用武之处，具体你可以慢慢了解。</p>
+<h3>TODO</h3>
+<p>目前来说，博客的基本使用已经可以了，不过我们依然可以对其进行完善。接下来的一篇文章我会介绍以下几个方面</p>
+<ol>
+<li>独立域名</li>
+<li>博文URL格式配置，例<a href="http://www.xycoding.com/pages/2013/11/21/create-blog/">http://www.xycoding.com/pages/2013/11/21/create-blog/</a></li>
+<li>pelican插件的使用（Sitemap等）</li>
+<li>Google Analytics和Google Webmasters</li>
+</ol>
+<h3>感想</h3>
+<p>这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。</p>
+<p>最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~</p>
+<hr />
+<p>博客源码地址：<a href="https://github.com/cowfighting/cowfighting.github.io">https://github.com/cowfighting/cowfighting.github.io</a></p>
+<p>博客主题地址：<a href="https://github.com/cowfighting/xycoding-gum">https://github.com/cowfighting/xycoding-gum</a></p>
+            </div><!-- /.entry-content -->
+			
+			
+			<ul style="float:right;">
+				<li>
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2013/11/20/life-graduate/">
+						读研究生三个月有感
+					</a>
+				</li>
+				<li>
+					►&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2013/11/22/blog-advance/">
+						使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇
+					</a>
+				</li>
+			</ul>
+			
+			
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "articles/2013/11/21/blog-create/";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://xycoding.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<div class="sidebarbg">
+	<h4>Pages</h4>
+	<ul>
+		  <li><a href="/functions/categories.html">Categories</a></li>
+		  <li><a href="/functions/tags.html">Tags</a></li>
+		  <li><a href="/functions/archives.html">Archives</a></li>
+		  <li><a href="/functions/random.html">Random Article</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+<h4>Categories</h4>
+	<ul>
+			<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+			<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+	<h4>Tags</h4>
+		<ul>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
+		</ul>
+</div>
+
+
+<div class="social sidebarbg">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
+		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
+		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
+		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
+		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
+		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
+	  </ul>
+	</nav>
+</div>
+
+<nav class="widget sidebarbg">
+  <h4>Links</h4>
+  <ul>
+	<li><a target="_blank" href="http://python.org/">Python</a></li>
+	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
+                   <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
+					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
+					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
+				   </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+
+                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
+
+                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
+
+                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'xycoding';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
+</body>
+</html>

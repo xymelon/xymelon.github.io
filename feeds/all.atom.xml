@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-12-02T16:32:00+08:00</updated><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><updated>2013-12-02T16:32:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When sed reads a file line by line, the line that has been currently read is inserted into the pattern buffer (pattern space). Pattern buffer is like the temporary buffer, the scratchpad where the current information is stored. When you tell sed to print, it prints the pattern buffer.&lt;/p&gt;
+&lt;p&gt;Hold buffer / hold space is like a long-term storage, such that you can catch something, store it and reuse it later when sed is processing another line. You do not directly process the hold space, instead, you need to copy it or append to the pattern space if you want to do something with it. For example, the print command p prints the pattern space only. Likewise, s operates on the pattern space.&lt;/p&gt;
+
+
+&lt;p&gt;Here is an example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sed&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(the -n option suppresses automatic printing of lines)&lt;/p&gt;
+&lt;p&gt;There are three commands here: &lt;code&gt;1!G&lt;/code&gt;, &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;$p&lt;/code&gt;. &lt;code&gt;1!G&lt;/code&gt; has an address, 1 (first line), but the &lt;code&gt;!&lt;/code&gt; means that the command will be executed everywhere but on the first line. &lt;code&gt;$p&lt;/code&gt; on the other hand will only be executed on the last line. So what happens is this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;first line is read and inserted automatically into the pattern space&lt;/li&gt;
+&lt;li&gt;on the first line, first command is not executed; &lt;code&gt;h&lt;/code&gt; copies the first line into the hold space.&lt;/li&gt;
+&lt;li&gt;now the second line replaces whatever was in the pattern space&lt;/li&gt;
+&lt;li&gt;on the second line, first we execute &lt;code&gt;G&lt;/code&gt;, appending the contents of the hold buffer to the pattern buffer, separating it by a newline. The pattern space now contains the second line, a newline, and the first line.&lt;/li&gt;
+&lt;li&gt;Then, &lt;code&gt;h&lt;/code&gt; command inserts the concatenated contents of the pattern buffer into the hold space, which now holds the reversed lines two and one.&lt;/li&gt;
+&lt;li&gt;We proceed to line number three -- go to the point (3) above.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Finally, after the last line has been read and the hold space (containing all the previous lines in a reverse order) have been appended to the pattern space, pattern space is printed with &lt;code&gt;p&lt;/code&gt;. As you have guessed, the above does exactly what the tac command does -- prints the file in reverse.&lt;/p&gt;</summary><category term="linux"></category><category term="sed"></category></entry><entry><title>Linux学习笔记——权限管理(2)</title><link href="http://www.xycoding.com/articles/2013/11/23/linux-authority2/" rel="alternate"></link><updated>2013-11-23T23:10:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-23:articles/2013/11/23/linux-authority2/</id><summary type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SUID&lt;/strong&gt;：当s这个标志出现在&lt;strong&gt;文件拥有者&lt;/strong&gt;权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SUID权限仅对二进制程序（binary program）有效；&lt;/li&gt;
+&lt;li&gt;执行者对于该程序需要具有x的可执行权限；&lt;/li&gt;
+&lt;li&gt;本权限尽在执行该程序的过程中有效（run-time）；&lt;/li&gt;
+&lt;li&gt;执行者将具有该拥有者（owner）的权限。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;简单的说就是具有x权限的执行者（groups/others）在执行过程中会具有拥有者(owner)的权限。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SGID&lt;/strong&gt;：当s这个标志出现在&lt;strong&gt;群组权限&lt;/strong&gt;的x权限上时，如【-rwx--s--x】,此时被称为Set GID,简称为SGID的特殊权限，可对文件和目录有效。对目录设定SGID权限后，具有如下功能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户对于此目录具有r与x的权限时，该用户能够进入此目录；&lt;/li&gt;
+&lt;li&gt;用户在此目录下的有效群组（effective group）将会变成该目录的群组；&lt;/li&gt;
+&lt;li&gt;用途：若用户在此目录下具有w的权限（可新建文件），则使用者所建立的新文件的群组与此目录的群组相同。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;SBIT(Sticky Bit)&lt;/strong&gt;：当t这个标志出现在&lt;strong&gt;其他权限&lt;/strong&gt;的x权限上时，如【drwxrwxrwt】，只对目录有效，对于目录作用如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当用户对于此目录具有w,x的权限，亦即具有写入的权限时；&lt;/li&gt;
+&lt;li&gt;当用户在该目录下建立文件和目录时，仅有自己与root才有权力删除该文件。&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="linux"></category><category term="权限管理"></category></entry><entry><title>Linux学习笔记——权限管理(1)</title><link href="http://www.xycoding.com/articles/2013/11/22/linux-authority1/" rel="alternate"></link><updated>2013-11-22T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:articles/2013/11/22/linux-authority1/</id><summary type="html">&lt;p&gt;&lt;strong&gt;权限对于文件&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;r(read):可读，如读取文本内容&lt;/li&gt;
+&lt;li&gt;w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）&lt;/li&gt;
+&lt;li&gt;x(execute):可被系统执行&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;strong&gt;权限对于目录&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;r(read contents in directory):可查询该目录下包含哪些文件&lt;/li&gt;
+&lt;li&gt;w(modify contents of directory):可对该目录下的子目录和文件进行增、删、更名、移位&lt;/li&gt;
+&lt;li&gt;x(access directory):可进入该目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;经典范例&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设有个帐号名为cow，它对目录/home/cow/具有rwx权限。若在此目录下有个test的文件，该文件权限如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rwx&lt;/span&gt;&lt;span class="o"&gt;------&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;  &lt;span class="n"&gt;root&lt;/span&gt;  &lt;span class="mi"&gt;4365&lt;/span&gt; &lt;span class="n"&gt;Sep&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;请问cow对此文件权限为什么？可否删除此文件？&lt;/p&gt;
+&lt;p&gt;解答：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如题，cow对此文件来说是[others]身份，因此对于该文件它没有任何权限。但是该文件位于其home目录下，它对于home目录具有rwx完整权限，因此对于test这个文件来说，它是可以删除的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;默认权限&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文件：-rw-rw-rw-（666）&lt;/li&gt;
+&lt;li&gt;目录：drwxrwxrwx(777)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;umask指令数字显示时代表【该默认值需要减掉的权限】&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例：umask数值为022&lt;/p&gt;
+&lt;p&gt;建立文件时默认权限：（-rw-rw-rw-）-（-----w--w-）= (-rw-r--r--)&lt;/p&gt;
+&lt;p&gt;建立目录时默认权限：（drwxrwxrwx）(d----w--w-) = (drwxr-xr-x)&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="linux"></category><category term="权限管理"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇</title><link href="http://www.xycoding.com/articles/2013/11/22/blog-advance/" rel="alternate"></link><updated>2013-11-22T08:00:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:articles/2013/11/22/blog-advance/</id><summary type="html">&lt;h3&gt;独立域名&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
+&lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
+&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;URL配置&lt;/h3&gt;
+&lt;p&gt;一个好的URL地址不光搜索引擎友好，也让自己看得舒心，pelican中也完全考虑到这一点，只需简单的配置就可打造出漂亮的URL。&lt;/p&gt;
+&lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，按照如下修改或添加，具体配置请参见&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;slug&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;slug&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;pelican插件&lt;/h3&gt;
+&lt;p&gt;插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了&lt;code&gt;sitemap&lt;/code&gt;,&lt;code&gt;summary&lt;/code&gt;,&lt;code&gt;neighbors&lt;/code&gt;等插件。首先，和主题一样，选择一个文件夹，去&lt;a href="https://github.com/getpelican/pelican-plugins"&gt;pelican插件开源库&lt;/a&gt;clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//clone插件&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="nl"&gt;https:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/getpelican/pelican-plugins&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;PLUGIN_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;plugins&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;     &lt;span class="c1"&gt;//设置路径&lt;/span&gt;
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;summary&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;sitemap&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;//选用插件&lt;/span&gt;
+
+&lt;span class="n"&gt;SITEMAP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;priorities&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;indexes&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;changefreqs&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;monthly&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;indexes&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;daily&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;monthly&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Google Analytics和Google Webmasters&lt;/h3&gt;
+&lt;p&gt;注册&lt;a href="http://www.google.com/analytics/"&gt;Google Analytics&lt;/a&gt;和&lt;a href="http://www.google.com/webmasters/"&gt;Google Webmasters&lt;/a&gt;可以更好的管理自己的站点，更好的让google收录等。具体教程非常简单，注册完基本就能知道~最后记得在&lt;code&gt;pelicanconf.py&lt;/code&gt;中进行配置。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;GOOGLE_ANALYTICS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Tracking&lt;/span&gt; &lt;span class="n"&gt;ID&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;最后&lt;/h3&gt;
+&lt;p&gt;博客到此为此基本介绍完毕，以后想起什么再补充吧。其实我对现在这个主题还有不满意的地方，比如&lt;code&gt;key words，description&lt;/code&gt;等没有地方设置，这对搜索引擎不友好；还有左边栏没有热门文章等~接下来再慢慢完善。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</title><link href="http://www.xycoding.com/articles/2013/11/21/blog-create/" rel="alternate"></link><updated>2013-11-21T11:21:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-21:articles/2013/11/21/blog-create/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直以来都希望拥有属于自己的个人博客，随性发点信息，写点技术感想，记录自己的生活，重要的是不受广告的影响、不被河蟹、不会担心有一天被莫名其妙地消失。作为一名技术渣硕，抛弃拿来主义，勇于摸索，踏出第一步，不再纸上谈兵，从现在开始。&lt;/p&gt;
+&lt;p&gt;本博客是在windows下搭建完成。不过这和linux下是类似的，因为搭建过程是在git bash中进行，git bash的命令风格是仿linux的。
+&lt;/p&gt;
+&lt;h3&gt;知识储备&lt;/h3&gt;
+&lt;p&gt;搭建博客的工具选用了基于python的pelican，相比wordpress等其它工具来说，它比较轻盈并有很多令人兴奋的&lt;a href="http://docs.getpelican.com/en/3.3.0/#features"&gt;特性&lt;/a&gt;，再配合免费无限制的github pages，近乎完美。搭建过程中涉及如下技术知识，不过你不必害怕，只是使用它们的开源框架而已，并不需要自己编码，点击可以了解它们是如何的强大，当然你也可以略过它们，后面遇到时再进行了解。&lt;br/&gt;
+假如你不能打开它们，原因你懂的，请爬墙解决~&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="https://github.com/"&gt;github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pages.github.com/"&gt;github pages&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://git-scm.com/"&gt;git&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.python.org/"&gt;python&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi"&gt;pip&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.getpelican.com/"&gt;pelican&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;下载安装&lt;/h3&gt;
+&lt;p&gt;请点击下载以下内容，本文会一步一步介绍如何安装，不着急，慢慢来。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://www.python.org/getit/"&gt;python3下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://msysgit.github.io/"&gt;git下载&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/distribute#downloads"&gt;pip下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.equation.com/servlet/equation.cmd?fa=make"&gt;window下make下载&lt;/a&gt; &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;安装python，这个就不用多说了吧~&lt;/li&gt;
+&lt;li&gt;安装git，简单。git bash使用教程请参见&lt;a href="http://www.git-scm.com/book/zh"&gt;官方文档&lt;/a&gt;~ &lt;/li&gt;
+&lt;li&gt;将python安装文件夹中scripts和make.exe加入环境变量。&lt;/li&gt;
+&lt;li&gt;安装pip，具体可以看&lt;a href="http://www.pip-installer.org/en/latest/installing.html"&gt;官网介绍&lt;/a&gt;，或者&lt;a href="http://tech.crandom.com/2011/10/21/python3_pip.html"&gt;Windows环境在python3装pip&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown教程&lt;/a&gt;和&lt;a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html"&gt;REST教程&lt;/a&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;主体搭建&lt;/h3&gt;
+&lt;p&gt;打开git bash，进入一个自己喜欢的文件夹（注意文件夹名最好不为空，因为后续make html命令会出错），执行以下命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt; &lt;span class="c1"&gt;//创建文件夹，名称可根据自己喜欢定&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt;
+&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;quickstart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;pelican-quickstart执行命令后，会提示输入博客的配置项，除了少数几个必填以外，其它都可以选择默认，而且都可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;文件中进行更改，所以你可以随意选择，如下图~&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pelican-quickstart" src="/images/pelican-quickstart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;命令成功执行后，会出现pelican的框架，如下所示&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;                &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;存放输入的&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="err"&gt;或&lt;/span&gt;&lt;span class="n"&gt;RST&lt;/span&gt;&lt;span class="err"&gt;源文件&lt;/span&gt;
+&lt;span class="err"&gt;│&lt;/span&gt;   &lt;span class="err"&gt;└──&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;存放手工创建的静态页面，可选&lt;/span&gt;
+&lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;                 &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;存放最终生成的静态博客&lt;/span&gt;
+&lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;develop_server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;      &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;测试服务器&lt;/span&gt;
+&lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;Makefile&lt;/span&gt;               &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;管理博客的&lt;/span&gt;&lt;span class="n"&gt;Makefile&lt;/span&gt;
+&lt;span class="err"&gt;├──&lt;/span&gt; &lt;span class="n"&gt;pelicanconf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;配置文件&lt;/span&gt;
+&lt;span class="err"&gt;└──&lt;/span&gt; &lt;span class="n"&gt;publishconf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;发布文件，可删除&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;书写博文&lt;/h3&gt;
+&lt;p&gt;完成上述博客主体搭建后，使用markdownpad创建一个&lt;code&gt;.md&lt;/code&gt;文件，保存于&lt;code&gt;content&lt;/code&gt;文件夹中。博文格式如下所示&lt;/p&gt;
+&lt;p&gt;&lt;img alt="markdown" src="/images/markdown.png" /&gt;&lt;/p&gt;
+&lt;p&gt;图中左侧是我们书写的markdown格式的源文件，右边则是即使预览效果，很棒吧~
+至于源文件顶部&lt;code&gt;Title,Date,Category等&lt;/code&gt;内容则是必须的，具体可参见&lt;a href="http://docs.getpelican.com/en/3.3.0/getting_started.html#writing-content-using-pelican"&gt;文档&lt;/a&gt;，它们各自意义如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;创建日期&lt;/span&gt;
+&lt;span class="n"&gt;Modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;修改日期&lt;/span&gt;
+&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章分类，标志本文处于该分类下&lt;/span&gt;
+&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章标签，标志本文处于该标签下&lt;/span&gt;
+&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;URL&lt;/span&gt;&lt;span class="err"&gt;中该文章的链接地址&lt;/span&gt;
+&lt;span class="n"&gt;Author&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;作者&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;写完后，回到&lt;code&gt;blog&lt;/code&gt;目录下，执行&lt;code&gt;make html&lt;/code&gt;命令进行博客的生成&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelicanconfg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;make html&lt;/code&gt;命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行&lt;code&gt;make serve&lt;/code&gt;开启测试服务器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;make serve&lt;/code&gt;命令也可由第二行替代，在浏览器中输入&lt;code&gt;http://localhost:8000&lt;/code&gt;即可看到博文效果。&lt;/p&gt;
+&lt;h3&gt;主题选择&lt;/h3&gt;
+&lt;p&gt;回到&lt;code&gt;blog&lt;/code&gt;目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个&lt;a href="http://pelicanthemes.com/"&gt;网页&lt;/a&gt;进行查看。不过如今pelican又新出了很多主题，所以你需看看&lt;a href="https://github.com/getpelican/pelican-themes"&gt;pelican主题开源库&lt;/a&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/getpelican/pelican-themes.git&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，更改或添加&lt;code&gt;THEME&lt;/code&gt;为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;themes&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gum&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;添加评论系统&lt;/h3&gt;
+&lt;p&gt;开启个人博客的原因在于分享知识，分享就需要交流，评论模块当然少不了。在&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt;上申请帐号，按照流程Disqus会分配给你站点的Shortname，记牢Shortname，如果忘了请进入admin/settings中查看。然后同理，在&lt;code&gt;pelicanconf.py&lt;/code&gt;添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;DISQUS_SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Shortname&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;博文发布&lt;/h3&gt;
+&lt;p&gt;经过以上的折腾，离成功只差最后一步呢。写好的博文总要找个站点发布吧，本文基于github pages，当然你也可以选择你熟悉的站点服务器。具体步骤如&lt;a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator"&gt;官方教程&lt;/a&gt;，非常简单。按照官方教程，你就拥有一个二级域名和一个&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;版本库&lt;/a&gt;，比如我的&lt;a href="http://cowfighting.github.com/"&gt;http://cowfighting.github.com/&lt;/a&gt;，当然现在访问会出现跳转，这在后面独立域名章节会介绍。&lt;/p&gt;
+&lt;p&gt;进入上一章节所示的&lt;code&gt;output&lt;/code&gt;目录下，依次执行以下命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/cowfighting/cowfighting.github.io&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;pull&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;熟悉git的同学肯定知道上述命令表达的是什么意思吧，如果你还不甚了解，没关系，先照做或者看看git的&lt;a href="http://www.git-scm.com/book/zh"&gt;官方文档&lt;/a&gt;。上述命令很长，如果你比较熟悉了，可以修改Makefile文件进行一键上传~&lt;/p&gt;
+&lt;p&gt;最后打开浏览器输入github pages的二级域名，效果如下&lt;/p&gt;
+&lt;p&gt;&lt;img alt="article" src="/images/article.png" /&gt;&lt;/p&gt;
+&lt;p&gt;目前为止，还算比较成功。从上图可以看出，书写源文件的&lt;code&gt;Title,Date,Category,Slug等&lt;/code&gt;内容每个都有其的用武之处，具体你可以慢慢了解。&lt;/p&gt;
+&lt;h3&gt;TODO&lt;/h3&gt;
+&lt;p&gt;目前来说，博客的基本使用已经可以了，不过我们依然可以对其进行完善。接下来的一篇文章我会介绍以下几个方面&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;独立域名&lt;/li&gt;
+&lt;li&gt;博文URL格式配置，例&lt;a href="http://www.xycoding.com/pages/2013/11/21/create-blog/"&gt;http://www.xycoding.com/pages/2013/11/21/create-blog/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;pelican插件的使用（Sitemap等）&lt;/li&gt;
+&lt;li&gt;Google Analytics和Google Webmasters&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;感想&lt;/h3&gt;
+&lt;p&gt;这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。&lt;/p&gt;
+&lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="github pages"></category><category term="pelican"></category></entry><entry><title>读研究生三个月有感</title><link href="http://www.xycoding.com/articles/2013/11/20/life-graduate/" rel="alternate"></link><updated>2013-11-20T08:25:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-20:articles/2013/11/20/life-graduate/</id><summary type="html">&lt;h3&gt;初进校园&lt;/h3&gt;
+&lt;p&gt;北邮给人的感觉就是很小，还没进入学校之前，就听byr说过，如果你要带你朋友逛北邮校园，那么请带他来到主楼前，面朝西门。那么在你后面就是东门，左手边就是南门，前面就是西门，右手边就是北门~马上就介绍完毕，哈哈。不过麻雀虽小，五脏俱全~
+&lt;/p&gt;
+&lt;h3&gt;信息黄埔&lt;/h3&gt;
+&lt;p&gt;是的，北邮号称信息黄埔，这个称号还算名副其实。学校里基本上一大半的学院都和IT有关，耳濡目染，码农风气传遍校园。&lt;/p&gt;
+&lt;p&gt;逛逛北邮人论坛，看看校招实习信息，你会发现在IT界面里byr遍地开花，IT公司大部分都在北邮开宣讲会，三大运营商不说了，每年北京主场都在北邮进行召开。今年微软的唯一北京宣讲会居然也选在了北邮，其他的诸如阿里、百度等互联网公司那是肯定来的。而且北邮师兄师姐在IT公司里也有很多很多，每天都有各种内推实习等，对byr很是照顾。&lt;/p&gt;
+&lt;h3&gt;研究生生活&lt;/h3&gt;
+&lt;p&gt;研究生生活基本都靠自己呢，毕竟都是好大的人呢，周围的人都很勤奋，在寝室里基本看不到身影，每个人都在为自己的目标而努力着。我的研究生方向不是那么的喜欢，看看论文，查查资料，更多的是和理论打交道，虽然说这本该是研究生该干的事，不过私以为还是喜欢有实践的感觉，不管怎样，毕业是要发论文的。&lt;/p&gt;
+&lt;p&gt;唯一让我郁闷的是我这导师从大实验室分出来单独给他的学生一个房间，这样就和大部队有点脱节，真不爽。不过这有什么办法啊，只有顺其自然呢，哎！！！&lt;/p&gt;
+&lt;p&gt;实验室不忙，每天都有属于自己的时间，我也还有很多书还没看，总感觉研究生时间不够，要学的太多，真为自己所荒废的本科而后悔。我也有自己的目标，正在为之而努力奋斗着，希望有很好的收获吧。&lt;/p&gt;</summary><category term="graduate"></category></entry></feed>
