@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-12-02T16:32:00+08:00</updated><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><updated>2013-12-02T16:32:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;When sed reads a file line by line, the line that has been currently read is inserted into the pattern buffer (pattern space). Pattern buffer is like the temporary buffer, the scratchpad where the current information is stored. When you tell sed to print, it prints the pattern buffer.&lt;/p&gt;
-&lt;p&gt;Hold buffer / hold space is like a long-term storage, such that you can catch something, store it and reuse it later when sed is processing another line. You do not directly process the hold space, instead, you need to copy it or append to the pattern space if you want to do something with it. For example, the print command p prints the pattern space only. Likewise, s operates on the pattern space.&lt;/p&gt;
-
-
-&lt;p&gt;Here is an example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sed&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;(the -n option suppresses automatic printing of lines)&lt;/p&gt;
-&lt;p&gt;There are three commands here: &lt;code&gt;1!G&lt;/code&gt;, &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;$p&lt;/code&gt;. &lt;code&gt;1!G&lt;/code&gt; has an address, 1 (first line), but the &lt;code&gt;!&lt;/code&gt; means that the command will be executed everywhere but on the first line. &lt;code&gt;$p&lt;/code&gt; on the other hand will only be executed on the last line. So what happens is this:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;first line is read and inserted automatically into the pattern space&lt;/li&gt;
-&lt;li&gt;on the first line, first command is not executed; &lt;code&gt;h&lt;/code&gt; copies the first line into the hold space.&lt;/li&gt;
-&lt;li&gt;now the second line replaces whatever was in the pattern space&lt;/li&gt;
-&lt;li&gt;on the second line, first we execute &lt;code&gt;G&lt;/code&gt;, appending the contents of the hold buffer to the pattern buffer, separating it by a newline. The pattern space now contains the second line, a newline, and the first line.&lt;/li&gt;
-&lt;li&gt;Then, &lt;code&gt;h&lt;/code&gt; command inserts the concatenated contents of the pattern buffer into the hold space, which now holds the reversed lines two and one.&lt;/li&gt;
-&lt;li&gt;We proceed to line number three -- go to the point (3) above.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Finally, after the last line has been read and the hold space (containing all the previous lines in a reverse order) have been appended to the pattern space, pattern space is printed with &lt;code&gt;p&lt;/code&gt;. As you have guessed, the above does exactly what the tac command does -- prints the file in reverse.&lt;/p&gt;</summary><category term="linux"></category><category term="sed"></category></entry><entry><title>Linux学习笔记——权限管理(2)</title><link href="http://www.xycoding.com/articles/2013/11/23/linux-authority2/" rel="alternate"></link><updated>2013-11-23T23:10:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-23:articles/2013/11/23/linux-authority2/</id><summary type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-11-23T23:10:00+08:00</updated><entry><title>Linux学习笔记——权限管理(2)</title><link href="http://www.xycoding.com/articles/2013/11/23/linux-authority2/" rel="alternate"></link><updated>2013-11-23T23:10:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-23:articles/2013/11/23/linux-authority2/</id><summary type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;SUID&lt;/strong&gt;：当s这个标志出现在&lt;strong&gt;文件拥有者&lt;/strong&gt;权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;SUID权限仅对二进制程序（binary program）有效；&lt;/li&gt;
