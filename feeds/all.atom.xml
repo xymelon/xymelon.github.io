@@ -82,7 +82,7 @@
 &lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
 &lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
 &lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
-&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为此，即大功告成。
+&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为止，即大功告成。
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;URL配置&lt;/h3&gt;
