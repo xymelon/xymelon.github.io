@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-12-02T20:01:00+08:00</updated><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><updated>2013-12-02T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-12-18T16:09:00+08:00</updated><entry><title>Linux学习笔记——有效群组（effective group）与初始群组（initial group）</title><link href="http://www.xycoding.com/articles/2013/12/18/linux-group/" rel="alternate"></link><updated>2013-12-18T16:09:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-18:articles/2013/12/18/linux-group/</id><summary type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;初始群组：/etc/passwd中第四栏所标志的GID；当用户登入系统，立刻拥有该群组的相关权限。&lt;/p&gt;
+&lt;p&gt;有效群组：当以某个用户身份登入后，输入&lt;code&gt;groups&lt;/code&gt;命令第一出现的群组即为有效群组。它的作用是当用户建立新文件或目录时，所属群组为有效群组。&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;/etc/group档案结构&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;每一行代表一个群组，用&lt;code&gt;：&lt;/code&gt;作为字段分隔符，共分为4部分。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;组名&lt;/li&gt;
+&lt;li&gt;群组密码&lt;/li&gt;
+&lt;li&gt;GID&lt;/li&gt;
+&lt;li&gt;该群组所支持的帐号名称。例，若cow帐号想加入root群组，即为&lt;code&gt;root:x:0:root,cow&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;切换有效群组&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;newgrp&lt;/code&gt;切换，不过所切换的群组必须为该用户所加入的群组。&lt;code&gt;newgrp&lt;/code&gt;是以另一个shell来提供群组切换功能的，如果想回到原本的环境中，可输入&lt;code&gt;exit&lt;/code&gt;命令。&lt;/p&gt;</summary><category term="linux"></category><category term="group"></category></entry><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><updated>2013-12-02T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;When sed reads a file line by line, the line that has been currently read is inserted into the pattern buffer (pattern space). Pattern buffer is like the temporary buffer, the scratchpad where the current information is stored. When you tell sed to print, it prints the pattern buffer.&lt;/p&gt;
 &lt;p&gt;Hold buffer / hold space is like a long-term storage, such that you can catch something, store it and reuse it later when sed is processing another line. You do not directly process the hold space, instead, you need to copy it or append to the pattern space if you want to do something with it. For example, the print command p prints the pattern space only. Likewise, s operates on the pattern space.&lt;/p&gt;
 
