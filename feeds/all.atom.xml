@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2013-12-18T16:09:00+08:00</updated><entry><title>Linux学习笔记——有效群组（effective group）与初始群组（initial group）</title><link href="http://www.xycoding.com/articles/2013/12/18/linux-group/" rel="alternate"></link><updated>2013-12-18T16:09:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-18:articles/2013/12/18/linux-group/</id><summary type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2014-03-15T16:36:00+08:00</updated><entry><title>Android开发——ListView注意事项</title><link href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="alternate"></link><updated>2014-03-15T16:36:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-15:articles/2014/03/15/android-listview-notice/</id><summary type="html">&lt;h3&gt;ListView&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;getChildAt(int index)&lt;/code&gt; 其中index范围在屏幕可见范围之内，使用&lt;code&gt;getChildCount&lt;/code&gt;获取index&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需更改ListView中内容，改变adapter绑定数组的数据。
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Android"></category><category term="ListView"></category></entry><entry><title>Linux学习笔记——有效群组（effective group）与初始群组（initial group）</title><link href="http://www.xycoding.com/articles/2013/12/18/linux-group/" rel="alternate"></link><updated>2013-12-18T16:09:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-18:articles/2013/12/18/linux-group/</id><summary type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;初始群组：/etc/passwd中第四栏所标志的GID；当用户登入系统，立刻拥有该群组的相关权限。&lt;/p&gt;
 &lt;p&gt;有效群组：当以某个用户身份登入后，输入&lt;code&gt;groups&lt;/code&gt;命令第一出现的群组即为有效群组。它的作用是当用户建立新文件或目录时，所属群组为有效群组。&lt;/p&gt;
 
