@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 
-        <title>Android开发——ListView注意事项</title>
+        <title>详解android:weight</title>
 		
 		<meta name="description" content="">
 		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
@@ -81,21 +81,21 @@
 
             <header>
               <h2 class="entry-title">
-                <a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark"
-                   title="Permalink to Android开发——ListView注意事项">Android开发——ListView注意事项</a></h2>
+                <a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="bookmark"
+                   title="Permalink to 详解android:weight">详解android:weight</a></h2>
            
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2014-03-15T16:36:00">
-                周六 15 三月 2014
+			  <abbr class="published" title="2014-03-28T17:51:00">
+                周五 28 三月 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周六 15 三月 2014
+				周五 28 三月 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -103,28 +103,107 @@
 			  <hr />			  
             </footer><!-- /.post-info -->
             <div class="entry-content">
-              <h3>ListView</h3>
-<ol>
-<li>
-<p><code>getChildAt(int index)</code> 其中index范围在屏幕可见范围之内，使用<code>getChildCount</code>获取index</p>
-</li>
-<li>
-<p>需更改ListView中内容，改变adapter绑定数组的数据。
-</p>
-</li>
-</ol>
+              <h3>android:layout_weight</h3>
+<p><code>android：weight</code>是线性布局中非常重要的概念，在创造兼容性APP中有不可替代的功劳。它主要作用为分配剩余空间，剩余空间是在线性布局中把子组件所占空间分配完毕后所剩余的部分。每个子组件占剩余空间的比例等于自身所设置参数除以所有子组件所设置参数之和。</p>
+
+
+<p>对于线性布局有<code>horizontal</code>和<code>vertical</code>两个方向，不过剩余空间计算方法都是一样的，以下举例都为<code>android:orientation="horizontal"</code>。</p>
+<p>剩余空间计算公式：<strong>剩余空间 = 父组件宽度 - 各组件所设置宽度或所占宽度</strong></p>
+<p>子组件所占空间 = <strong>所设置宽度或所占宽度 + 剩余空间 * 子组件所占比例</strong></p>
+<p>剩余空间和子组件所占空间与<code>android:layout_width</code>属性设置参数（<code>wrap_content</code>和<code>match_parent</code>）有很大关系，以下分别举例。</p>
+<h3>设置参数<code>android:layout_width:"wrap_content"</code></h3>
+<p>首先看看如下布局xml：</p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:orientation=</span><span class="s">&quot;horizontal&quot;</span>
+<span class="na">android:paddingTop=</span><span class="s">&quot;50dp&quot;</span> <span class="nt">&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;1&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#FFFF00&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;2&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#FF0000&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;2&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;3&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#000000&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;3&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/LinearLayout&gt;</span>
+</pre></div>
+
+
+<p>布局效果图1如下：
+<img alt="布局效果1" src="/images/layout_weight1.png" /></p>
+<p>此处各子组件<code>android:layout_weight</code>之和为6，TextView1、TextView2、TextView3各占剩余空间比例为1/6、2/6、3/6。各子组件所设置<code>android:layout_width</code>属性为<code>wrap_content</code>，即依内容而定，此处为各自文本字符串1、2、3的宽度；父组件宽度属性为<code>android:layout_width="match_parent"</code>，即撑满整个屏幕宽度。</p>
+<p>剩余空间 = 屏幕宽度 - 字符串1宽度 - 字符串2宽度 - 字符串3宽度</p>
+<p>子组件1所占空间 = 字符串1宽度 + 1/6 * 剩余空间 </p>
+<p>子组件2所占空间 = 字符串2宽度 + 2/6 * 剩余空间</p>
+<p>字组件3所占空间 = 字符串3宽度 + 3/6 * 剩余空间</p>
+<p>因字符串1、2、3宽度比较小，初略估计为0。那么此处各子组件所占组件比例则近似于1：2：3，符合效果图1。</p>
+<h3>设置参数<code>android:layout_width:"match_parent"</code></h3>
+<p>同样布局文件xml如下，和上文xml文件唯一不同的地方在于各子组件所设置宽度属性改为了<code>match_parent</code>:</p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:orientation=</span><span class="s">&quot;horizontal&quot;</span>
+<span class="na">android:paddingTop=</span><span class="s">&quot;50dp&quot;</span> <span class="nt">&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;1&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#FFFF00&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;2&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#FF0000&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;2&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;TextView</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_weight=</span><span class="s">&quot;3&quot;</span>
+<span class="na">android:background=</span><span class="s">&quot;#000000&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;3&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/LinearLayout&gt;</span>
+</pre></div>
+
+
+<p>效果图2如下：
+<img alt="布局效果2" src="/images/layout_weight2.png" /></p>
+<p>看到图片你可能非常惊讶，怎么只显示1、2，而3没显示出来。不着急，根据计算公式，你就会知道结果。</p>
+<p>同样此处各子组件<code>android:layout_weight</code>之和为6，TextView1、TextView2、TextView3各占剩余空间比例为1/6、2/6、3/6。各子组件和父组件宽度属性都为<code>android:layout_width="match_parent"</code>，即都撑满整个屏幕宽度。</p>
+<p>剩余空间：屏幕宽度 - TextView1所设置宽度（<strong>即屏幕宽度</strong>） - TextView2所设置宽度（即屏幕宽度） - TextView3所设置宽度（即屏幕宽度） = -2个屏幕宽度（<code>对的，没错。此处剩余空间为负</code>）</p>
+<p>那么组件1所占空间： TextView1所设置宽度（<strong>即屏幕宽度</strong>） + 1/6 * （-2个屏幕宽度） = 2/3个屏幕宽度</p>
+<p>组件2所占空间：TextView2所设置宽度（即屏幕宽度） + 2/6 * （-2个屏幕宽度） = 1/3个屏幕宽度</p>
+<p>组件3所占空间：TextView3所设置宽度（即屏幕宽度） + 3/6 * （-2个屏幕宽度） = 0</p>
+<p>根据计算，我们可以看到组件3所占空间为0，且组件1和组件2所占空间比为2：1，和效果图一样。</p>
+<p>那么如果是属性<code>wrap_content</code>和<code>match_parent</code>混合使用的话，同样可应用公式算出，本文不在详述。</p>
             </div><!-- /.entry-content -->
 			
 			
 			<ul style="float:right;">
 				<li>
-					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2013/12/18/linux-group/">
-						Linux学习笔记——有效群组（effective group）与初始群组（initial group）
-					</a>
-				</li>
-				<li>
-					►&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/">
-						详解android:weight
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/">
+						Android开发——ListView注意事项
 					</a>
 				</li>
 			</ul>
@@ -134,7 +213,7 @@
               <h3>Comments</h3>
               <div id="disqus_thread"></div>
               <script type="text/javascript">
-                var disqus_identifier = "articles/2014/03/15/android-listview-notice/";
+                var disqus_identifier = "articles/2014/03/28/android-layout-weight/";
                 (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'http://xycoding.disqus.com/embed.js';
