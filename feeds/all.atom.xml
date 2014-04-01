@@ -50,7 +50,7 @@
 &lt;p&gt;子组件2所占空间 = 字符串2宽度 + 2/6 * 剩余空间&lt;/p&gt;
 &lt;p&gt;字组件3所占空间 = 字符串3宽度 + 3/6 * 剩余空间&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;因字符串1、2、3宽度比较小，初略估计为0。那么此处各子组件所占组件比例则近似于1：2：3，符合效果图1。&lt;/p&gt;
+&lt;p&gt;因字符串1、2、3宽度比较小，粗略估计为0。那么此处各子组件所占组件比例则近似于1：2：3，符合效果图1。&lt;/p&gt;
 &lt;h3&gt;设置参数&lt;code&gt;android:layout_width:"match_parent"&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;同样布局文件xml如下，和上文xml文件唯一不同的地方在于各子组件所设置宽度属性改为了&lt;code&gt;match_parent&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
