@@ -1,0 +1,487 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+        <title>Android使用HttpClient实现下载，并监控进度</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		
+        <meta charset="utf-8" />
+        <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/pygment.css" />
+
+        <script src="http://www.xycoding.com/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+              <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-46026074-1', 'www.xycoding.com');
+                ga('send', 'pageview');
+
+              </script>
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+<!-- Fork me on github -->
+<a target="_blank" href="https://github.com/cowfighting">
+	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
+</a>
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="http://www.xycoding.com">Coding Our World <strong>Life is not fair -- Get used to it!</strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
+					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+				<li><a href="/functions/archives.html">Archives</a></li>
+				<li><a href="/functions/random.html">Random Article</a></li>
+				<!--
+					<li><a href="/functions/categories.html">Categories</a></li>
+					<li><a href="/functions/tags.html">Tags</a></li>
+					<li><a href="/functions/archives.html">Archives</a></li>
+					<li><a href="/functions/random.html">Random Article</a></li>
+				
+				-->
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="bookmark"
+                   title="Permalink to Android使用HttpClient实现下载，并监控进度">Android使用HttpClient实现下载，并监控进度</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <!--
+			  <abbr class="published" title="2014-07-28T19:50:00">
+                周一 28 七月 2014
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+              </address>
+			  -->
+			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
+				周一 28 七月 2014
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
+	
+			  </address>
+			  <hr />			  
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <h3>前言</h3>
+<p>Android程序开发中使用网络上传下载是必不可少的，前不久使用<a href="http://hc.apache.org/">Apache Httpclient</a>组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现<code>SkImageDecoder::Factory returned null</code>错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步<a href="">Android使用HttpClient实现文件上传到PHP服务器，并监控进度</a>。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。</p>
+
+
+<h3>监控进度实现</h3>
+<p>关于HttpClient的资料，可去其官方查阅。本例简单的使用它进行图片下载，如想实现批量下载图片，请参见<a href="">Android异步批量下载图片并缓存，防止OOM错误</a>，代码如下。</p>
+<p>首先定义监听器接口，如下所示：</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * 进度监听器接口</span>
+<span class="cm"> */</span>
+<span class="n">public</span> <span class="k">interface</span> <span class="n">ProgressListener</span> <span class="p">{</span>
+    <span class="n">public</span> <span class="k">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后自定义一个<code>CountingInputStream</code>类继承于<code>FilterInputStream</code>，重写其中的关键方法，实现进度监听的功能，如下所示：</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * 重写FilterInputStream，实现进度监听的功能</span>
+<span class="cm"> * </span>
+<span class="cm"> * @author Cow</span>
+<span class="cm"> * </span>
+<span class="cm"> */</span>
+<span class="n">public</span> <span class="k">class</span> <span class="n">CountingInputStream</span> <span class="k">extends</span> <span class="n">FilterInputStream</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">long</span> <span class="n">transferred</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="n">CountingInputStream</span><span class="p">(</span><span class="k">final</span> <span class="n">InputStream</span> <span class="n">in</span><span class="p">,</span>
+            <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="n">Override</span>
+    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">()</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="n">Override</span>
+    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">(</span><span class="k">byte</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="n">Override</span>
+    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">(</span><span class="k">byte</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">int</span> <span class="n">byteOffset</span><span class="p">,</span> <span class="k">int</span> <span class="n">byteCount</span><span class="p">)</span>
+            <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byteOffset</span><span class="p">,</span> <span class="n">byteCount</span><span class="p">);</span>
+        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="n">Override</span>
+    <span class="n">public</span> <span class="n">long</span> <span class="n">skip</span><span class="p">(</span><span class="n">long</span> <span class="n">byteCount</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="n">long</span> <span class="n">skip</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">skip</span><span class="p">(</span><span class="n">byteCount</span><span class="p">);</span>
+        <span class="n">readCount</span><span class="p">(</span><span class="n">skip</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">skip</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="k">void</span> <span class="n">readCount</span><span class="p">(</span><span class="n">long</span> <span class="n">read</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">read</span> <span class="o">&gt;</span> <span class="mh">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">+=</span> <span class="n">read</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">listener</span><span class="p">.</span><span class="n">transferred</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">transferred</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>最后就是使用上述实现的类和Httpclient进行下载并显示进度的功能，非常简单，代码如下，使用AsyncTask异步下载。</p>
+<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">FileDownLoadAsyncTask</span> <span class="n">extends</span>
+        <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">ImageView</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Bitmap</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="c1">// 图片下载地址</span>
+    <span class="n">private</span> <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://192.168.83.213/upload/1.jpg&quot;</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">Context</span> <span class="n">context</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">ProgressDialog</span> <span class="n">pd</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">ImageView</span> <span class="n">image</span><span class="p">;</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="nf">FileDownLoadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPreExecute</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">pd</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ProgressDialog</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">setProgressStyle</span><span class="p">(</span><span class="n">ProgressDialog</span><span class="p">.</span><span class="n">STYLE_HORIZONTAL</span><span class="p">);</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">setMessage</span><span class="p">(</span><span class="s">&quot;下载中....&quot;</span><span class="p">);</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">setCancelable</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 下载图片，并按指定高度和宽度压缩</span>
+<span class="cm">     */</span>
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">protected</span> <span class="n">Bitmap</span> <span class="n">doInBackground</span><span class="p">(</span><span class="n">ImageView</span><span class="p">...</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">Bitmap</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="n">new</span> <span class="n">DefaultHttpClient</span><span class="p">();</span>
+        <span class="n">try</span> <span class="p">{</span>
+            <span class="n">httpClient</span><span class="p">.</span><span class="n">getParams</span><span class="p">().</span><span class="n">setParameter</span><span class="p">(</span>
+                    <span class="n">CoreProtocolPNames</span><span class="p">.</span><span class="n">PROTOCOL_VERSION</span><span class="p">,</span> <span class="n">HttpVersion</span><span class="p">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
+            <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="p">.</span><span class="n">getStatusLine</span><span class="p">().</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">httpResponse</span><span class="p">.</span><span class="n">getEntity</span><span class="p">();</span>
+                <span class="n">final</span> <span class="kt">long</span> <span class="n">size</span> <span class="o">=</span> <span class="n">entity</span><span class="p">.</span><span class="n">getContentLength</span><span class="p">();</span>
+                <span class="n">CountingInputStream</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountingInputStream</span><span class="p">(</span>
+                        <span class="n">entity</span><span class="p">.</span><span class="n">getContent</span><span class="p">(),</span> <span class="n">new</span> <span class="n">ProgressListener</span><span class="p">()</span> <span class="p">{</span>
+
+                            <span class="err">@</span><span class="n">Override</span>
+                            <span class="n">public</span> <span class="kt">void</span> <span class="n">transferred</span><span class="p">(</span><span class="kt">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="n">Log</span><span class="p">.</span><span class="n">i</span><span class="p">(</span><span class="s">&quot;FileDownLoadAsyncTask&quot;</span><span class="p">,</span> <span class="s">&quot;总字节数：&quot;</span> <span class="o">+</span> <span class="n">size</span>
+                                        <span class="o">+</span> <span class="s">&quot; 已下载字节数：&quot;</span> <span class="o">+</span> <span class="n">transferedBytes</span><span class="p">);</span>
+                                <span class="n">publishProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="n">size</span><span class="p">));</span>
+                            <span class="p">}</span>
+                        <span class="p">});</span>
+                <span class="c1">// 需将Inputstream转化为byte数组，以备decodeByteArray用</span>
+                <span class="c1">// 如直接使用decodeStream会将stream破坏，然后第二次decodeStream时，会出现SkImageDecoder::Factory returned null错误</span>
+                <span class="c1">// 我试过将获得的Inputstream转化为BufferedInputStream，然后使用mark、reset方法，但是我试了试没成功，不知道为啥，还请成功的各位告知</span>
+                <span class="n">byte</span><span class="p">[]</span> <span class="n">byteIn</span> <span class="o">=</span> <span class="n">toByteArray</span><span class="p">(</span><span class="n">cis</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">size</span><span class="p">);</span>
+                <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">Options</span> <span class="n">bmpFactoryOptions</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">Options</span><span class="p">();</span>
+                <span class="c1">// 第一次decode时，需设置inJustDecodeBounds属性为true,这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在Options中</span>
+                <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inJustDecodeBounds</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="c1">// 第一次decode，获取图片高宽度等属性</span>
+                <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeByteArray</span><span class="p">(</span><span class="n">byteIn</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">byteIn</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
+                        <span class="n">bmpFactoryOptions</span><span class="p">);</span>
+                <span class="c1">// 根据显示控件大小获取压缩比率，有效避免OOM</span>
+                <span class="kt">int</span> <span class="n">heightRatio</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">outHeight</span>
+                        <span class="o">/</span> <span class="n">height</span><span class="p">);</span>
+                <span class="kt">int</span> <span class="n">widthRatio</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">outWidth</span>
+                        <span class="o">/</span> <span class="n">width</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">widthRatio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inSampleSize</span> <span class="o">=</span> <span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="n">widthRatio</span> <span class="o">?</span> <span class="n">heightRatio</span>
+                            <span class="o">:</span> <span class="n">widthRatio</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="c1">// 第二次decode时，需设置inJustDecodeBounds属性为fasle,系统才会根据传入的BitmapFactory.Options真正的压缩图片并返回</span>
+                <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inJustDecodeBounds</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                <span class="n">bitmap</span> <span class="o">=</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeByteArray</span><span class="p">(</span><span class="n">byteIn</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">byteIn</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="n">bmpFactoryOptions</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ClientProtocolException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ConnectTimeoutException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">().</span><span class="n">shutdown</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">bitmap</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onProgressUpdate</span><span class="p">(</span><span class="n">Integer</span><span class="p">...</span> <span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">setProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">progress</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPostExecute</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bm</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pd</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">bm</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">image</span><span class="p">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bm</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;图片下载失败&quot;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_SHORT</span><span class="p">).</span><span class="n">show</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * InputStream转化为Byte数组</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param instream</span>
+<span class="cm">     * @param contentLength</span>
+<span class="cm">     * @return</span>
+<span class="cm">     * @throws IOException</span>
+<span class="cm">     */</span>
+    <span class="n">public</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">toByteArray</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">instream</span><span class="p">,</span> <span class="kt">int</span> <span class="n">contentLength</span><span class="p">)</span>
+            <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">instream</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">try</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">contentLength</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">contentLength</span> <span class="o">=</span> <span class="mi">4096</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">final</span> <span class="n">ByteArrayBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ByteArrayBuffer</span><span class="p">(</span><span class="n">contentLength</span><span class="p">);</span>
+            <span class="n">final</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">new</span> <span class="n">byte</span><span class="p">[</span><span class="mi">4096</span><span class="p">];</span>
+            <span class="kt">int</span> <span class="n">l</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">((</span><span class="n">l</span> <span class="o">=</span> <span class="n">instream</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">tmp</span><span class="p">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">buffer</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">buffer</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">();</span>
+        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
+            <span class="n">instream</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+
+
+<p>最后的最后，下载效果图如下：</p>
+<p><img alt="dowmload" src="/images/image-download.png" /></p>
+<p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
+<p><a href="http://download.csdn.net/detail/q541959443/7689851">DownLoad源码下载：DEMO</a></p>
+            </div><!-- /.entry-content -->
+			
+			
+			<ul style="float:right;">
+				<li>
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/">
+						详解android:layout_weight
+					</a>
+				</li>
+				<li>
+					►&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/">
+						Android使用HttpClient实现文件上传到PHP服务器，并监控进度
+					</a>
+				</li>
+			</ul>
+			
+			
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "articles/2014/07/28/android-httpclient-download/";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://xycoding.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<div class="sidebarbg">
+	<h4>Pages</h4>
+	<ul>
+		  <li><a href="/functions/categories.html">Categories</a></li>
+		  <li><a href="/functions/tags.html">Tags</a></li>
+		  <li><a href="/functions/archives.html">Archives</a></li>
+		  <li><a href="/functions/random.html">Random Article</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+<h4>Categories</h4>
+	<ul>
+			<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+			<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+	<h4>Tags</h4>
+		<ul>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
+		</ul>
+</div>
+
+
+<div class="social sidebarbg">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
+		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
+		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
+		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
+		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
+		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
+	  </ul>
+	</nav>
+</div>
+
+<nav class="widget sidebarbg">
+  <h4>Links</h4>
+  <ul>
+	<li><a target="_blank" href="http://python.org/">Python</a></li>
+	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
+	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
+                   <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
+					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
+					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
+				   </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+
+                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
+
+                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
+
+                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'xycoding';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
+</body>
+</html>

@@ -82,6 +82,97 @@
 		
 		         <ol id="post-list">
 				        <li><article class="hentry">
+				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="bookmark" title="Permalink to Android异步批量下载图片并缓存，防止OOM错误">Android异步批量下载图片并缓存，防止OOM错误</a></h2> </header>
+				                <footer class="post-info">
+				                    <!--<abbr class="published" title="2014-07-29T19:55:00"> 周二 29 七月 2014 </abbr>
+<address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a></address>-->
+								 <address class="vcard author" style="font-style:italic;">
+									周二 29 七月 2014
+										&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+								  </address>
+									
+				                </footer><!-- /.post-info -->
+				                <div class="entry-content"> <h3>前言</h3>
+<p>接触android开发不久，近段时间需实现一个批量下载图片并显示的小功能。在网上搜索了一圈，发现国内外网上异步加载的例子太多太杂，要么是加载大图decode时报OOM异常，要么内存急剧上升不稳定。在前辈们的基础上，做了一些优化，特共享出来，欢迎大家指正。这里主要参见了以下两篇文章，非常感谢：</p>
+<p><a href="http://blog.csdn.net/guolin_blog/article/details/9526203">Android照片墙应用实现，再多的图片也不怕崩溃</a></p>
+<p><a href="http://blog.csdn.net/xiaanming/article/details/9825113">Android 异步加载图片，使用LruCache和SD卡或手机缓存，效果非常的流畅 </a></p>
+<p>在巨人的肩膀上，主要优化了以下几个地方：</p>
+<ul>
+<li>下载大图decode时，可根据View大小自动缩放图片，不在出现OOM和SkImageDecoder::Factory returned null错误</li>
+<li>图片下载失败时，可自定义失败重试次数</li>
+<li>记录正在下载的任务，防止屏幕滚动时多次下载</li>
+<li>缓存目录容量大于给定限制时，清空文件缓存</li>
+<li>其他一些小问题</li>
+</ul>
+ </div><!-- /.entry-content -->
+
+								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="bookmark" title="Permalink to Android异步批量下载图片并缓存，防止OOM错误">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+								<div class="row tag-row">
+										<span>Tagged as : </span>
+											<a class="danger label" href="http://www.xycoding.com/tag/android.html">Android</a>
+								</div>
+
+
+
+				        </article></li>
+				        <li><article class="hentry">
+				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="bookmark" title="Permalink to Android使用HttpClient实现文件上传到PHP服务器，并监控进度">Android使用HttpClient实现文件上传到PHP服务器，并监控进度</a></h2> </header>
+				                <footer class="post-info">
+				                    <!--<abbr class="published" title="2014-07-29T10:35:00"> 周二 29 七月 2014 </abbr>
+<address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a></address>-->
+								 <address class="vcard author" style="font-style:italic;">
+									周二 29 七月 2014
+										&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+								  </address>
+									
+				                </footer><!-- /.post-info -->
+				                <div class="entry-content"> <h3>前言</h3>
+<p>上一篇文章<a href="">Android使用HttpClient实现下载，并监控进度</a>，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是<code>FilterOutputStream</code>，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。</p>
+ </div><!-- /.entry-content -->
+
+								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="bookmark" title="Permalink to Android使用HttpClient实现文件上传到PHP服务器，并监控进度">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+								<div class="row tag-row">
+										<span>Tagged as : </span>
+											<a class="danger label" href="http://www.xycoding.com/tag/android.html">Android</a>
+								</div>
+
+
+
+				        </article></li>
+				        <li><article class="hentry">
+				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="bookmark" title="Permalink to Android使用HttpClient实现下载，并监控进度">Android使用HttpClient实现下载，并监控进度</a></h2> </header>
+				                <footer class="post-info">
+				                    <!--<abbr class="published" title="2014-07-28T19:50:00"> 周一 28 七月 2014 </abbr>
+<address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a></address>-->
+								 <address class="vcard author" style="font-style:italic;">
+									周一 28 七月 2014
+										&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+								  </address>
+									
+				                </footer><!-- /.post-info -->
+				                <div class="entry-content"> <h3>前言</h3>
+<p>Android程序开发中使用网络上传下载是必不可少的，前不久使用<a href="http://hc.apache.org/">Apache Httpclient</a>组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现<code>SkImageDecoder::Factory returned null</code>错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步<a href="">Android使用HttpClient实现文件上传到PHP服务器，并监控进度</a>。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。</p>
+ </div><!-- /.entry-content -->
+
+								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="bookmark" title="Permalink to Android使用HttpClient实现下载，并监控进度">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+								<div class="row tag-row">
+										<span>Tagged as : </span>
+											<a class="danger label" href="http://www.xycoding.com/tag/android.html">Android</a>
+								</div>
+
+
+
+				        </article></li>
+				        <li><article class="hentry">
 				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="bookmark" title="Permalink to 详解android:layout_weight">详解android:layout_weight</a></h2> </header>
 				                <footer class="post-info">
 				                    <!--<abbr class="published" title="2014-03-28T17:51:00"> 周五 28 三月 2014 </abbr>
@@ -97,39 +188,6 @@
  </div><!-- /.entry-content -->
 
 								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="bookmark" title="Permalink to 详解android:layout_weight">Read more <i class="icon-arrow-right"></i></a></div>
-
-
-
-								<div class="row tag-row">
-										<span>Tagged as : </span>
-											<a class="danger label" href="http://www.xycoding.com/tag/android.html">Android</a>
-											<a class="danger label" href="http://www.xycoding.com/tag/layout.html">layout</a>
-								</div>
-
-
-
-				        </article></li>
-				        <li><article class="hentry">
-				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark" title="Permalink to Android开发——ListView注意事项">Android开发——ListView注意事项</a></h2> </header>
-				                <footer class="post-info">
-				                    <!--<abbr class="published" title="2014-03-15T16:36:00"> 周六 15 三月 2014 </abbr>
-<address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a></address>-->
-								 <address class="vcard author" style="font-style:italic;">
-									周六 15 三月 2014
-										&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
-								  </address>
-									
-				                </footer><!-- /.post-info -->
-				                <div class="entry-content"> <h3>ListView</h3>
-<ol>
-<li>
-<p><code>getChildAt(int index)</code> 其中index范围在屏幕可见范围之内，使用<code>getChildCount</code>获取index</p>
-</li>
-<li>
-<p>需更改ListView中内容，改变adapter绑定数组的数据。
- </div><!-- /.entry-content -->
-
-								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark" title="Permalink to Android开发——ListView注意事项">Read more <i class="icon-arrow-right"></i></a></div>
 
 
 
@@ -169,14 +227,14 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
 			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
 		</ul>
 </div>
 
@@ -209,7 +267,8 @@
 </div> </div><!-- /.row -->
 
 <p class="paginator">
-    Page 1 / 1
+    Page 1 / 2
+        <a href="http://www.xycoding.com/tag/android2.html"><i class="icon-arrow-right"></i></a>
 </p>
 </section><!-- /#content -->
 

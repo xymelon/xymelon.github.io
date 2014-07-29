@@ -1,10 +1,10 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh">
 <head>
 
-        <title>Android开发——ListView注意事项</title>
+        <title>Coding Our World - Android</title>
 		
-		<meta name="description" content="">
+		<meta name="description" content="Coding the World是一个专注于开源软件、Linux、数据结构、算法等的IT科技博客，希望大家一起交流学习。">
 		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
 		
         <meta charset="utf-8" />
@@ -59,7 +59,7 @@
                 <li><a href="/">Home</a></li>
 					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
 					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
-					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<!--<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
 					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
 				<li><a href="/functions/archives.html">Archives</a></li>
 				<li><a href="/functions/random.html">Random Article</a></li>
@@ -73,76 +73,48 @@
               </ul>
             </div>
 
-<section id="content" class="body">
+<section id="content">
 
    <div class="row">
+
         <div class="eleven columns">
 
-
-            <header>
-              <h2 class="entry-title">
-                <a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark"
-                   title="Permalink to Android开发——ListView注意事项">Android开发——ListView注意事项</a></h2>
-           
-            </header>
-            <footer class="post-info">
-              <!--
-			  <abbr class="published" title="2014-03-15T16:36:00">
-                周六 15 三月 2014
-              </abbr>
-              <address class="vcard author">
-                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
-              </address>
-			  -->
-			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周六 15 三月 2014
-					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
-					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
-	
-			  </address>
-			  <hr />			  
-            </footer><!-- /.post-info -->
-            <div class="entry-content">
-              <h3>ListView</h3>
+		
+		         <ol id="post-list">
+				        <li><article class="hentry">
+				                <header> <h2 class="entry-title"><a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark" title="Permalink to Android开发——ListView注意事项">Android开发——ListView注意事项</a></h2> </header>
+				                <footer class="post-info">
+				                    <!--<abbr class="published" title="2014-03-15T16:36:00"> 周六 15 三月 2014 </abbr>
+<address class="vcard author">By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a></address>-->
+								 <address class="vcard author" style="font-style:italic;">
+									周六 15 三月 2014
+										&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+								  </address>
+									
+				                </footer><!-- /.post-info -->
+				                <div class="entry-content"> <h3>ListView</h3>
 <ol>
 <li>
 <p><code>getChildAt(int index)</code> 其中index范围在屏幕可见范围之内，使用<code>getChildCount</code>获取index</p>
 </li>
 <li>
 <p>需更改ListView中内容，改变adapter绑定数组的数据。
-</p>
-</li>
-</ol>
-            </div><!-- /.entry-content -->
-			
-			
-			<ul style="float:right;">
-				<li>
-					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2013/12/18/linux-group/">
-						Linux学习笔记——有效群组（effective group）与初始群组（initial group）
-					</a>
-				</li>
-				<li>
-					►&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/">
-						详解android:layout_weight
-					</a>
-				</li>
-			</ul>
-			
-			
-            <div class="comments">
-              <h3>Comments</h3>
-              <div id="disqus_thread"></div>
-              <script type="text/javascript">
-                var disqus_identifier = "articles/2014/03/15/android-listview-notice/";
-                (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://xycoding.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                })();
-              </script>
-            </div>
+ </div><!-- /.entry-content -->
 
+								<div class="medium primary btn"><a href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="bookmark" title="Permalink to Android开发——ListView注意事项">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+								<div class="row tag-row">
+										<span>Tagged as : </span>
+											<a class="danger label" href="http://www.xycoding.com/tag/android.html">Android</a>
+											<a class="danger label" href="http://www.xycoding.com/tag/layout.html">layout</a>
+								</div>
+
+
+
+				        </article></li>
+				</ol><!-- /#posts-list -->
 
         </div><!-- /.eleven.columns -->
         
@@ -208,8 +180,11 @@
 
 </div> </div><!-- /.row -->
 
-
-</section>
+<p class="paginator">
+            <a href="http://www.xycoding.com/tag/android.html"><i class="icon-arrow-left"></i></a>
+    Page 2 / 2
+</p>
+</section><!-- /#content -->
 
        </div><!-- /.row -->
     </div><!-- /.container -->
