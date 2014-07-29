@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2014-07-29T19:55:00+08:00</updated><entry><title>Android异步批量下载图片并缓存，防止OOM错误</title><link href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="alternate"></link><updated>2014-07-29T19:55:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-async-images-download/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2014-07-29T19:55:00+08:00</updated><entry><title>Android异步批量下载图片并缓存</title><link href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="alternate"></link><updated>2014-07-29T19:55:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-async-images-download/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
 &lt;p&gt;接触android开发不久，近段时间需实现一个批量下载图片并显示的小功能。在网上搜索了一圈，发现国内外网上异步加载的例子太多太杂，要么是加载大图decode时报OOM异常，要么内存急剧上升不稳定。在前辈们的基础上，做了一些优化，特共享出来，欢迎大家指正。这里主要参见了以下两篇文章，非常感谢：&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/guolin_blog/article/details/9526203"&gt;Android照片墙应用实现，再多的图片也不怕崩溃&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/xiaanming/article/details/9825113"&gt;Android 异步加载图片，使用LruCache和SD卡或手机缓存，效果非常的流畅 &lt;/a&gt;&lt;/p&gt;
@@ -527,8 +527,7 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;img alt="upload" src="/images/download-images.png" /&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7689851"&gt;ImagesDownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现文件上传到PHP服务器，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="alternate"></link><updated>2014-07-29T10:35:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-httpclient-upload/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
-&lt;p&gt;上一篇文章&lt;a href=""&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692557"&gt;ImagesDownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现文件上传到PHP服务器，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="alternate"></link><updated>2014-07-29T10:35:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-httpclient-upload/</id><summary type="html">&lt;p&gt;上一篇文章&lt;a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/"&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
 
 
 &lt;h3&gt;服务器端PHP&lt;/h3&gt;
@@ -712,12 +711,11 @@
 &lt;p&gt;最后的最后，下载效果图如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="upload" src="/images/image-upload.png" /&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7689851"&gt;Upload源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现下载，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="alternate"></link><updated>2014-07-28T19:50:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-28:articles/2014/07/28/android-httpclient-download/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
-&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href=""&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692621"&gt;Upload源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现下载，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="alternate"></link><updated>2014-07-28T19:50:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-28:articles/2014/07/28/android-httpclient-download/</id><summary type="html">&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/"&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
 
 
 &lt;h3&gt;监控进度实现&lt;/h3&gt;
-&lt;p&gt;关于HttpClient的资料，可去其官方查阅。本例简单的使用它进行图片下载，如想实现批量下载图片，请参见&lt;a href=""&gt;Android异步批量下载图片并缓存，防止OOM错误&lt;/a&gt;，代码如下。&lt;/p&gt;
+&lt;p&gt;关于HttpClient的资料，可去其官方查阅。本例简单的使用它进行图片下载，如想实现批量下载图片，请参见&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/"&gt;Android异步批量下载图片并缓存&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;首先定义监听器接口，如下所示：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt; * 进度监听器接口&lt;/span&gt;
@@ -926,7 +924,7 @@
 &lt;p&gt;最后的最后，下载效果图如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dowmload" src="/images/image-download.png" /&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7689851"&gt;DownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>详解android:layout_weight</title><link href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="alternate"></link><updated>2014-03-28T17:51:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-28:articles/2014/03/28/android-layout-weight/</id><summary type="html">&lt;h3&gt;android:layout_weight&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692621"&gt;DownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>详解android:layout_weight</title><link href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="alternate"></link><updated>2014-03-28T17:51:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-28:articles/2014/03/28/android-layout-weight/</id><summary type="html">&lt;h3&gt;android:layout_weight&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;android：weight&lt;/code&gt;是线性布局&lt;code&gt;LinearLayout&lt;/code&gt;中非常重要的概念，在创造兼容性APP中有不可替代的功劳。它主要作用为分配剩余空间，剩余空间是在线性布局中把子组件所占空间分配完毕后所剩余的部分。每个子组件占剩余空间的比例等于自身所设置参数除以所有子组件所设置参数之和。&lt;/p&gt;
 
 
