@@ -520,11 +520,12 @@
 
 
 &lt;p&gt;最后的最后，别忘加上权限，并附效果图如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;uses-permission android:name="android.permission.INTERNET" /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;uses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;permission&lt;/span&gt; &lt;span class="n"&gt;android&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;android.permission.INTERNET&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;uses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;permission&lt;/span&gt; &lt;span class="n"&gt;android&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;android.permission.MOUNT_UNMOUNT_FILESYSTEMS&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;uses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;permission&lt;/span&gt; &lt;span class="n"&gt;android&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;android.permission.WRITE_EXTERNAL_STORAGE&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;img alt="upload" src="/images/download-images.png" /&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692557"&gt;ImagesDownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现文件上传到PHP服务器，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="alternate"></link><updated>2014-07-29T10:35:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-httpclient-upload/</id><summary type="html">&lt;p&gt;上一篇文章&lt;a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/"&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
