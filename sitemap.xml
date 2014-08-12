@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.xycoding.com/index.html</loc>
-<lastmod>2014-07-30T20:07:19-00:00</lastmod>
+<lastmod>2014-08-12T23:07:08-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -109,6 +109,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.xycoding.com/tag/github-pages.html</loc>
+<lastmod>2013-11-27T12:11:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.xycoding.com/tag/android.html</loc>
+<lastmod>2014-07-29T19:55:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.xycoding.com/tag/layout.html</loc>
 <lastmod>2014-03-28T17:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -116,8 +130,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.xycoding.com/tag/linux.html</loc>
-<lastmod>2013-12-18T16:09:00-00:00</lastmod>
+<loc>http://www.xycoding.com/tag/sed.html</loc>
+<lastmod>2013-12-02T20:01:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -137,29 +151,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.xycoding.com/tag/android.html</loc>
-<lastmod>2014-07-29T19:55:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://www.xycoding.com/tag/sed.html</loc>
-<lastmod>2013-12-02T20:01:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://www.xycoding.com/tag/github-pages.html</loc>
-<lastmod>2013-11-27T12:11:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://www.xycoding.com/tag/pelican.html</loc>
 <lastmod>2013-11-27T12:11:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.xycoding.com/tag/linux.html</loc>
+<lastmod>2013-12-18T16:09:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -5,7 +5,7 @@
 &lt;p&gt;&lt;a href="http://blog.csdn.net/xiaanming/article/details/9825113"&gt;Android 异步加载图片，使用LruCache和SD卡或手机缓存，效果非常的流畅 &lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;在巨人的肩膀上，主要优化了以下几个地方：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;下载大图decode时，可根据View大小自动缩放图片，不在出现OOM和SkImageDecoder::Factory returned null错误&lt;/li&gt;
+&lt;li&gt;下载大图decode时，可根据View大小自动缩放图片，不在出现&lt;code&gt;OOM&lt;/code&gt;和&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误&lt;/li&gt;
 &lt;li&gt;图片下载失败时，可自定义失败重试次数&lt;/li&gt;
 &lt;li&gt;记录正在下载的任务，防止屏幕滚动时多次下载&lt;/li&gt;
 &lt;li&gt;缓存目录容量大于给定限制时，清空文件缓存&lt;/li&gt;
