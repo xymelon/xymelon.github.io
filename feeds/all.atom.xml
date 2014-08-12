@@ -709,7 +709,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;最后的最后，下载效果图如下：&lt;/p&gt;
+&lt;p&gt;最后的最后，上传效果图如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="upload" src="/images/image-upload.png" /&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692621"&gt;Upload源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现下载，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="alternate"></link><updated>2014-07-28T19:50:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-28:articles/2014/07/28/android-httpclient-download/</id><summary type="html">&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/"&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
