@@ -1,0 +1,646 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+        <title>Android仿微信上传头像（缩放、拖动、裁剪）</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		
+        <meta charset="utf-8" />
+        <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/pygment.css" />
+
+        <script src="http://www.xycoding.com/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+              <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-46026074-1', 'www.xycoding.com');
+                ga('send', 'pageview');
+
+              </script>
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+<!-- Fork me on github -->
+<a target="_blank" href="https://github.com/cowfighting">
+	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
+</a>
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="http://www.xycoding.com">Coding Our World <strong>Life is not fair -- Get used to it!</strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
+					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+				<li><a href="/functions/archives.html">Archives</a></li>
+				<li><a href="/functions/random.html">Random Article</a></li>
+				<!--
+					<li><a href="/functions/categories.html">Categories</a></li>
+					<li><a href="/functions/tags.html">Tags</a></li>
+					<li><a href="/functions/archives.html">Archives</a></li>
+					<li><a href="/functions/random.html">Random Article</a></li>
+				
+				-->
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="http://www.xycoding.com/articles/2014/11/21/android-clipimage/" rel="bookmark"
+                   title="Permalink to Android仿微信上传头像（缩放、拖动、裁剪）">Android仿微信上传头像（缩放、拖动、裁剪）</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <!--
+			  <abbr class="published" title="2014-11-21T17:18:00">
+                周五 21 十一月 2014
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+              </address>
+			  -->
+			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
+				周五 21 十一月 2014
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
+	
+			  </address>
+			  <hr />			  
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>相信大多数做过Android APP的同学们都会上传头像，而用户选择的图片可能并不符合我们APP的要求且不美观，所以对于图片尺寸的控制（缩放、拖动、裁剪等）就非常重要了。本文就讲讲我在项目中使用的仿微信上传头像功能，欢迎大家指正。</p>
+
+
+<h3>裁剪图片原理</h3>
+<p>关于裁剪指定位置的图片原理非常简单，本文中采用的是对屏幕进行截取屏幕，然后再裁剪指定坐标、宽度位置的图片。了解裁剪图片原理后，即可进行编码工作。</p>
+<h3>自定义裁剪框</h3>
+<p>如微信上传头像界面，裁剪框的作用是在屏幕上呈现一个白色的矩形边框，边框以外的界面都是半透明的形式。当图片在屏幕中拖动时，可以非常明确地提醒矩形框中的图片才是我们所需要的。以下的代码即自定义裁剪框，大家可看代码中注释，非常简单（即在屏幕中画出一个白色的矩形线框，边框以外的上下左右画出半透明背景）。</p>
+<p>在本代码中，自定义了一个<code>OnDrawListenerComplete</code>接口，里面定义了<code>onDrawCompelete</code>方法。它的作用是什么？不知大家仔细观察过微信上传头像功能没，当我们选择图片后，不管图片多大多小，多宽多窄，它总能保证图片的宽度满足裁剪框或者高度满足裁剪框，即按裁剪框的比例缩放图片，这样用户在上传时就非常方便呢。该接口的作用就是当裁剪框绘画完成后即可调用回调函数，进行图片处理，以满足裁剪框的大小。</p>
+<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">ClipView</span> <span class="n">extends</span> <span class="n">View</span> <span class="p">{</span>
+    <span class="n">private</span> <span class="n">Paint</span> <span class="n">paint</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Paint</span><span class="p">();</span>
+    <span class="n">private</span> <span class="n">Paint</span> <span class="n">borderPaint</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Paint</span><span class="p">();</span>
+
+    <span class="cm">/** 自定义顶部栏高度，如不是自定义，则默认为0即可 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">customTopBarHeight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框长宽比，默认4：3 */</span>
+    <span class="n">private</span> <span class="kt">double</span> <span class="n">clipRatio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框宽度 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipWidth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框高度 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipHeight</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框左边空留宽度 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框上边空留宽度 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipTopMargin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="cm">/** 裁剪框边框宽度 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipBorderWidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">boolean</span> <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">OnDrawListenerComplete</span> <span class="n">listenerComplete</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">defStyle</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">defStyle</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onDraw</span><span class="p">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">super</span><span class="p">.</span><span class="n">onDraw</span><span class="p">(</span><span class="n">canvas</span><span class="p">);</span>
+
+        <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getWidth</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getHeight</span><span class="p">();</span>
+        <span class="c1">// 如没有显示设置裁剪框高度和宽度，取默认值</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">clipHeight</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">clipWidth</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">50</span><span class="p">;</span>
+            <span class="n">clipHeight</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">*</span> <span class="n">clipRatio</span><span class="p">);</span>
+            <span class="c1">// 横屏</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">clipHeight</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">50</span><span class="p">;</span>
+                <span class="n">clipWidth</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">/</span> <span class="n">clipRatio</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 如没有显示设置裁剪框左和上预留宽度，取默认值</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isSetMargin</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">clipWidth</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">clipTopMargin</span> <span class="o">=</span> <span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">clipHeight</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 画阴影</span>
+        <span class="n">paint</span><span class="p">.</span><span class="n">setAlpha</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+        <span class="c1">// top</span>
+        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">customTopBarHeight</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
+        <span class="c1">// left</span>
+        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">clipLeftMargin</span><span class="p">,</span> <span class="n">clipTopMargin</span>
+                <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
+        <span class="c1">// right</span>
+        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">clipLeftMargin</span> <span class="o">+</span> <span class="n">clipWidth</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span>
+                <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
+        <span class="c1">// bottom</span>
+        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
+
+        <span class="c1">// 画边框</span>
+        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">.</span><span class="n">STROKE</span><span class="p">);</span>
+        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">WHITE</span><span class="p">);</span>
+        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setStrokeWidth</span><span class="p">(</span><span class="n">clipBorderWidth</span><span class="p">);</span>
+        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">clipLeftMargin</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">clipLeftMargin</span>
+                <span class="o">+</span> <span class="n">clipWidth</span><span class="p">,</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">borderPaint</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">listenerComplete</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">listenerComplete</span><span class="p">.</span><span class="n">onDrawCompelete</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">int</span> <span class="n">getCustomTopBarHeight</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">customTopBarHeight</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setCustomTopBarHeight</span><span class="p">(</span><span class="kt">int</span> <span class="n">customTopBarHeight</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">customTopBarHeight</span> <span class="o">=</span> <span class="n">customTopBarHeight</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">double</span> <span class="n">getClipRatio</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">clipRatio</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipRatio</span><span class="p">(</span><span class="kt">double</span> <span class="n">clipRatio</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">clipRatio</span> <span class="o">=</span> <span class="n">clipRatio</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipWidth</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 减clipBorderWidth原因：截图时去除边框白线</span>
+        <span class="k">return</span> <span class="n">clipWidth</span> <span class="o">-</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipWidth</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipWidth</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">clipWidth</span> <span class="o">=</span> <span class="n">clipWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipHeight</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">clipHeight</span> <span class="o">-</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipHeight</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipHeight</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">clipHeight</span> <span class="o">=</span> <span class="n">clipHeight</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipLeftMargin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">clipLeftMargin</span> <span class="o">+</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipLeftMargin</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipLeftMargin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="n">clipLeftMargin</span><span class="p">;</span>
+        <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipTopMargin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipTopMargin</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipTopMargin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">clipTopMargin</span> <span class="o">=</span> <span class="n">clipTopMargin</span><span class="p">;</span>
+        <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">addOnDrawCompleteListener</span><span class="p">(</span><span class="n">OnDrawListenerComplete</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">listenerComplete</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">removeOnDrawCompleteListener</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">listenerComplete</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 裁剪区域画完时调用接口</span>
+<span class="cm">     * </span>
+<span class="cm">     * @author Cow</span>
+<span class="cm">     * </span>
+<span class="cm">     */</span>
+    <span class="n">public</span> <span class="n">interface</span> <span class="n">OnDrawListenerComplete</span> <span class="p">{</span>
+        <span class="n">public</span> <span class="kt">void</span> <span class="n">onDrawCompelete</span><span class="p">();</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+
+
+<h3>使用裁剪框</h3>
+<p>使用裁剪框就非常简单了，将该裁剪框以<code>this.addContentView</code>的方式添加到要使用的Activity中。本代码中，即<code>initClipView</code>方法，至于为什么要在<code>observer.addOnGlobalLayoutListener</code>中初始化裁剪框，是因为本例的顶部栏是自定义的，需等该头部的高度确定以后才能对裁剪框进行初始化，如果你没有使用自定义顶部栏，那么就无所谓了。大家可以看到在<code>observer.addOnGlobalLayoutListener</code>回调接口中，有一大段计算缩放、平移等的语句，这些代码的作用即是上文所讨论的，让用户无论选择多大的图片，都让它满足裁剪框的高宽度。然后再加上针对<code>ImageView</code>容器的拖动、缩放等效果即可。</p>
+<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">ClipPictureActivity</span> <span class="n">extends</span> <span class="n">Activity</span> <span class="n">implements</span> <span class="n">OnTouchListener</span><span class="p">,</span>
+        <span class="n">OnClickListener</span> <span class="p">{</span>
+    <span class="n">private</span> <span class="n">ImageView</span> <span class="n">srcPic</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">View</span> <span class="n">sure</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">ClipView</span> <span class="n">clipview</span><span class="p">;</span>
+
+    <span class="n">private</span> <span class="n">Matrix</span> <span class="n">matrix</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Matrix</span><span class="p">();</span>
+    <span class="n">private</span> <span class="n">Matrix</span> <span class="n">savedMatrix</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Matrix</span><span class="p">();</span>
+
+    <span class="cm">/** 动作标志：无 */</span>
+    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="cm">/** 动作标志：拖动 */</span>
+    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">DRAG</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="cm">/** 动作标志：缩放 */</span>
+    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">ZOOM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="cm">/** 初始化动作标志 */</span>
+    <span class="n">private</span> <span class="kt">int</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">;</span>
+
+    <span class="cm">/** 记录起始坐标 */</span>
+    <span class="n">private</span> <span class="n">PointF</span> <span class="n">start</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PointF</span><span class="p">();</span>
+    <span class="cm">/** 记录缩放时两指中间点坐标 */</span>
+    <span class="n">private</span> <span class="n">PointF</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PointF</span><span class="p">();</span>
+    <span class="n">private</span> <span class="kt">float</span> <span class="n">oldDist</span> <span class="o">=</span> <span class="mf">1f</span><span class="p">;</span>
+
+    <span class="n">private</span> <span class="n">Bitmap</span> <span class="n">bitmap</span><span class="p">;</span>
+
+    <span class="err">@</span><span class="n">Override</span>
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">onCreate</span><span class="p">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+        <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">main</span><span class="p">);</span>
+
+        <span class="n">srcPic</span> <span class="o">=</span> <span class="p">(</span><span class="n">ImageView</span><span class="p">)</span> <span class="n">this</span><span class="p">.</span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">src_pic</span><span class="p">);</span>
+        <span class="n">srcPic</span><span class="p">.</span><span class="n">setOnTouchListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+
+        <span class="n">ViewTreeObserver</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">srcPic</span><span class="p">.</span><span class="n">getViewTreeObserver</span><span class="p">();</span>
+        <span class="n">observer</span><span class="p">.</span><span class="n">addOnGlobalLayoutListener</span><span class="p">(</span><span class="n">new</span> <span class="n">OnGlobalLayoutListener</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s">&quot;deprecation&quot;</span><span class="p">)</span>
+            <span class="n">public</span> <span class="kt">void</span> <span class="n">onGlobalLayout</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">srcPic</span><span class="p">.</span><span class="n">getViewTreeObserver</span><span class="p">().</span><span class="n">removeGlobalOnLayoutListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+                <span class="n">initClipView</span><span class="p">(</span><span class="n">srcPic</span><span class="p">.</span><span class="n">getTop</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="n">sure</span> <span class="o">=</span> <span class="p">(</span><span class="n">View</span><span class="p">)</span> <span class="n">this</span><span class="p">.</span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">sure</span><span class="p">);</span>
+        <span class="n">sure</span><span class="p">.</span><span class="n">setOnClickListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 初始化截图区域，并将源图按裁剪框比例缩放</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param top</span>
+<span class="cm">     */</span>
+    <span class="n">private</span> <span class="kt">void</span> <span class="n">initClipView</span><span class="p">(</span><span class="kt">int</span> <span class="n">top</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">bitmap</span> <span class="o">=</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeResource</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">getResources</span><span class="p">(),</span>
+                <span class="n">R</span><span class="p">.</span><span class="n">drawable</span><span class="p">.</span><span class="n">pic</span><span class="p">);</span>
+        <span class="n">clipview</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ClipView</span><span class="p">(</span><span class="n">ClipPictureActivity</span><span class="p">.</span><span class="n">this</span><span class="p">);</span>
+        <span class="n">clipview</span><span class="p">.</span><span class="n">setCustomTopBarHeight</span><span class="p">(</span><span class="n">top</span><span class="p">);</span>
+        <span class="n">clipview</span><span class="p">.</span><span class="n">addOnDrawCompleteListener</span><span class="p">(</span><span class="n">new</span> <span class="n">OnDrawListenerComplete</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="n">public</span> <span class="kt">void</span> <span class="n">onDrawCompelete</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">clipview</span><span class="p">.</span><span class="n">removeOnDrawCompleteListener</span><span class="p">();</span>
+                <span class="kt">int</span> <span class="n">clipHeight</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipHeight</span><span class="p">();</span>
+                <span class="kt">int</span> <span class="n">clipWidth</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipWidth</span><span class="p">();</span>
+                <span class="kt">int</span> <span class="n">midX</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipLeftMargin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+                <span class="kt">int</span> <span class="n">midY</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipTopMargin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+
+                <span class="kt">int</span> <span class="n">imageWidth</span> <span class="o">=</span> <span class="n">bitmap</span><span class="p">.</span><span class="n">getWidth</span><span class="p">();</span>
+                <span class="kt">int</span> <span class="n">imageHeight</span> <span class="o">=</span> <span class="n">bitmap</span><span class="p">.</span><span class="n">getHeight</span><span class="p">();</span>
+                <span class="c1">// 按裁剪框求缩放比例</span>
+                <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">*</span> <span class="mf">1.0f</span><span class="p">)</span> <span class="o">/</span> <span class="n">imageWidth</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">imageWidth</span> <span class="o">&gt;</span> <span class="n">imageHeight</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">*</span> <span class="mf">1.0f</span><span class="p">)</span> <span class="o">/</span> <span class="n">imageHeight</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 起始中心点</span>
+                <span class="kt">float</span> <span class="n">imageMidX</span> <span class="o">=</span> <span class="n">imageWidth</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="kt">float</span> <span class="n">imageMidY</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getCustomTopBarHeight</span><span class="p">()</span>
+                        <span class="o">+</span> <span class="n">imageHeight</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="n">srcPic</span><span class="p">.</span><span class="n">setScaleType</span><span class="p">(</span><span class="n">ScaleType</span><span class="p">.</span><span class="n">MATRIX</span><span class="p">);</span>
+
+                <span class="c1">// 缩放</span>
+                <span class="n">matrix</span><span class="p">.</span><span class="n">postScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">);</span>
+                <span class="c1">// 平移</span>
+                <span class="n">matrix</span><span class="p">.</span><span class="n">postTranslate</span><span class="p">(</span><span class="n">midX</span> <span class="o">-</span> <span class="n">imageMidX</span><span class="p">,</span> <span class="n">midY</span> <span class="o">-</span> <span class="n">imageMidY</span><span class="p">);</span>
+
+                <span class="n">srcPic</span><span class="p">.</span><span class="n">setImageMatrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
+                <span class="n">srcPic</span><span class="p">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="n">this</span><span class="p">.</span><span class="n">addContentView</span><span class="p">(</span><span class="n">clipview</span><span class="p">,</span> <span class="n">new</span> <span class="n">LayoutParams</span><span class="p">(</span>
+                <span class="n">LayoutParams</span><span class="p">.</span><span class="n">MATCH_PARENT</span><span class="p">,</span> <span class="n">LayoutParams</span><span class="p">.</span><span class="n">MATCH_PARENT</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">onTouch</span><span class="p">(</span><span class="n">View</span> <span class="n">v</span><span class="p">,</span> <span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ImageView</span> <span class="n">view</span> <span class="o">=</span> <span class="p">(</span><span class="n">ImageView</span><span class="p">)</span> <span class="n">v</span><span class="p">;</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getAction</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MASK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span>:
+            <span class="n">savedMatrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
+            <span class="c1">// 设置开始点位置</span>
+            <span class="n">start</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">());</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">DRAG</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span>:
+            <span class="n">oldDist</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">oldDist</span> <span class="o">&gt;</span> <span class="mf">10f</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">savedMatrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
+                <span class="n">midPoint</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="n">ZOOM</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>:
+        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_UP</span>:
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MOVE</span>:
+            <span class="k">if</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="n">DRAG</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">matrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">savedMatrix</span><span class="p">);</span>
+                <span class="n">matrix</span><span class="p">.</span><span class="n">postTranslate</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">()</span>
+                        <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ZOOM</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">float</span> <span class="n">newDist</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">newDist</span> <span class="o">&gt;</span> <span class="mf">10f</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">matrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">savedMatrix</span><span class="p">);</span>
+                    <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">newDist</span> <span class="o">/</span> <span class="n">oldDist</span><span class="p">;</span>
+                    <span class="n">matrix</span><span class="p">.</span><span class="n">postScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">mid</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">mid</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">setImageMatrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 多点触控时，计算最先放下的两指距离</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param event</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="n">private</span> <span class="kt">float</span> <span class="n">spacing</span><span class="p">(</span><span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 多点触控时，计算最先放下的两指中心坐标</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param point</span>
+<span class="cm">     * @param event</span>
+<span class="cm">     */</span>
+    <span class="n">private</span> <span class="kt">void</span> <span class="n">midPoint</span><span class="p">(</span><span class="n">PointF</span> <span class="n">point</span><span class="p">,</span> <span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">point</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">onClick</span><span class="p">(</span><span class="n">View</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Bitmap</span> <span class="n">clipBitmap</span> <span class="o">=</span> <span class="n">getBitmap</span><span class="p">();</span>
+        <span class="n">ByteArrayOutputStream</span> <span class="n">baos</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ByteArrayOutputStream</span><span class="p">();</span>
+        <span class="n">clipBitmap</span><span class="p">.</span><span class="n">compress</span><span class="p">(</span><span class="n">Bitmap</span><span class="p">.</span><span class="n">CompressFormat</span><span class="p">.</span><span class="n">JPEG</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">baos</span><span class="p">);</span>
+        <span class="n">byte</span><span class="p">[]</span> <span class="n">bitmapByte</span> <span class="o">=</span> <span class="n">baos</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">();</span>
+
+        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Intent</span><span class="p">();</span>
+        <span class="n">intent</span><span class="p">.</span><span class="n">setClass</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="n">PreviewActivity</span><span class="p">.</span><span class="n">class</span><span class="p">);</span>
+        <span class="n">intent</span><span class="p">.</span><span class="n">putExtra</span><span class="p">(</span><span class="s">&quot;bitmap&quot;</span><span class="p">,</span> <span class="n">bitmapByte</span><span class="p">);</span>
+
+        <span class="n">startActivity</span><span class="p">(</span><span class="n">intent</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取裁剪框内截图</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="n">private</span> <span class="n">Bitmap</span> <span class="n">getBitmap</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 获取截屏</span>
+        <span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getWindow</span><span class="p">().</span><span class="n">getDecorView</span><span class="p">();</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">setDrawingCacheEnabled</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">buildDrawingCache</span><span class="p">();</span>
+
+        <span class="c1">// 获取状态栏高度</span>
+        <span class="n">Rect</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Rect</span><span class="p">();</span>
+        <span class="n">this</span><span class="p">.</span><span class="n">getWindow</span><span class="p">().</span><span class="n">getDecorView</span><span class="p">().</span><span class="n">getWindowVisibleDisplayFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">statusBarHeight</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">top</span><span class="p">;</span>
+
+        <span class="n">Bitmap</span> <span class="n">finalBitmap</span> <span class="o">=</span> <span class="n">Bitmap</span><span class="p">.</span><span class="n">createBitmap</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">getDrawingCache</span><span class="p">(),</span>
+                <span class="n">clipview</span><span class="p">.</span><span class="n">getClipLeftMargin</span><span class="p">(),</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipTopMargin</span><span class="p">()</span>
+                        <span class="o">+</span> <span class="n">statusBarHeight</span><span class="p">,</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipWidth</span><span class="p">(),</span>
+                <span class="n">clipview</span><span class="p">.</span><span class="n">getClipHeight</span><span class="p">());</span>
+
+        <span class="c1">// 释放资源</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">destroyDrawingCache</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">finalBitmap</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+
+
+<p>最后，效果图如下：</p>
+<p><img alt="dowmload" src="/images/clip_1_1.png" />
+（图1.1）当用户选择图片后，初始化界面，大家可以看到，图片的高度符合裁剪框的高度，相应的图片宽度也按比例缩放。</p>
+<p><img alt="dowmload" src="/images/clip_1_2.png" />
+（图1.2）针对初始界面进行裁剪截图操作。</p>
+<p><img alt="dowmload" src="/images/clip_2_1.png" />
+（图2.1）往上拖动图片，大家可以看到白云飘出裁剪框了。</p>
+<p><img alt="dowmload" src="/images/clip_2_2.png" />
+（图2.2）针对拖动图片进行裁剪截图操作，可以看到截图中没有白云了。</p>
+<p><img alt="dowmload" src="/images/clip_3_1.png" />
+（图3.1）缩放图片，大家可以看到图片被放大了，只有一半白云，下方的湖面也少了。</p>
+<p><img alt="dowmload" src="/images/clip_3_2.png" />
+（图3.2）针对缩放图片进行裁剪截图操作，同样可以发现操作成功了。</p>
+<p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
+<p><a href="http://download.csdn.net/download/q541959443/8188455">DownLoad源码下载：DEMO</a></p>
+            </div><!-- /.entry-content -->
+			
+			
+			<ul style="float:right;">
+				<li>
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/">
+						Android异步批量下载图片并缓存
+					</a>
+				</li>
+			</ul>
+			
+			
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "articles/2014/11/21/android-clipimage/";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://xycoding.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<div class="sidebarbg">
+	<h4>Pages</h4>
+	<ul>
+		  <li><a href="/functions/categories.html">Categories</a></li>
+		  <li><a href="/functions/tags.html">Tags</a></li>
+		  <li><a href="/functions/archives.html">Archives</a></li>
+		  <li><a href="/functions/random.html">Random Article</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+<h4>Categories</h4>
+	<ul>
+			<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+			<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+	<h4>Tags</h4>
+		<ul>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
+		</ul>
+</div>
+
+
+<div class="social sidebarbg">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
+		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
+		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
+		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
+		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
+		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
+	  </ul>
+	</nav>
+</div>
+
+<nav class="widget sidebarbg">
+  <h4>Links</h4>
+  <ul>
+	<li><a target="_blank" href="http://python.org/">Python</a></li>
+	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
+	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
+                   <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
+					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
+					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
+				   </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+
+                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
+
+                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
+
+                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'xycoding';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
+</body>
+</html>
