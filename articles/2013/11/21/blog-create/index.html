@@ -87,15 +87,15 @@
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2013-11-21T11:21:00">
-                周四 21 十一月 2013
+			  <abbr class="published" title="2013-11-21T11:21:00+08:00">
+                四 21 十一月 2013
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周四 21 十一月 2013
+				四 21 十一月 2013
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -134,10 +134,8 @@
 <li>安装git，简单。git bash使用教程请参见<a href="http://www.git-scm.com/book/zh">官方文档</a>~ </li>
 <li>将python安装文件夹中scripts和make.exe加入环境变量。</li>
 <li>安装pip，具体可以看<a href="http://www.pip-installer.org/en/latest/installing.html">官网介绍</a>，或者<a href="http://tech.crandom.com/2011/10/21/python3_pip.html">Windows环境在python3装pip</a>。</li>
-<li>
-<p>安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见<a href="http://daringfireball.net/projects/markdown/syntax">markdown教程</a>和<a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html">REST教程</a>。</p>
-<div class="highlight"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">pelican</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">markdown</span>
+<li>安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见<a href="http://daringfireball.net/projects/markdown/syntax">markdown教程</a>和<a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html">REST教程</a>。<div class="highlight"><pre>pip install pelican
+pip install markdown
 </pre></div>
 
 
@@ -145,23 +143,23 @@
 </ol>
 <h3>主体搭建</h3>
 <p>打开git bash，进入一个自己喜欢的文件夹（注意文件夹名最好不为空，因为后续make html命令会出错），执行以下命令</p>
-<div class="highlight"><pre><span class="n">mkdir</span> <span class="n">blog</span> <span class="c1">//创建文件夹，名称可根据自己喜欢定</span>
-<span class="n">cd</span> <span class="n">blog</span>
-<span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span>
+<div class="highlight"><pre>mkdir blog //创建文件夹，名称可根据自己喜欢定
+cd blog
+pelican-quickstart
 </pre></div>
 
 
 <p>pelican-quickstart执行命令后，会提示输入博客的配置项，除了少数几个必填以外，其它都可以选择默认，而且都可以在<code>pelicanconf.py</code>文件中进行更改，所以你可以随意选择，如下图~</p>
 <p><img alt="pelican-quickstart" src="/images/pelican-quickstart.png" /></p>
 <p>命令成功执行后，会出现pelican的框架，如下所示</p>
-<div class="highlight"><pre><span class="n">blog</span><span class="o">/</span>
-<span class="err">├──</span> <span class="n">content</span>                <span class="err">#</span> <span class="err">存放输入的</span><span class="n">markdown</span><span class="err">或</span><span class="n">RST</span><span class="err">源文件</span>
-<span class="err">│</span>   <span class="err">└──</span> <span class="p">(</span><span class="n">pages</span><span class="p">)</span>            <span class="err">#</span> <span class="err">存放手工创建的静态页面，可选</span>
-<span class="err">├──</span> <span class="n">output</span>                 <span class="err">#</span> <span class="err">存放最终生成的静态博客</span>
-<span class="err">├──</span> <span class="n">develop_server</span><span class="p">.</span><span class="n">sh</span>      <span class="err">#</span> <span class="err">测试服务器</span>
-<span class="err">├──</span> <span class="n">Makefile</span>               <span class="err">#</span> <span class="err">管理博客的</span><span class="n">Makefile</span>
-<span class="err">├──</span> <span class="n">pelicanconf</span><span class="p">.</span><span class="n">py</span>         <span class="err">#</span> <span class="err">配置文件</span>
-<span class="err">└──</span> <span class="n">publishconf</span><span class="p">.</span><span class="n">py</span>         <span class="err">#</span> <span class="err">发布文件，可删除</span>
+<div class="highlight"><pre>blog/
+├── content                # 存放输入的markdown或RST源文件
+│   └── (pages)            # 存放手工创建的静态页面，可选
+├── output                 # 存放最终生成的静态博客
+├── develop_server.sh      # 测试服务器
+├── Makefile               # 管理博客的Makefile
+├── pelicanconf.py         # 配置文件
+└── publishconf.py         # 发布文件，可删除
 </pre></div>
 
 
@@ -170,55 +168,55 @@
 <p><img alt="markdown" src="/images/markdown.png" /></p>
 <p>图中左侧是我们书写的markdown格式的源文件，右边则是即使预览效果，很棒吧~
 至于源文件顶部<code>Title,Date,Category等</code>内容则是必须的，具体可参见<a href="http://docs.getpelican.com/en/3.3.0/getting_started.html#writing-content-using-pelican">文档</a>，它们各自意义如下</p>
-<div class="highlight"><pre><span class="n">Title</span><span class="o">:</span> <span class="err">文章标题</span>
-<span class="n">Date</span><span class="o">:</span> <span class="err">创建日期</span>
-<span class="n">Modified</span><span class="o">:</span> <span class="err">修改日期</span>
-<span class="n">Category</span><span class="o">:</span> <span class="err">文章分类，标志本文处于该分类下</span>
-<span class="n">Tags</span><span class="o">:</span> <span class="err">文章标签，标志本文处于该标签下</span>
-<span class="n">Slug</span><span class="o">:</span> <span class="n">URL</span><span class="err">中该文章的链接地址</span>
-<span class="n">Author</span><span class="o">:</span> <span class="err">作者</span>
+<div class="highlight"><pre>Title: 文章标题
+Date: 创建日期
+Modified: 修改日期
+Category: 文章分类，标志本文处于该分类下
+Tags: 文章标签，标志本文处于该标签下
+Slug: URL中该文章的链接地址
+Author: 作者
 </pre></div>
 
 
 <p>写完后，回到<code>blog</code>目录下，执行<code>make html</code>命令进行博客的生成</p>
-<div class="highlight"><pre><span class="n">make</span> <span class="n">html</span>
-<span class="p">(</span><span class="n">pelican</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">content</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">output</span> <span class="o">-</span><span class="n">s</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">pelicanconfg</span><span class="p">.</span><span class="n">py</span><span class="p">)</span>
+<div class="highlight"><pre>make html
+(pelican e:/blog/content/ -o e:/blog/output -s e:/blog/pelicanconfg.py)
 </pre></div>
 
 
 <p><code>make html</code>命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行<code>make serve</code>开启测试服务器</p>
-<div class="highlight"><pre><span class="n">make</span> <span class="n">serve</span>
-<span class="p">(</span><span class="n">cd</span> <span class="n">e</span><span class="o">:/</span><span class="n">blog</span><span class="o">/</span><span class="n">output</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pelican</span><span class="p">.</span><span class="n">server</span><span class="p">)</span>
+<div class="highlight"><pre>make serve
+(cd e:/blog/output/ &amp;&amp; python -m pelican.server)
 </pre></div>
 
 
 <p><code>make serve</code>命令也可由第二行替代，在浏览器中输入<code>http://localhost:8000</code>即可看到博文效果。</p>
 <h3>主题选择</h3>
 <p>回到<code>blog</code>目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个<a href="http://pelicanthemes.com/">网页</a>进行查看。不过如今pelican又新出了很多主题，所以你需看看<a href="https://github.com/getpelican/pelican-themes">pelican主题开源库</a>。</p>
-<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/getpelican/pelican-themes.git</span>
+<div class="highlight"><pre>git clone https://github.com/getpelican/pelican-themes.git
 </pre></div>
 
 
 <p>打开<code>pelicanconf.py</code>配置文件，更改或添加<code>THEME</code>为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
-<div class="highlight"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pelican</span><span class="o">-</span><span class="n">themes</span><span class="o">/</span><span class="n">gum</span><span class="err">&#39;</span>
+<div class="highlight"><pre>THEME = &#39;pelican-themes/gum&#39;
 </pre></div>
 
 
 <h3>添加评论系统</h3>
 <p>开启个人博客的原因在于分享知识，分享就需要交流，评论模块当然少不了。在<a href="https://disqus.com/">Disqus</a>上申请帐号，按照流程Disqus会分配给你站点的Shortname，记牢Shortname，如果忘了请进入admin/settings中查看。然后同理，在<code>pelicanconf.py</code>添加</p>
-<div class="highlight"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="n">Shortname</span>
+<div class="highlight"><pre>DISQUS_SITENAME = Shortname
 </pre></div>
 
 
 <h3>博文发布</h3>
 <p>经过以上的折腾，离成功只差最后一步呢。写好的博文总要找个站点发布吧，本文基于github pages，当然你也可以选择你熟悉的站点服务器。具体步骤如<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">官方教程</a>，非常简单。按照官方教程，你就拥有一个二级域名和一个<a href="https://github.com/cowfighting/cowfighting.github.io">版本库</a>，比如我的<a href="http://cowfighting.github.com/">http://cowfighting.github.com/</a>，当然现在访问会出现跳转，这在后面独立域名章节会介绍。</p>
 <p>进入上一章节所示的<code>output</code>目录下，依次执行以下命令</p>
-<div class="highlight"><pre><span class="n">git</span> <span class="n">init</span>
-<span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
-<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/cowfighting/cowfighting.github.io</span>
-<span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">first</span> <span class="n">blog</span><span class="err">&#39;</span>
-<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
+<div class="highlight"><pre>git init
+git add .
+git remote add origin https://github.com/cowfighting/cowfighting.github.io
+git pull origin master
+git commit -m &#39;first blog&#39;
+git push origin master
 </pre></div>
 
 
@@ -296,14 +294,6 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 		</ul>
 </div>
 

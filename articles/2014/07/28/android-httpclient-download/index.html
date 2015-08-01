@@ -87,15 +87,15 @@
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2014-07-28T19:50:00">
-                周一 28 七月 2014
+			  <abbr class="published" title="2014-07-28T19:50:00+08:00">
+                一 28 七月 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周一 28 七月 2014
+				一 28 七月 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -111,10 +111,10 @@
 <p>首先定义监听器接口，如下所示：</p>
 <div class="highlight"><pre><span class="cm">/**</span>
 <span class="cm"> * 进度监听器接口</span>
-<span class="cm"> */</span>
-<span class="n">public</span> <span class="k">interface</span> <span class="n">ProgressListener</span> <span class="p">{</span>
-    <span class="n">public</span> <span class="k">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="cm"> */</span><span class="w"></span>
+public<span class="w"> </span>interface<span class="w"> </span>ProgressListener<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>void<span class="w"> </span>transferred<span class="o">(</span>long<span class="w"> </span>transferedBytes<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
 </pre></div>
 
 
@@ -124,192 +124,192 @@
 <span class="cm"> * </span>
 <span class="cm"> * @author Cow</span>
 <span class="cm"> * </span>
-<span class="cm"> */</span>
-<span class="n">public</span> <span class="k">class</span> <span class="n">CountingInputStream</span> <span class="k">extends</span> <span class="n">FilterInputStream</span> <span class="p">{</span>
+<span class="cm"> */</span><span class="w"></span>
+public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<span class="w"> </span>extends<span class="w"> </span>FilterInputStream<span class="w"> </span><span class="err">{</span><span class="w"></span>
 
-    <span class="n">private</span> <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">long</span> <span class="n">transferred</span><span class="p">;</span>
+<span class="w">    </span>private<span class="w"> </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
+<span class="w">    </span>private<span class="w"> </span>long<span class="w"> </span>transferred<span class="err">;</span><span class="w"></span>
 
-    <span class="k">protected</span> <span class="n">CountingInputStream</span><span class="p">(</span><span class="k">final</span> <span class="n">InputStream</span> <span class="n">in</span><span class="p">,</span>
-            <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="n">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
-        <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span>protected<span class="w"> </span>CountingInputStream<span class="o">(</span>final<span class="w"> </span>InputStream<span class="w"> </span>in<span class="o">,</span><span class="w"></span>
+<span class="w">            </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="o">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>super<span class="o">(</span>in<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>this<span class="o">.</span>listener<span class="w"> </span><span class="o">=</span><span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
+<span class="w">        </span>this<span class="o">.</span>transferred<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">()</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>int<span class="w"> </span>read<span class="o">()</span><span class="w"> </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>int<span class="w"> </span>read<span class="w"> </span><span class="o">=</span><span class="w"> </span>in<span class="o">.</span>read<span class="o">()</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>readCount<span class="o">(</span>read<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span>read<span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">(</span><span class="k">byte</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
-        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>int<span class="w"> </span>read<span class="o">(</span>byte<span class="err">[]</span><span class="w"> </span>buffer<span class="o">)</span><span class="w"> </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>int<span class="w"> </span>read<span class="w"> </span><span class="o">=</span><span class="w"> </span>in<span class="o">.</span>read<span class="o">(</span>buffer<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>readCount<span class="o">(</span>read<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span>read<span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="k">int</span> <span class="n">read</span><span class="p">(</span><span class="k">byte</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">int</span> <span class="n">byteOffset</span><span class="p">,</span> <span class="k">int</span> <span class="n">byteCount</span><span class="p">)</span>
-            <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="k">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byteOffset</span><span class="p">,</span> <span class="n">byteCount</span><span class="p">);</span>
-        <span class="n">readCount</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>int<span class="w"> </span>read<span class="o">(</span>byte<span class="err">[]</span><span class="w"> </span>buffer<span class="o">,</span><span class="w"> </span>int<span class="w"> </span>byteOffset<span class="o">,</span><span class="w"> </span>int<span class="w"> </span>byteCount<span class="o">)</span><span class="w"></span>
+<span class="w">            </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>int<span class="w"> </span>read<span class="w"> </span><span class="o">=</span><span class="w"> </span>in<span class="o">.</span>read<span class="o">(</span>buffer<span class="o">,</span><span class="w"> </span>byteOffset<span class="o">,</span><span class="w"> </span>byteCount<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>readCount<span class="o">(</span>read<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span>read<span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="n">long</span> <span class="n">skip</span><span class="p">(</span><span class="n">long</span> <span class="n">byteCount</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="n">long</span> <span class="n">skip</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">skip</span><span class="p">(</span><span class="n">byteCount</span><span class="p">);</span>
-        <span class="n">readCount</span><span class="p">(</span><span class="n">skip</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">skip</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>long<span class="w"> </span>skip<span class="o">(</span>long<span class="w"> </span>byteCount<span class="o">)</span><span class="w"> </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>long<span class="w"> </span>skip<span class="w"> </span><span class="o">=</span><span class="w"> </span>in<span class="o">.</span>skip<span class="o">(</span>byteCount<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>readCount<span class="o">(</span>skip<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span>skip<span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="n">private</span> <span class="k">void</span> <span class="n">readCount</span><span class="p">(</span><span class="n">long</span> <span class="n">read</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">read</span> <span class="o">&gt;</span> <span class="mh">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">+=</span> <span class="n">read</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">listener</span><span class="p">.</span><span class="n">transferred</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">transferred</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span>private<span class="w"> </span>void<span class="w"> </span>readCount<span class="o">(</span>long<span class="w"> </span>read<span class="o">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="o">(</span>read<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="o">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>transferred<span class="w"> </span><span class="o">+=</span><span class="w"> </span>read<span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>listener<span class="o">.</span>transferred<span class="o">(</span>this<span class="o">.</span>transferred<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="err">}</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
 </pre></div>
 
 
 <p>最后就是使用上述实现的类和Httpclient进行下载并显示进度的功能，非常简单，代码如下，使用AsyncTask异步下载。</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">FileDownLoadAsyncTask</span> <span class="n">extends</span>
-        <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">ImageView</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Bitmap</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">public</span> <span class="nt">class</span> <span class="nt">FileDownLoadAsyncTask</span> <span class="nt">extends</span>
+        <span class="nt">AsyncTask</span><span class="o">&lt;</span><span class="nt">ImageView</span><span class="o">,</span> <span class="nt">Integer</span><span class="o">,</span> <span class="nt">Bitmap</span><span class="o">&gt;</span> <span class="p">{</span>
 
-    <span class="c1">// 图片下载地址</span>
-    <span class="n">private</span> <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://192.168.83.213/upload/1.jpg&quot;</span><span class="p">;</span>
+    <span class="o">//</span> <span class="err">图片下载地址</span>
+    <span class="n">private</span> <span class="n">String</span> <span class="k">url</span> <span class="o">=</span> <span class="s2">&quot;http://192.168.83.213/upload/1.jpg&quot;</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">Context</span> <span class="n">context</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">ProgressDialog</span> <span class="n">pd</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">ImageView</span> <span class="n">image</span><span class="p">;</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">int</span> <span class="k">width</span> <span class="o">=</span> <span class="m">150</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">int</span> <span class="k">height</span> <span class="o">=</span> <span class="m">150</span><span class="p">;</span>
 
-    <span class="n">public</span> <span class="nf">FileDownLoadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">FileDownLoadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="err">{</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPreExecute</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">pd</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ProgressDialog</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setProgressStyle</span><span class="p">(</span><span class="n">ProgressDialog</span><span class="p">.</span><span class="n">STYLE_HORIZONTAL</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setMessage</span><span class="p">(</span><span class="s">&quot;下载中....&quot;</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setCancelable</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPreExecute</span><span class="o">()</span> <span class="p">{</span>
+        <span class="nt">pd</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ProgressDialog</span><span class="o">(</span><span class="nt">context</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setProgressStyle</span><span class="o">(</span><span class="nt">ProgressDialog</span><span class="nc">.STYLE_HORIZONTAL</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setMessage</span><span class="o">(</span><span class="s2">&quot;下载中....&quot;</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setCancelable</span><span class="o">(</span><span class="nt">false</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.show</span><span class="o">();</span>
     <span class="p">}</span>
 
-    <span class="cm">/**</span>
-<span class="cm">     * 下载图片，并按指定高度和宽度压缩</span>
-<span class="cm">     */</span>
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="n">Bitmap</span> <span class="n">doInBackground</span><span class="p">(</span><span class="n">ImageView</span><span class="p">...</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="n">Bitmap</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-        <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="n">new</span> <span class="n">DefaultHttpClient</span><span class="p">();</span>
-        <span class="n">try</span> <span class="p">{</span>
-            <span class="n">httpClient</span><span class="p">.</span><span class="n">getParams</span><span class="p">().</span><span class="n">setParameter</span><span class="p">(</span>
-                    <span class="n">CoreProtocolPNames</span><span class="p">.</span><span class="n">PROTOCOL_VERSION</span><span class="p">,</span> <span class="n">HttpVersion</span><span class="p">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
-            <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="p">.</span><span class="n">getStatusLine</span><span class="p">().</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">httpResponse</span><span class="p">.</span><span class="n">getEntity</span><span class="p">();</span>
-                <span class="n">final</span> <span class="kt">long</span> <span class="n">size</span> <span class="o">=</span> <span class="n">entity</span><span class="p">.</span><span class="n">getContentLength</span><span class="p">();</span>
+    <span class="c">/**</span>
+<span class="c">     * 下载图片，并按指定高度和宽度压缩</span>
+<span class="c">     */</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">Bitmap</span> <span class="nt">doInBackground</span><span class="o">(</span><span class="nt">ImageView</span><span class="o">...</span> <span class="nt">params</span><span class="o">)</span> <span class="p">{</span>
+        <span class="nt">this</span><span class="nc">.image</span> <span class="o">=</span> <span class="nt">params</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span>
+        <span class="nt">Bitmap</span> <span class="nt">bitmap</span> <span class="o">=</span> <span class="nt">null</span><span class="o">;</span>
+        <span class="nt">HttpClient</span> <span class="nt">httpClient</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">DefaultHttpClient</span><span class="o">();</span>
+        <span class="nt">try</span> <span class="p">{</span>
+            <span class="n">httpClient</span><span class="o">.</span><span class="n">getParams</span><span class="p">()</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span>
+                    <span class="n">CoreProtocolPNames</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
+            <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="k">url</span><span class="p">);</span>
+            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
+            <span class="n">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="n">getStatusLine</span><span class="p">()</span><span class="o">.</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="o">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="err">{</span>
+                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">httpResponse</span><span class="o">.</span><span class="n">getEntity</span><span class="p">();</span>
+                <span class="n">final</span> <span class="n">long</span> <span class="k">size</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getContentLength</span><span class="p">();</span>
                 <span class="n">CountingInputStream</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountingInputStream</span><span class="p">(</span>
-                        <span class="n">entity</span><span class="p">.</span><span class="n">getContent</span><span class="p">(),</span> <span class="n">new</span> <span class="n">ProgressListener</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="n">entity</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span><span class="o">,</span> <span class="n">new</span> <span class="n">ProgressListener</span><span class="p">()</span> <span class="err">{</span>
 
-                            <span class="err">@</span><span class="n">Override</span>
-                            <span class="n">public</span> <span class="kt">void</span> <span class="n">transferred</span><span class="p">(</span><span class="kt">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="p">{</span>
-                                <span class="n">Log</span><span class="p">.</span><span class="n">i</span><span class="p">(</span><span class="s">&quot;FileDownLoadAsyncTask&quot;</span><span class="p">,</span> <span class="s">&quot;总字节数：&quot;</span> <span class="o">+</span> <span class="n">size</span>
-                                        <span class="o">+</span> <span class="s">&quot; 已下载字节数：&quot;</span> <span class="o">+</span> <span class="n">transferedBytes</span><span class="p">);</span>
-                                <span class="n">publishProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="n">size</span><span class="p">));</span>
+                            <span class="o">@</span><span class="n">Override</span>
+                            <span class="n">public</span> <span class="n">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="err">{</span>
+                                <span class="n">Log</span><span class="o">.</span><span class="n">i</span><span class="p">(</span><span class="s2">&quot;FileDownLoadAsyncTask&quot;</span><span class="o">,</span> <span class="s2">&quot;总字节数：&quot;</span> <span class="o">+</span> <span class="k">size</span>
+                                        <span class="o">+</span> <span class="s2">&quot; 已下载字节数：&quot;</span> <span class="o">+</span> <span class="n">transferedBytes</span><span class="p">);</span>
+                                <span class="n">publishProgress</span><span class="p">((</span><span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="k">size</span><span class="p">));</span>
                             <span class="p">}</span>
-                        <span class="p">});</span>
-                <span class="c1">// 需将Inputstream转化为byte数组，以备decodeByteArray用</span>
-                <span class="c1">// 如直接使用decodeStream会将stream破坏，然后第二次decodeStream时，会出现SkImageDecoder::Factory returned null错误</span>
-                <span class="c1">// 我试过将获得的Inputstream转化为BufferedInputStream，然后使用mark、reset方法，但是我试了试没成功，不知道为啥，还请成功的各位告知</span>
-                <span class="n">byte</span><span class="p">[]</span> <span class="n">byteIn</span> <span class="o">=</span> <span class="n">toByteArray</span><span class="p">(</span><span class="n">cis</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">size</span><span class="p">);</span>
-                <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">Options</span> <span class="n">bmpFactoryOptions</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">Options</span><span class="p">();</span>
-                <span class="c1">// 第一次decode时，需设置inJustDecodeBounds属性为true,这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在Options中</span>
-                <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inJustDecodeBounds</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-                <span class="c1">// 第一次decode，获取图片高宽度等属性</span>
-                <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeByteArray</span><span class="p">(</span><span class="n">byteIn</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">byteIn</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-                        <span class="n">bmpFactoryOptions</span><span class="p">);</span>
-                <span class="c1">// 根据显示控件大小获取压缩比率，有效避免OOM</span>
-                <span class="kt">int</span> <span class="n">heightRatio</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">outHeight</span>
-                        <span class="o">/</span> <span class="n">height</span><span class="p">);</span>
-                <span class="kt">int</span> <span class="n">widthRatio</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">outWidth</span>
-                        <span class="o">/</span> <span class="n">width</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">widthRatio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inSampleSize</span> <span class="o">=</span> <span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="n">widthRatio</span> <span class="o">?</span> <span class="n">heightRatio</span>
+                        <span class="p">}</span><span class="o">);</span>
+                <span class="o">//</span> <span class="err">需将</span><span class="nt">Inputstream</span><span class="err">转化为</span><span class="nt">byte</span><span class="err">数组，以备</span><span class="nt">decodeByteArray</span><span class="err">用</span>
+                <span class="o">//</span> <span class="err">如直接使用</span><span class="nt">decodeStream</span><span class="err">会将</span><span class="nt">stream</span><span class="err">破坏，然后第二次</span><span class="nt">decodeStream</span><span class="err">时，会出现</span><span class="nt">SkImageDecoder</span><span class="o">:</span><span class="nd">:Factory</span> <span class="nt">returned</span> <span class="nt">null</span><span class="err">错误</span>
+                <span class="o">//</span> <span class="err">我试过将获得的</span><span class="nt">Inputstream</span><span class="err">转化为</span><span class="nt">BufferedInputStream</span><span class="err">，然后使用</span><span class="nt">mark</span><span class="err">、</span><span class="nt">reset</span><span class="err">方法，但是我试了试没成功，不知道为啥，还请成功的各位告知</span>
+                <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">byteIn</span> <span class="o">=</span> <span class="nt">toByteArray</span><span class="o">(</span><span class="nt">cis</span><span class="o">,</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">size</span><span class="o">);</span>
+                <span class="nt">BitmapFactory</span><span class="nc">.Options</span> <span class="nt">bmpFactoryOptions</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">BitmapFactory</span><span class="nc">.Options</span><span class="o">();</span>
+                <span class="o">//</span> <span class="err">第一次</span><span class="nt">decode</span><span class="err">时，需设置</span><span class="nt">inJustDecodeBounds</span><span class="err">属性为</span><span class="nt">true</span><span class="o">,</span><span class="err">这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在</span><span class="nt">Options</span><span class="err">中</span>
+                <span class="nt">bmpFactoryOptions</span><span class="nc">.inJustDecodeBounds</span> <span class="o">=</span> <span class="nt">true</span><span class="o">;</span>
+                <span class="o">//</span> <span class="err">第一次</span><span class="nt">decode</span><span class="err">，获取图片高宽度等属性</span>
+                <span class="nt">BitmapFactory</span><span class="nc">.decodeByteArray</span><span class="o">(</span><span class="nt">byteIn</span><span class="o">,</span> <span class="nt">0</span><span class="o">,</span> <span class="nt">byteIn</span><span class="nc">.length</span><span class="o">,</span>
+                        <span class="nt">bmpFactoryOptions</span><span class="o">);</span>
+                <span class="o">//</span> <span class="err">根据显示控件大小获取压缩比率，有效避免</span><span class="nt">OOM</span>
+                <span class="nt">int</span> <span class="nt">heightRatio</span> <span class="o">=</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">Math</span><span class="nc">.ceil</span><span class="o">(</span><span class="nt">bmpFactoryOptions</span><span class="nc">.outHeight</span>
+                        <span class="o">/</span> <span class="nt">height</span><span class="o">);</span>
+                <span class="nt">int</span> <span class="nt">widthRatio</span> <span class="o">=</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">Math</span><span class="nc">.ceil</span><span class="o">(</span><span class="nt">bmpFactoryOptions</span><span class="nc">.outWidth</span>
+                        <span class="o">/</span> <span class="nt">width</span><span class="o">);</span>
+                <span class="nt">if</span> <span class="o">(</span><span class="nt">heightRatio</span> <span class="o">&gt;</span> <span class="nt">1</span> <span class="o">&amp;&amp;</span> <span class="nt">widthRatio</span> <span class="o">&gt;</span> <span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
+                    <span class="n">bmpFactoryOptions</span><span class="o">.</span><span class="n">inSampleSize</span> <span class="o">=</span> <span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="n">widthRatio</span> <span class="o">?</span> <span class="n">heightRatio</span>
                             <span class="o">:</span> <span class="n">widthRatio</span><span class="p">;</span>
                 <span class="p">}</span>
-                <span class="c1">// 第二次decode时，需设置inJustDecodeBounds属性为fasle,系统才会根据传入的BitmapFactory.Options真正的压缩图片并返回</span>
-                <span class="n">bmpFactoryOptions</span><span class="p">.</span><span class="n">inJustDecodeBounds</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-                <span class="n">bitmap</span> <span class="o">=</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeByteArray</span><span class="p">(</span><span class="n">byteIn</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-                        <span class="n">byteIn</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="n">bmpFactoryOptions</span><span class="p">);</span>
+                <span class="o">//</span> <span class="err">第二次</span><span class="nt">decode</span><span class="err">时，需设置</span><span class="nt">inJustDecodeBounds</span><span class="err">属性为</span><span class="nt">fasle</span><span class="o">,</span><span class="err">系统才会根据传入的</span><span class="nt">BitmapFactory</span><span class="nc">.Options</span><span class="err">真正的压缩图片并返回</span>
+                <span class="nt">bmpFactoryOptions</span><span class="nc">.inJustDecodeBounds</span> <span class="o">=</span> <span class="nt">false</span><span class="o">;</span>
+                <span class="nt">bitmap</span> <span class="o">=</span> <span class="nt">BitmapFactory</span><span class="nc">.decodeByteArray</span><span class="o">(</span><span class="nt">byteIn</span><span class="o">,</span> <span class="nt">0</span><span class="o">,</span>
+                        <span class="nt">byteIn</span><span class="nc">.length</span><span class="o">,</span> <span class="nt">bmpFactoryOptions</span><span class="o">);</span>
+            <span class="err">}</span>
+        <span class="err">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ClientProtocolException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ConnectTimeoutException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">Exception</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">finally</span> <span class="p">{</span>
+            <span class="n">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="err">{</span>
+                <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span><span class="o">.</span><span class="n">shutdown</span><span class="p">();</span>
             <span class="p">}</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ClientProtocolException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ConnectTimeoutException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">().</span><span class="n">shutdown</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">bitmap</span><span class="p">;</span>
+        <span class="err">}</span>
+        <span class="nt">return</span> <span class="nt">bitmap</span><span class="o">;</span>
+    <span class="err">}</span>
+
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onProgressUpdate</span><span class="o">(</span><span class="nt">Integer</span><span class="o">...</span> <span class="nt">progress</span><span class="o">)</span> <span class="p">{</span>
+        <span class="nt">pd</span><span class="nc">.setProgress</span><span class="o">((</span><span class="nt">int</span><span class="o">)</span> <span class="o">(</span><span class="nt">progress</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">));</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onProgressUpdate</span><span class="p">(</span><span class="n">Integer</span><span class="p">...</span> <span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">progress</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
-    <span class="p">}</span>
-
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPostExecute</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bm</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">bm</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">image</span><span class="p">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bm</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;图片下载失败&quot;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_SHORT</span><span class="p">).</span><span class="n">show</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="cm">/**</span>
-<span class="cm">     * InputStream转化为Byte数组</span>
-<span class="cm">     * </span>
-<span class="cm">     * @param instream</span>
-<span class="cm">     * @param contentLength</span>
-<span class="cm">     * @return</span>
-<span class="cm">     * @throws IOException</span>
-<span class="cm">     */</span>
-    <span class="n">public</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">toByteArray</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">instream</span><span class="p">,</span> <span class="kt">int</span> <span class="n">contentLength</span><span class="p">)</span>
-            <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">instream</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="n">null</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">try</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">contentLength</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">contentLength</span> <span class="o">=</span> <span class="mi">4096</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="n">final</span> <span class="n">ByteArrayBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ByteArrayBuffer</span><span class="p">(</span><span class="n">contentLength</span><span class="p">);</span>
-            <span class="n">final</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">new</span> <span class="n">byte</span><span class="p">[</span><span class="mi">4096</span><span class="p">];</span>
-            <span class="kt">int</span> <span class="n">l</span><span class="p">;</span>
-            <span class="k">while</span> <span class="p">((</span><span class="n">l</span> <span class="o">=</span> <span class="n">instream</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">tmp</span><span class="p">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">buffer</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="n">buffer</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
-            <span class="n">instream</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPostExecute</span><span class="o">(</span><span class="nt">Bitmap</span> <span class="nt">bm</span><span class="o">)</span> <span class="p">{</span>
+        <span class="nt">pd</span><span class="nc">.dismiss</span><span class="o">();</span>
+        <span class="nt">if</span> <span class="o">(</span><span class="nt">bm</span> <span class="o">!=</span> <span class="nt">null</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">image</span><span class="o">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bm</span><span class="p">);</span>
+        <span class="p">}</span> <span class="nt">else</span> <span class="p">{</span>
+            <span class="n">Toast</span><span class="o">.</span><span class="n">makeText</span><span class="p">(</span><span class="n">context</span><span class="o">,</span> <span class="s2">&quot;图片下载失败&quot;</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="n">LENGTH_SHORT</span><span class="p">)</span><span class="o">.</span><span class="k">show</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
-<span class="p">}</span>
+    <span class="c">/**</span>
+<span class="c">     * InputStream转化为Byte数组</span>
+<span class="c">     * </span>
+<span class="c">     * @param instream</span>
+<span class="c">     * @param contentLength</span>
+<span class="c">     * @return</span>
+<span class="c">     * @throws IOException</span>
+<span class="c">     */</span>
+    <span class="nt">public</span> <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">toByteArray</span><span class="o">(</span><span class="nt">InputStream</span> <span class="nt">instream</span><span class="o">,</span> <span class="nt">int</span> <span class="nt">contentLength</span><span class="o">)</span>
+            <span class="nt">throws</span> <span class="nt">IOException</span> <span class="p">{</span>
+        <span class="n">if</span> <span class="p">(</span><span class="n">instream</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="err">{</span>
+            <span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nt">try</span> <span class="p">{</span>
+            <span class="n">if</span> <span class="p">(</span><span class="n">contentLength</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="err">{</span>
+                <span class="n">contentLength</span> <span class="o">=</span> <span class="m">4096</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nt">final</span> <span class="nt">ByteArrayBuffer</span> <span class="nt">buffer</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ByteArrayBuffer</span><span class="o">(</span><span class="nt">contentLength</span><span class="o">);</span>
+            <span class="nt">final</span> <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">tmp</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">byte</span><span class="cp">[</span><span class="mi">4096</span><span class="cp">]</span><span class="o">;</span>
+            <span class="nt">int</span> <span class="nt">l</span><span class="o">;</span>
+            <span class="nt">while</span> <span class="o">((</span><span class="nt">l</span> <span class="o">=</span> <span class="nt">instream</span><span class="nc">.read</span><span class="o">(</span><span class="nt">tmp</span><span class="o">))</span> <span class="o">!=</span> <span class="nt">-1</span><span class="o">)</span> <span class="p">{</span>
+                <span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="n">l</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nt">return</span> <span class="nt">buffer</span><span class="nc">.toByteArray</span><span class="o">();</span>
+        <span class="err">}</span> <span class="nt">finally</span> <span class="p">{</span>
+            <span class="n">instream</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="err">}</span>
+
+<span class="err">}</span>
 </pre></div>
 
 
@@ -373,14 +373,6 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 		</ul>
 </div>
 

@@ -87,15 +87,15 @@
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2014-11-21T17:18:00">
-                周五 21 十一月 2014
+			  <abbr class="published" title="2014-11-21T17:18:00+08:00">
+                五 21 十一月 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周五 21 十一月 2014
+				五 21 十一月 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -111,359 +111,380 @@
 <h3>自定义裁剪框</h3>
 <p>如微信上传头像界面，裁剪框的作用是在屏幕上呈现一个白色的矩形边框，边框以外的界面都是半透明的形式。当图片在屏幕中拖动时，可以非常明确地提醒矩形框中的图片才是我们所需要的。以下的代码即自定义裁剪框，大家可看代码中注释，非常简单（即在屏幕中画出一个白色的矩形线框，边框以外的上下左右画出半透明背景）。</p>
 <p>在本代码中，自定义了一个<code>OnDrawListenerComplete</code>接口，里面定义了<code>onDrawCompelete</code>方法。它的作用是什么？不知大家仔细观察过微信上传头像功能没，当我们选择图片后，不管图片多大多小，多宽多窄，它总能保证图片的宽度满足裁剪框或者高度满足裁剪框，即按裁剪框的比例缩放图片，这样用户在上传时就非常方便呢。该接口的作用就是当裁剪框绘画完成后即可调用回调函数，进行图片处理，以满足裁剪框的大小。</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">ClipView</span> <span class="n">extends</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="n">private</span> <span class="n">Paint</span> <span class="n">paint</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Paint</span><span class="p">();</span>
-    <span class="n">private</span> <span class="n">Paint</span> <span class="n">borderPaint</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Paint</span><span class="p">();</span>
+<div class="highlight"><pre>public class ClipView extends View {
+    private Paint paint = new Paint();
+    private Paint borderPaint = new Paint();
 
-    <span class="cm">/** 自定义顶部栏高度，如不是自定义，则默认为0即可 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">customTopBarHeight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框长宽比，默认4：3 */</span>
-    <span class="n">private</span> <span class="kt">double</span> <span class="n">clipRatio</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框宽度 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipWidth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框高度 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipHeight</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框左边空留宽度 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框上边空留宽度 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipTopMargin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="cm">/** 裁剪框边框宽度 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">clipBorderWidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">boolean</span> <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">OnDrawListenerComplete</span> <span class="n">listenerComplete</span><span class="p">;</span>
+    /**
+     * 自定义顶部栏高度，如不是自定义，则默认为0即可
+     */
+    private int customTopBarHeight = 0;
+    /**
+     * 裁剪框长宽比，默认4：3
+     */
+    private double clipRatio = 0.75;
+    /**
+     * 裁剪框宽度
+     */
+    private int clipWidth = -1;
+    /**
+     * 裁剪框高度
+     */
+    private int clipHeight = -1;
+    /**
+     * 裁剪框左边空留宽度
+     */
+    private int clipLeftMargin = 0;
+    /**
+     * 裁剪框上边空留宽度
+     */
+    private int clipTopMargin = 0;
+    /**
+     * 裁剪框边框宽度
+     */
+    private int clipBorderWidth = 1;
+    private boolean isSetMargin = false;
+    private OnDrawListenerComplete listenerComplete;
 
-    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-    <span class="p">}</span>
+    public ClipView(Context context) {
+        this(context, null);
+    }
 
-    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
-    <span class="p">}</span>
+    public ClipView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-    <span class="n">public</span> <span class="nf">ClipView</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">defStyle</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">defStyle</span><span class="p">);</span>
-    <span class="p">}</span>
+    public ClipView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onDraw</span><span class="p">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">.</span><span class="n">onDraw</span><span class="p">(</span><span class="n">canvas</span><span class="p">);</span>
+        paint.setAlpha(200);
 
-        <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getWidth</span><span class="p">();</span>
-        <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getHeight</span><span class="p">();</span>
-        <span class="c1">// 如没有显示设置裁剪框高度和宽度，取默认值</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">clipHeight</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">clipWidth</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">50</span><span class="p">;</span>
-            <span class="n">clipHeight</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">*</span> <span class="n">clipRatio</span><span class="p">);</span>
-            <span class="c1">// 横屏</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">clipHeight</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">50</span><span class="p">;</span>
-                <span class="n">clipWidth</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">/</span> <span class="n">clipRatio</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="c1">// 如没有显示设置裁剪框左和上预留宽度，取默认值</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isSetMargin</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">clipWidth</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-            <span class="n">clipTopMargin</span> <span class="o">=</span> <span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">clipHeight</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="c1">// 画阴影</span>
-        <span class="n">paint</span><span class="p">.</span><span class="n">setAlpha</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-        <span class="c1">// top</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">customTopBarHeight</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
-        <span class="c1">// left</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">clipLeftMargin</span><span class="p">,</span> <span class="n">clipTopMargin</span>
-                <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
-        <span class="c1">// right</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">clipLeftMargin</span> <span class="o">+</span> <span class="n">clipWidth</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span>
-                <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
-        <span class="c1">// bottom</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
+        borderPaint.setStyle(Style.STROKE);
+        borderPaint.setColor(Color.WHITE);
+        borderPaint.setStrokeWidth(clipBorderWidth);
+    }
 
-        <span class="c1">// 画边框</span>
-        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">.</span><span class="n">STROKE</span><span class="p">);</span>
-        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">WHITE</span><span class="p">);</span>
-        <span class="n">borderPaint</span><span class="p">.</span><span class="n">setStrokeWidth</span><span class="p">(</span><span class="n">clipBorderWidth</span><span class="p">);</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">clipLeftMargin</span><span class="p">,</span> <span class="n">clipTopMargin</span><span class="p">,</span> <span class="n">clipLeftMargin</span>
-                <span class="o">+</span> <span class="n">clipWidth</span><span class="p">,</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipHeight</span><span class="p">,</span> <span class="n">borderPaint</span><span class="p">);</span>
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">listenerComplete</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">listenerComplete</span><span class="p">.</span><span class="n">onDrawCompelete</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+        int width = this.getWidth();
+        int height = this.getHeight();
+        // 如没有显式设置裁剪框高度和宽度，取默认值
+        if (clipWidth == -1 || clipHeight == -1) {
+            clipWidth = width - 50;
+            clipHeight = (int) (clipWidth * clipRatio);
+            // 横屏
+            if (width &gt; height) {
+                clipHeight = height - customTopBarHeight - 50;
+                clipWidth = (int) (clipHeight / clipRatio);
+            }
+        }
+        // 如没有显示设置裁剪框左和上预留宽度，取默认值
+        if (!isSetMargin) {
+            clipLeftMargin = (width - clipWidth) / 2;
+            clipTopMargin = (height - clipHeight) / 2;
+        }
 
-    <span class="n">public</span> <span class="kt">int</span> <span class="n">getCustomTopBarHeight</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">customTopBarHeight</span><span class="p">;</span>
-    <span class="p">}</span>
+        // 防止横屏时，覆盖标题栏
+        if (clipTopMargin &lt;= customTopBarHeight) {
+            clipTopMargin = customTopBarHeight + 20;
+        }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setCustomTopBarHeight</span><span class="p">(</span><span class="kt">int</span> <span class="n">customTopBarHeight</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">customTopBarHeight</span> <span class="o">=</span> <span class="n">customTopBarHeight</span><span class="p">;</span>
-    <span class="p">}</span>
+        // 画阴影
+        // top
+        canvas.drawRect(0, customTopBarHeight, width, clipTopMargin, paint);
+        // left
+        canvas.drawRect(0, clipTopMargin, clipLeftMargin, clipTopMargin
+                + clipHeight, paint);
+        // right
+        canvas.drawRect(clipLeftMargin + clipWidth, clipTopMargin, width,
+                clipTopMargin + clipHeight, paint);
+        // bottom
+        canvas.drawRect(0, clipTopMargin + clipHeight, width, height, paint);
 
-    <span class="n">public</span> <span class="kt">double</span> <span class="n">getClipRatio</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">clipRatio</span><span class="p">;</span>
-    <span class="p">}</span>
+        // 画边框
+        canvas.drawRect(clipLeftMargin, clipTopMargin, clipLeftMargin
+                + clipWidth, clipTopMargin + clipHeight, borderPaint);
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipRatio</span><span class="p">(</span><span class="kt">double</span> <span class="n">clipRatio</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">clipRatio</span> <span class="o">=</span> <span class="n">clipRatio</span><span class="p">;</span>
-    <span class="p">}</span>
+        if (listenerComplete != null) {
+            listenerComplete.onDrawCompelete();
+        }
+    }
 
-    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipWidth</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// 减clipBorderWidth原因：截图时去除边框白线</span>
-        <span class="k">return</span> <span class="n">clipWidth</span> <span class="o">-</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
-    <span class="p">}</span>
+    public int getCustomTopBarHeight() {
+        return customTopBarHeight;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipWidth</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipWidth</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">clipWidth</span> <span class="o">=</span> <span class="n">clipWidth</span><span class="p">;</span>
-    <span class="p">}</span>
+    public void setCustomTopBarHeight(int customTopBarHeight) {
+        this.customTopBarHeight = customTopBarHeight;
+    }
 
-    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipHeight</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">clipHeight</span> <span class="o">-</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
-    <span class="p">}</span>
+    public double getClipRatio() {
+        return clipRatio;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipHeight</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipHeight</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">clipHeight</span> <span class="o">=</span> <span class="n">clipHeight</span><span class="p">;</span>
-    <span class="p">}</span>
+    public void setClipRatio(double clipRatio) {
+        this.clipRatio = clipRatio;
+    }
 
-    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipLeftMargin</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">clipLeftMargin</span> <span class="o">+</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
-    <span class="p">}</span>
+    public int getClipWidth() {
+        // 减clipBorderWidth原因：截图时去除边框白线
+        return clipWidth - clipBorderWidth;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipLeftMargin</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipLeftMargin</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">clipLeftMargin</span> <span class="o">=</span> <span class="n">clipLeftMargin</span><span class="p">;</span>
-        <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
+    public void setClipWidth(int clipWidth) {
+        this.clipWidth = clipWidth;
+    }
 
-    <span class="n">public</span> <span class="kt">int</span> <span class="n">getClipTopMargin</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">clipTopMargin</span> <span class="o">+</span> <span class="n">clipBorderWidth</span><span class="p">;</span>
-    <span class="p">}</span>
+    public int getClipHeight() {
+        return clipHeight - clipBorderWidth;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">setClipTopMargin</span><span class="p">(</span><span class="kt">int</span> <span class="n">clipTopMargin</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">clipTopMargin</span> <span class="o">=</span> <span class="n">clipTopMargin</span><span class="p">;</span>
-        <span class="n">isSetMargin</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
+    public void setClipHeight(int clipHeight) {
+        this.clipHeight = clipHeight;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">addOnDrawCompleteListener</span><span class="p">(</span><span class="n">OnDrawListenerComplete</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">listenerComplete</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
-    <span class="p">}</span>
+    public int getClipLeftMargin() {
+        return clipLeftMargin + clipBorderWidth;
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">removeOnDrawCompleteListener</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">listenerComplete</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-    <span class="p">}</span>
+    public void setClipLeftMargin(int clipLeftMargin) {
+        this.clipLeftMargin = clipLeftMargin;
+        isSetMargin = true;
+    }
 
-    <span class="cm">/**</span>
-<span class="cm">     * 裁剪区域画完时调用接口</span>
-<span class="cm">     * </span>
-<span class="cm">     * @author Cow</span>
-<span class="cm">     * </span>
-<span class="cm">     */</span>
-    <span class="n">public</span> <span class="n">interface</span> <span class="n">OnDrawListenerComplete</span> <span class="p">{</span>
-        <span class="n">public</span> <span class="kt">void</span> <span class="n">onDrawCompelete</span><span class="p">();</span>
-    <span class="p">}</span>
+    public int getClipTopMargin() {
+        return clipTopMargin + clipBorderWidth;
+    }
 
-<span class="p">}</span>
+    public void setClipTopMargin(int clipTopMargin) {
+        this.clipTopMargin = clipTopMargin;
+        isSetMargin = true;
+    }
+
+    public void addOnDrawCompleteListener(OnDrawListenerComplete listener) {
+        this.listenerComplete = listener;
+    }
+
+    public void removeOnDrawCompleteListener() {
+        this.listenerComplete = null;
+    }
+
+    /**
+     * 裁剪区域画完时调用接口
+     *
+     * @author Cow
+     */
+    public interface OnDrawListenerComplete {
+        public void onDrawCompelete();
+    }
+
+}
 </pre></div>
 
 
 <h3>使用裁剪框</h3>
 <p>使用裁剪框就非常简单了，将该裁剪框以<code>this.addContentView</code>的方式添加到要使用的Activity中。本代码中，即<code>initClipView</code>方法，至于为什么要在<code>observer.addOnGlobalLayoutListener</code>中初始化裁剪框，是因为本例的顶部栏是自定义的，需等该头部的高度确定以后才能对裁剪框进行初始化，如果你没有使用自定义顶部栏，那么就无所谓了。大家可以看到在<code>observer.addOnGlobalLayoutListener</code>回调接口中，有一大段计算缩放、平移等的语句，这些代码的作用即是上文所讨论的，让用户无论选择多大的图片，都让它满足裁剪框的高宽度。然后再加上针对<code>ImageView</code>容器的拖动、缩放等效果即可。</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">ClipPictureActivity</span> <span class="n">extends</span> <span class="n">Activity</span> <span class="n">implements</span> <span class="n">OnTouchListener</span><span class="p">,</span>
-        <span class="n">OnClickListener</span> <span class="p">{</span>
-    <span class="n">private</span> <span class="n">ImageView</span> <span class="n">srcPic</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">View</span> <span class="n">sure</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">ClipView</span> <span class="n">clipview</span><span class="p">;</span>
+<div class="highlight"><pre>public class ClipPictureActivity extends Activity implements OnTouchListener,
+        OnClickListener {
+    private ImageView srcPic;
+    private View sure;
+    private ClipView clipview;
 
-    <span class="n">private</span> <span class="n">Matrix</span> <span class="n">matrix</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Matrix</span><span class="p">();</span>
-    <span class="n">private</span> <span class="n">Matrix</span> <span class="n">savedMatrix</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Matrix</span><span class="p">();</span>
+    private Matrix matrix = new Matrix();
+    private Matrix savedMatrix = new Matrix();
 
-    <span class="cm">/** 动作标志：无 */</span>
-    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="cm">/** 动作标志：拖动 */</span>
-    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">DRAG</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="cm">/** 动作标志：缩放 */</span>
-    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="kt">int</span> <span class="n">ZOOM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="cm">/** 初始化动作标志 */</span>
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">;</span>
+    /** 动作标志：无 */
+    private static final int NONE = 0;
+    /** 动作标志：拖动 */
+    private static final int DRAG = 1;
+    /** 动作标志：缩放 */
+    private static final int ZOOM = 2;
+    /** 初始化动作标志 */
+    private int mode = NONE;
 
-    <span class="cm">/** 记录起始坐标 */</span>
-    <span class="n">private</span> <span class="n">PointF</span> <span class="n">start</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PointF</span><span class="p">();</span>
-    <span class="cm">/** 记录缩放时两指中间点坐标 */</span>
-    <span class="n">private</span> <span class="n">PointF</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PointF</span><span class="p">();</span>
-    <span class="n">private</span> <span class="kt">float</span> <span class="n">oldDist</span> <span class="o">=</span> <span class="mf">1f</span><span class="p">;</span>
+    /** 记录起始坐标 */
+    private PointF start = new PointF();
+    /** 记录缩放时两指中间点坐标 */
+    private PointF mid = new PointF();
+    private float oldDist = 1f;
 
-    <span class="n">private</span> <span class="n">Bitmap</span> <span class="n">bitmap</span><span class="p">;</span>
+    private Bitmap bitmap;
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">onCreate</span><span class="p">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
-        <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">main</span><span class="p">);</span>
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-        <span class="n">srcPic</span> <span class="o">=</span> <span class="p">(</span><span class="n">ImageView</span><span class="p">)</span> <span class="n">this</span><span class="p">.</span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">src_pic</span><span class="p">);</span>
-        <span class="n">srcPic</span><span class="p">.</span><span class="n">setOnTouchListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        srcPic = (ImageView) this.findViewById(R.id.src_pic);
+        srcPic.setOnTouchListener(this);
 
-        <span class="n">ViewTreeObserver</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">srcPic</span><span class="p">.</span><span class="n">getViewTreeObserver</span><span class="p">();</span>
-        <span class="n">observer</span><span class="p">.</span><span class="n">addOnGlobalLayoutListener</span><span class="p">(</span><span class="n">new</span> <span class="n">OnGlobalLayoutListener</span><span class="p">()</span> <span class="p">{</span>
+        ViewTreeObserver observer = srcPic.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-            <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s">&quot;deprecation&quot;</span><span class="p">)</span>
-            <span class="n">public</span> <span class="kt">void</span> <span class="n">onGlobalLayout</span><span class="p">()</span> <span class="p">{</span>
-                <span class="n">srcPic</span><span class="p">.</span><span class="n">getViewTreeObserver</span><span class="p">().</span><span class="n">removeGlobalOnLayoutListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-                <span class="n">initClipView</span><span class="p">(</span><span class="n">srcPic</span><span class="p">.</span><span class="n">getTop</span><span class="p">());</span>
-            <span class="p">}</span>
-        <span class="p">});</span>
+            @SuppressWarnings(&quot;deprecation&quot;)
+            public void onGlobalLayout() {
+                srcPic.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                initClipView(srcPic.getTop());
+            }
+        });
 
-        <span class="n">sure</span> <span class="o">=</span> <span class="p">(</span><span class="n">View</span><span class="p">)</span> <span class="n">this</span><span class="p">.</span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">sure</span><span class="p">);</span>
-        <span class="n">sure</span><span class="p">.</span><span class="n">setOnClickListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-    <span class="p">}</span>
+        sure = (View) this.findViewById(R.id.sure);
+        sure.setOnClickListener(this);
+    }
 
-    <span class="cm">/**</span>
-<span class="cm">     * 初始化截图区域，并将源图按裁剪框比例缩放</span>
-<span class="cm">     * </span>
-<span class="cm">     * @param top</span>
-<span class="cm">     */</span>
-    <span class="n">private</span> <span class="kt">void</span> <span class="n">initClipView</span><span class="p">(</span><span class="kt">int</span> <span class="n">top</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">bitmap</span> <span class="o">=</span> <span class="n">BitmapFactory</span><span class="p">.</span><span class="n">decodeResource</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="n">getResources</span><span class="p">(),</span>
-                <span class="n">R</span><span class="p">.</span><span class="n">drawable</span><span class="p">.</span><span class="n">pic</span><span class="p">);</span>
-        <span class="n">clipview</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ClipView</span><span class="p">(</span><span class="n">ClipPictureActivity</span><span class="p">.</span><span class="n">this</span><span class="p">);</span>
-        <span class="n">clipview</span><span class="p">.</span><span class="n">setCustomTopBarHeight</span><span class="p">(</span><span class="n">top</span><span class="p">);</span>
-        <span class="n">clipview</span><span class="p">.</span><span class="n">addOnDrawCompleteListener</span><span class="p">(</span><span class="n">new</span> <span class="n">OnDrawListenerComplete</span><span class="p">()</span> <span class="p">{</span>
+    /**
+     * 初始化截图区域，并将源图按裁剪框比例缩放
+     * 
+     * @param top
+     */
+    private void initClipView(int top) {
+        bitmap = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.pic);
+        clipview = new ClipView(ClipPictureActivity.this);
+        clipview.setCustomTopBarHeight(top);
+        clipview.addOnDrawCompleteListener(new OnDrawListenerComplete() {
 
-            <span class="n">public</span> <span class="kt">void</span> <span class="n">onDrawCompelete</span><span class="p">()</span> <span class="p">{</span>
-                <span class="n">clipview</span><span class="p">.</span><span class="n">removeOnDrawCompleteListener</span><span class="p">();</span>
-                <span class="kt">int</span> <span class="n">clipHeight</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipHeight</span><span class="p">();</span>
-                <span class="kt">int</span> <span class="n">clipWidth</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipWidth</span><span class="p">();</span>
-                <span class="kt">int</span> <span class="n">midX</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipLeftMargin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-                <span class="kt">int</span> <span class="n">midY</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipTopMargin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+            public void onDrawCompelete() {
+                clipview.removeOnDrawCompleteListener();
+                int clipHeight = clipview.getClipHeight();
+                int clipWidth = clipview.getClipWidth();
+                int midX = clipview.getClipLeftMargin() + (clipWidth / 2);
+                int midY = clipview.getClipTopMargin() + (clipHeight / 2);
 
-                <span class="kt">int</span> <span class="n">imageWidth</span> <span class="o">=</span> <span class="n">bitmap</span><span class="p">.</span><span class="n">getWidth</span><span class="p">();</span>
-                <span class="kt">int</span> <span class="n">imageHeight</span> <span class="o">=</span> <span class="n">bitmap</span><span class="p">.</span><span class="n">getHeight</span><span class="p">();</span>
-                <span class="c1">// 按裁剪框求缩放比例</span>
-                <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipWidth</span> <span class="o">*</span> <span class="mf">1.0f</span><span class="p">)</span> <span class="o">/</span> <span class="n">imageWidth</span><span class="p">;</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">imageWidth</span> <span class="o">&gt;</span> <span class="n">imageHeight</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipHeight</span> <span class="o">*</span> <span class="mf">1.0f</span><span class="p">)</span> <span class="o">/</span> <span class="n">imageHeight</span><span class="p">;</span>
-                <span class="p">}</span>
+                int imageWidth = bitmap.getWidth();
+                int imageHeight = bitmap.getHeight();
+                // 按裁剪框求缩放比例
+                float scale = (clipWidth * 1.0f) / imageWidth;
+                if (imageWidth &gt; imageHeight) {
+                    scale = (clipHeight * 1.0f) / imageHeight;
+                }
 
-                <span class="c1">// 起始中心点</span>
-                <span class="kt">float</span> <span class="n">imageMidX</span> <span class="o">=</span> <span class="n">imageWidth</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-                <span class="kt">float</span> <span class="n">imageMidY</span> <span class="o">=</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getCustomTopBarHeight</span><span class="p">()</span>
-                        <span class="o">+</span> <span class="n">imageHeight</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-                <span class="n">srcPic</span><span class="p">.</span><span class="n">setScaleType</span><span class="p">(</span><span class="n">ScaleType</span><span class="p">.</span><span class="n">MATRIX</span><span class="p">);</span>
+                // 起始中心点
+                float imageMidX = imageWidth * scale / 2;
+                float imageMidY = clipview.getCustomTopBarHeight()
+                        + imageHeight * scale / 2;
+                srcPic.setScaleType(ScaleType.MATRIX);
 
-                <span class="c1">// 缩放</span>
-                <span class="n">matrix</span><span class="p">.</span><span class="n">postScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">);</span>
-                <span class="c1">// 平移</span>
-                <span class="n">matrix</span><span class="p">.</span><span class="n">postTranslate</span><span class="p">(</span><span class="n">midX</span> <span class="o">-</span> <span class="n">imageMidX</span><span class="p">,</span> <span class="n">midY</span> <span class="o">-</span> <span class="n">imageMidY</span><span class="p">);</span>
+                // 缩放
+                matrix.postScale(scale, scale);
+                // 平移
+                matrix.postTranslate(midX - imageMidX, midY - imageMidY);
 
-                <span class="n">srcPic</span><span class="p">.</span><span class="n">setImageMatrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
-                <span class="n">srcPic</span><span class="p">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">});</span>
+                srcPic.setImageMatrix(matrix);
+                srcPic.setImageBitmap(bitmap);
+            }
+        });
 
-        <span class="n">this</span><span class="p">.</span><span class="n">addContentView</span><span class="p">(</span><span class="n">clipview</span><span class="p">,</span> <span class="n">new</span> <span class="n">LayoutParams</span><span class="p">(</span>
-                <span class="n">LayoutParams</span><span class="p">.</span><span class="n">MATCH_PARENT</span><span class="p">,</span> <span class="n">LayoutParams</span><span class="p">.</span><span class="n">MATCH_PARENT</span><span class="p">));</span>
-    <span class="p">}</span>
+        this.addContentView(clipview, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    }
 
-    <span class="n">public</span> <span class="n">boolean</span> <span class="n">onTouch</span><span class="p">(</span><span class="n">View</span> <span class="n">v</span><span class="p">,</span> <span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ImageView</span> <span class="n">view</span> <span class="o">=</span> <span class="p">(</span><span class="n">ImageView</span><span class="p">)</span> <span class="n">v</span><span class="p">;</span>
-        <span class="k">switch</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getAction</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MASK</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_DOWN</span>:
-            <span class="n">savedMatrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
-            <span class="c1">// 设置开始点位置</span>
-            <span class="n">start</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">());</span>
-            <span class="n">mode</span> <span class="o">=</span> <span class="n">DRAG</span><span class="p">;</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_DOWN</span>:
-            <span class="n">oldDist</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">oldDist</span> <span class="o">&gt;</span> <span class="mf">10f</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">savedMatrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
-                <span class="n">midPoint</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
-                <span class="n">mode</span> <span class="o">=</span> <span class="n">ZOOM</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_UP</span>:
-        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_POINTER_UP</span>:
-            <span class="n">mode</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">;</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="n">MotionEvent</span><span class="p">.</span><span class="n">ACTION_MOVE</span>:
-            <span class="k">if</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="n">DRAG</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">matrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">savedMatrix</span><span class="p">);</span>
-                <span class="n">matrix</span><span class="p">.</span><span class="n">postTranslate</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">()</span>
-                        <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ZOOM</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">float</span> <span class="n">newDist</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">newDist</span> <span class="o">&gt;</span> <span class="mf">10f</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">matrix</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">savedMatrix</span><span class="p">);</span>
-                    <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">newDist</span> <span class="o">/</span> <span class="n">oldDist</span><span class="p">;</span>
-                    <span class="n">matrix</span><span class="p">.</span><span class="n">postScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">mid</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">mid</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">setImageMatrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">);</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
+    public boolean onTouch(View v, MotionEvent event) {
+        ImageView view = (ImageView) v;
+        switch (event.getAction() &amp; MotionEvent.ACTION_MASK) {
+        case MotionEvent.ACTION_DOWN:
+            savedMatrix.set(matrix);
+            // 设置开始点位置
+            start.set(event.getX(), event.getY());
+            mode = DRAG;
+            break;
+        case MotionEvent.ACTION_POINTER_DOWN:
+            oldDist = spacing(event);
+            if (oldDist &gt; 10f) {
+                savedMatrix.set(matrix);
+                midPoint(mid, event);
+                mode = ZOOM;
+            }
+            break;
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_POINTER_UP:
+            mode = NONE;
+            break;
+        case MotionEvent.ACTION_MOVE:
+            if (mode == DRAG) {
+                matrix.set(savedMatrix);
+                matrix.postTranslate(event.getX() - start.x, event.getY()
+                        - start.y);
+            } else if (mode == ZOOM) {
+                float newDist = spacing(event);
+                if (newDist &gt; 10f) {
+                    matrix.set(savedMatrix);
+                    float scale = newDist / oldDist;
+                    matrix.postScale(scale, scale, mid.x, mid.y);
+                }
+            }
+            break;
+        }
+        view.setImageMatrix(matrix);
+        return true;
+    }
 
-    <span class="cm">/**</span>
-<span class="cm">     * 多点触控时，计算最先放下的两指距离</span>
-<span class="cm">     * </span>
-<span class="cm">     * @param event</span>
-<span class="cm">     * @return</span>
-<span class="cm">     */</span>
-    <span class="n">private</span> <span class="kt">float</span> <span class="n">spacing</span><span class="p">(</span><span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="k">return</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">Math</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">);</span>
-    <span class="p">}</span>
+    /**
+     * 多点触控时，计算最先放下的两指距离
+     * 
+     * @param event
+     * @return
+     */
+    private float spacing(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return (float) Math.sqrt(x * x + y * y);
+    }
 
-    <span class="cm">/**</span>
-<span class="cm">     * 多点触控时，计算最先放下的两指中心坐标</span>
-<span class="cm">     * </span>
-<span class="cm">     * @param point</span>
-<span class="cm">     * @param event</span>
-<span class="cm">     */</span>
-    <span class="n">private</span> <span class="kt">void</span> <span class="n">midPoint</span><span class="p">(</span><span class="n">PointF</span> <span class="n">point</span><span class="p">,</span> <span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">event</span><span class="p">.</span><span class="n">getX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">event</span><span class="p">.</span><span class="n">getY</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="n">point</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-    <span class="p">}</span>
+    /**
+     * 多点触控时，计算最先放下的两指中心坐标
+     * 
+     * @param point
+     * @param event
+     */
+    private void midPoint(PointF point, MotionEvent event) {
+        float x = event.getX(0) + event.getX(1);
+        float y = event.getY(0) + event.getY(1);
+        point.set(x / 2, y / 2);
+    }
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">onClick</span><span class="p">(</span><span class="n">View</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Bitmap</span> <span class="n">clipBitmap</span> <span class="o">=</span> <span class="n">getBitmap</span><span class="p">();</span>
-        <span class="n">ByteArrayOutputStream</span> <span class="n">baos</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ByteArrayOutputStream</span><span class="p">();</span>
-        <span class="n">clipBitmap</span><span class="p">.</span><span class="n">compress</span><span class="p">(</span><span class="n">Bitmap</span><span class="p">.</span><span class="n">CompressFormat</span><span class="p">.</span><span class="n">JPEG</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">baos</span><span class="p">);</span>
-        <span class="n">byte</span><span class="p">[]</span> <span class="n">bitmapByte</span> <span class="o">=</span> <span class="n">baos</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">();</span>
+    public void onClick(View v) {
+        Bitmap clipBitmap = getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        clipBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] bitmapByte = baos.toByteArray();
 
-        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Intent</span><span class="p">();</span>
-        <span class="n">intent</span><span class="p">.</span><span class="n">setClass</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="n">PreviewActivity</span><span class="p">.</span><span class="n">class</span><span class="p">);</span>
-        <span class="n">intent</span><span class="p">.</span><span class="n">putExtra</span><span class="p">(</span><span class="s">&quot;bitmap&quot;</span><span class="p">,</span> <span class="n">bitmapByte</span><span class="p">);</span>
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), PreviewActivity.class);
+        intent.putExtra(&quot;bitmap&quot;, bitmapByte);
 
-        <span class="n">startActivity</span><span class="p">(</span><span class="n">intent</span><span class="p">);</span>
-    <span class="p">}</span>
+        startActivity(intent);
+    }
 
-    <span class="cm">/**</span>
-<span class="cm">     * 获取裁剪框内截图</span>
-<span class="cm">     * </span>
-<span class="cm">     * @return</span>
-<span class="cm">     */</span>
-    <span class="n">private</span> <span class="n">Bitmap</span> <span class="n">getBitmap</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// 获取截屏</span>
-        <span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">this</span><span class="p">.</span><span class="n">getWindow</span><span class="p">().</span><span class="n">getDecorView</span><span class="p">();</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">setDrawingCacheEnabled</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">buildDrawingCache</span><span class="p">();</span>
+    /**
+     * 获取裁剪框内截图
+     * 
+     * @return
+     */
+    private Bitmap getBitmap() {
+        // 获取截屏
+        View view = this.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
 
-        <span class="c1">// 获取状态栏高度</span>
-        <span class="n">Rect</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Rect</span><span class="p">();</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">getWindow</span><span class="p">().</span><span class="n">getDecorView</span><span class="p">().</span><span class="n">getWindowVisibleDisplayFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-        <span class="kt">int</span> <span class="n">statusBarHeight</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">top</span><span class="p">;</span>
+        // 获取状态栏高度
+        Rect frame = new Rect();
+        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
 
-        <span class="n">Bitmap</span> <span class="n">finalBitmap</span> <span class="o">=</span> <span class="n">Bitmap</span><span class="p">.</span><span class="n">createBitmap</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">getDrawingCache</span><span class="p">(),</span>
-                <span class="n">clipview</span><span class="p">.</span><span class="n">getClipLeftMargin</span><span class="p">(),</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipTopMargin</span><span class="p">()</span>
-                        <span class="o">+</span> <span class="n">statusBarHeight</span><span class="p">,</span> <span class="n">clipview</span><span class="p">.</span><span class="n">getClipWidth</span><span class="p">(),</span>
-                <span class="n">clipview</span><span class="p">.</span><span class="n">getClipHeight</span><span class="p">());</span>
+        Bitmap finalBitmap = Bitmap.createBitmap(view.getDrawingCache(),
+                clipview.getClipLeftMargin(), clipview.getClipTopMargin()
+                        + statusBarHeight, clipview.getClipWidth(),
+                clipview.getClipHeight());
 
-        <span class="c1">// 释放资源</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">destroyDrawingCache</span><span class="p">();</span>
-        <span class="k">return</span> <span class="n">finalBitmap</span><span class="p">;</span>
-    <span class="p">}</span>
+        // 释放资源
+        view.destroyDrawingCache();
+        return finalBitmap;
+    }
 
-<span class="p">}</span>
+}
 </pre></div>
 
 
@@ -480,8 +501,10 @@
 <p>（图3.1）缩放图片，大家可以看到图片被放大了，只有一半白云，下方的湖面也少了。</p>
 <p><img alt="dowmload" src="/images/clip_3_2.png" /></p>
 <p>（图3.2）针对缩放图片进行裁剪截图操作，同样可以发现操作成功了。</p>
+<h3>注意</h3>
+<p>本例中，Activity之间传递截图是以Bitmap形式传递的，这是大忌，这有可能因Bitmap过大而导致APP崩溃。本文完全是出于方便，读者在实际使用中需注意。</p>
 <p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
-<p><a href="http://download.csdn.net/download/q541959443/8188455">DownLoad源码下载：DEMO</a></p>
+<p><a href="https://github.com/cowfighting/clippicture">GitHub源码下载：DEMO</a></p>
             </div><!-- /.entry-content -->
 			
 			
@@ -533,14 +556,6 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 		</ul>
 </div>
 

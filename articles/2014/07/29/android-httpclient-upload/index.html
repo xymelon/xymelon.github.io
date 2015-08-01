@@ -87,15 +87,15 @@
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2014-07-29T10:35:00">
-                周二 29 七月 2014
+			  <abbr class="published" title="2014-07-29T10:35:00+08:00">
+                二 29 七月 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周二 29 七月 2014
+				二 29 七月 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -108,16 +108,16 @@
 
 <h3>服务器端PHP</h3>
 <p>废话不多说，直接上代码：</p>
-<div class="highlight"><pre><span class="o">&lt;?</span><span class="nt">php</span>
-    <span class="err">$</span><span class="nt">target_path</span>  <span class="o">=</span> <span class="s2">&quot;./tmp/&quot;</span><span class="o">;//</span><span class="err">接收文件目录</span>  
-    <span class="err">$</span><span class="nt">target_path</span> <span class="o">=</span> <span class="err">$</span><span class="nt">target_path</span><span class="o">.(</span><span class="err">$</span><span class="nt">_FILES</span><span class="cp">[</span><span class="s1">&#39;file&#39;</span><span class="cp">][</span><span class="s1">&#39;name&#39;</span><span class="cp">]</span><span class="o">);</span>
-    <span class="err">$</span><span class="nt">target_path</span> <span class="o">=</span> <span class="nt">iconv</span><span class="o">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="o">,</span><span class="s2">&quot;gb2312&quot;</span><span class="o">,</span> <span class="err">$</span><span class="nt">target_path</span><span class="o">);</span>
-    <span class="nt">if</span><span class="o">(</span><span class="nt">move_uploaded_file</span><span class="o">(</span><span class="err">$</span><span class="nt">_FILES</span><span class="cp">[</span><span class="s1">&#39;file&#39;</span><span class="cp">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="cp">]</span><span class="o">,</span> <span class="err">$</span><span class="nt">target_path</span><span class="o">))</span> <span class="p">{</span>  
-       <span class="n">echo</span> <span class="s2">&quot;The file &quot;</span><span class="o">.</span><span class="p">(</span> <span class="err">$</span><span class="n">_FILES</span><span class="cp">[</span><span class="s1">&#39;file&#39;</span><span class="cp">][</span><span class="s1">&#39;name&#39;</span><span class="cp">]</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot; has been uploaded.&quot;</span><span class="p">;</span>
-    <span class="p">}</span><span class="nt">else</span><span class="p">{</span>  
-       <span class="n">echo</span> <span class="s2">&quot;There was an error uploading the file, please try again! Error Code: &quot;</span><span class="o">.</span><span class="err">$</span><span class="n">_FILES</span><span class="cp">[</span><span class="s1">&#39;file&#39;</span><span class="cp">][</span><span class="s1">&#39;error&#39;</span><span class="cp">]</span><span class="p">;</span>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+    <span class="nv">$target_path</span>  <span class="o">=</span> <span class="s2">&quot;./tmp/&quot;</span><span class="p">;</span><span class="c1">//接收文件目录  </span>
+    <span class="nv">$target_path</span> <span class="o">=</span> <span class="nv">$target_path</span><span class="o">.</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+    <span class="nv">$target_path</span> <span class="o">=</span> <span class="nb">iconv</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">,</span><span class="s2">&quot;gb2312&quot;</span><span class="p">,</span> <span class="nv">$target_path</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nv">$target_path</span><span class="p">))</span> <span class="p">{</span>  
+       <span class="k">echo</span> <span class="s2">&quot;The file &quot;</span><span class="o">.</span><span class="p">(</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span><span class="o">.</span><span class="s2">&quot; has been uploaded.&quot;</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>  
+       <span class="k">echo</span> <span class="s2">&quot;There was an error uploading the file, please try again! Error Code: &quot;</span><span class="o">.</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
     <span class="p">}</span>
-<span class="o">?&gt;</span>
+<span class="cp">?&gt;</span>
 </pre></div>
 
 
@@ -125,10 +125,10 @@
 <p>首先定义监听器接口，这和上文中是一样的，如下所示：</p>
 <div class="highlight"><pre><span class="cm">/**</span>
 <span class="cm"> * 进度监听器接口</span>
-<span class="cm"> */</span>
-<span class="n">public</span> <span class="k">interface</span> <span class="n">ProgressListener</span> <span class="p">{</span>
-    <span class="n">public</span> <span class="k">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="cm"> */</span><span class="w"></span>
+public<span class="w"> </span>interface<span class="w"> </span>ProgressListener<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>void<span class="w"> </span>transferred<span class="o">(</span>long<span class="w"> </span>transferedBytes<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
 </pre></div>
 
 
@@ -138,149 +138,149 @@
 <span class="cm"> * </span>
 <span class="cm"> * @author Cow</span>
 <span class="cm"> * </span>
-<span class="cm"> */</span>
-<span class="n">public</span> <span class="k">class</span> <span class="n">ProgressOutHttpEntity</span> <span class="k">extends</span> <span class="n">HttpEntityWrapper</span> <span class="p">{</span>
+<span class="cm"> */</span><span class="w"></span>
+public<span class="w"> </span>class<span class="w"> </span>ProgressOutHttpEntity<span class="w"> </span>extends<span class="w"> </span>HttpEntityWrapper<span class="w"> </span><span class="err">{</span><span class="w"></span>
 
-    <span class="n">private</span> <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">;</span>
+<span class="w">    </span>private<span class="w"> </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
 
-    <span class="n">public</span> <span class="n">ProgressOutHttpEntity</span><span class="p">(</span><span class="k">final</span> <span class="n">HttpEntity</span> <span class="n">entity</span><span class="p">,</span>
-            <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="n">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span>public<span class="w"> </span>ProgressOutHttpEntity<span class="o">(</span>final<span class="w"> </span>HttpEntity<span class="w"> </span>entity<span class="o">,</span><span class="w"></span>
+<span class="w">            </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="o">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>super<span class="o">(</span>entity<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span>this<span class="o">.</span>listener<span class="w"> </span><span class="o">=</span><span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="n">public</span> <span class="k">static</span> <span class="k">class</span> <span class="n">CountingOutputStream</span> <span class="k">extends</span> <span class="n">FilterOutputStream</span> <span class="p">{</span>
+<span class="w">    </span>public<span class="w"> </span>static<span class="w"> </span>class<span class="w"> </span>CountingOutputStream<span class="w"> </span>extends<span class="w"> </span>FilterOutputStream<span class="w"> </span><span class="err">{</span><span class="w"></span>
 
-        <span class="n">private</span> <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">;</span>
-        <span class="n">private</span> <span class="n">long</span> <span class="n">transferred</span><span class="p">;</span>
+<span class="w">        </span>private<span class="w"> </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
+<span class="w">        </span>private<span class="w"> </span>long<span class="w"> </span>transferred<span class="err">;</span><span class="w"></span>
 
-        <span class="n">CountingOutputStream</span><span class="p">(</span><span class="k">final</span> <span class="n">OutputStream</span> <span class="n">out</span><span class="p">,</span>
-                <span class="k">final</span> <span class="n">ProgressListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">super</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
-        <span class="p">}</span>
+<span class="w">        </span>CountingOutputStream<span class="o">(</span>final<span class="w"> </span>OutputStream<span class="w"> </span>out<span class="o">,</span><span class="w"></span>
+<span class="w">                </span>final<span class="w"> </span>ProgressListener<span class="w"> </span>listener<span class="o">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">            </span>super<span class="o">(</span>out<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>listener<span class="w"> </span><span class="o">=</span><span class="w"> </span>listener<span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>transferred<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="err">}</span><span class="w"></span>
 
-        <span class="p">@</span><span class="n">Override</span>
-        <span class="n">public</span> <span class="k">void</span> <span class="n">write</span><span class="p">(</span><span class="k">final</span> <span class="k">byte</span><span class="p">[]</span> <span class="n">b</span><span class="p">,</span> <span class="k">final</span> <span class="k">int</span> <span class="n">off</span><span class="p">,</span> <span class="k">final</span> <span class="k">int</span> <span class="n">len</span><span class="p">)</span>
-                <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-            <span class="c1">// NO, double-counting, as super.write(byte[], int, int)</span>
-            <span class="c1">// delegates to write(int).</span>
-            <span class="c1">// super.write(b, off, len);</span>
-            <span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">transferred</span> <span class="o">+=</span> <span class="n">len</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">listener</span><span class="p">.</span><span class="n">transferred</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">transferred</span><span class="p">);</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">        </span>public<span class="w"> </span>void<span class="w"> </span>write<span class="o">(</span>final<span class="w"> </span>byte<span class="err">[]</span><span class="w"> </span>b<span class="o">,</span><span class="w"> </span>final<span class="w"> </span>int<span class="w"> </span><span class="kr">off</span><span class="o">,</span><span class="w"> </span>final<span class="w"> </span>int<span class="w"> </span>len<span class="o">)</span><span class="w"></span>
+<span class="w">                </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span>NO<span class="o">,</span><span class="w"> </span>double<span class="o">-</span>counting<span class="o">,</span><span class="w"> </span>as<span class="w"> </span>super<span class="o">.</span>write<span class="o">(</span>byte<span class="err">[]</span><span class="o">,</span><span class="w"> </span>int<span class="o">,</span><span class="w"> </span>int<span class="o">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span>delegates<span class="w"> </span><span class="kr">to</span><span class="w"> </span>write<span class="o">(</span>int<span class="o">).</span><span class="w"></span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span>super<span class="o">.</span>write<span class="o">(</span>b<span class="o">,</span><span class="w"> </span><span class="kr">off</span><span class="o">,</span><span class="w"> </span>len<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">            </span>out<span class="o">.</span>write<span class="o">(</span>b<span class="o">,</span><span class="w"> </span><span class="kr">off</span><span class="o">,</span><span class="w"> </span>len<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>transferred<span class="w"> </span><span class="o">+=</span><span class="w"> </span>len<span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>listener<span class="o">.</span>transferred<span class="o">(</span>this<span class="o">.</span>transferred<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="err">}</span><span class="w"></span>
 
-        <span class="p">@</span><span class="n">Override</span>
-        <span class="n">public</span> <span class="k">void</span> <span class="n">write</span><span class="p">(</span><span class="k">final</span> <span class="k">int</span> <span class="n">b</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-            <span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">transferred</span><span class="o">++</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="n">listener</span><span class="p">.</span><span class="n">transferred</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">transferred</span><span class="p">);</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">        </span>public<span class="w"> </span>void<span class="w"> </span>write<span class="o">(</span>final<span class="w"> </span>int<span class="w"> </span>b<span class="o">)</span><span class="w"> </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">            </span>out<span class="o">.</span>write<span class="o">(</span>b<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>transferred<span class="o">++</span><span class="err">;</span><span class="w"></span>
+<span class="w">            </span>this<span class="o">.</span>listener<span class="o">.</span>transferred<span class="o">(</span>this<span class="o">.</span>transferred<span class="o">)</span><span class="err">;</span><span class="w"></span>
+<span class="w">        </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">}</span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
 
-    <span class="p">@</span><span class="n">Override</span>
-    <span class="n">public</span> <span class="k">void</span> <span class="n">writeTo</span><span class="p">(</span><span class="k">final</span> <span class="n">OutputStream</span> <span class="n">out</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="n">wrappedEntity</span><span class="p">.</span><span class="n">writeTo</span><span class="p">(</span><span class="n">out</span> <span class="n">instanceof</span> <span class="n">CountingOutputStream</span> <span class="o">?</span> <span class="n">out</span>
-                <span class="o">:</span> <span class="k">new</span> <span class="n">CountingOutputStream</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="n">listener</span><span class="p">));</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="err">@</span>Override<span class="w"></span>
+<span class="w">    </span>public<span class="w"> </span>void<span class="w"> </span>writeTo<span class="o">(</span>final<span class="w"> </span>OutputStream<span class="w"> </span>out<span class="o">)</span><span class="w"> </span>throws<span class="w"> </span>IOException<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span>this<span class="o">.</span>wrappedEntity<span class="o">.</span>writeTo<span class="o">(</span>out<span class="w"> </span>instanceof<span class="w"> </span>CountingOutputStream<span class="w"> </span><span class="err">?</span><span class="w"> </span><span class="nl">out</span><span class="w"></span>
+<span class="w">                </span><span class="o">:</span><span class="w"> </span>new<span class="w"> </span>CountingOutputStream<span class="o">(</span>out<span class="o">,</span><span class="w"> </span>this<span class="o">.</span>listener<span class="o">))</span><span class="err">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
 </pre></div>
 
 
 <p>最后就是使用上述实现的类和Httpclient进行上传并显示进度的功能，非常简单，代码如下，使用AsyncTask异步上传。</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">FileUploadAsyncTask</span> <span class="n">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">File</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">public</span> <span class="nt">class</span> <span class="nt">FileUploadAsyncTask</span> <span class="nt">extends</span> <span class="nt">AsyncTask</span><span class="o">&lt;</span><span class="nt">File</span><span class="o">,</span> <span class="nt">Integer</span><span class="o">,</span> <span class="nt">String</span><span class="o">&gt;</span> <span class="p">{</span>
 
-    <span class="n">private</span> <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://192.168.83.213/receive_file.php&quot;</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">String</span> <span class="k">url</span> <span class="o">=</span> <span class="s2">&quot;http://192.168.83.213/receive_file.php&quot;</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">Context</span> <span class="n">context</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">ProgressDialog</span> <span class="n">pd</span><span class="p">;</span>
-    <span class="n">private</span> <span class="kt">long</span> <span class="n">totalSize</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">long</span> <span class="n">totalSize</span><span class="p">;</span>
 
-    <span class="n">public</span> <span class="nf">FileUploadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">this</span><span class="p">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">FileUploadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="err">{</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPreExecute</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">pd</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ProgressDialog</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setProgressStyle</span><span class="p">(</span><span class="n">ProgressDialog</span><span class="p">.</span><span class="n">STYLE_HORIZONTAL</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setMessage</span><span class="p">(</span><span class="s">&quot;上传中....&quot;</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setCancelable</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPreExecute</span><span class="o">()</span> <span class="p">{</span>
+        <span class="nt">pd</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ProgressDialog</span><span class="o">(</span><span class="nt">context</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setProgressStyle</span><span class="o">(</span><span class="nt">ProgressDialog</span><span class="nc">.STYLE_HORIZONTAL</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setMessage</span><span class="o">(</span><span class="s2">&quot;上传中....&quot;</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.setCancelable</span><span class="o">(</span><span class="nt">false</span><span class="o">);</span>
+        <span class="nt">pd</span><span class="nc">.show</span><span class="o">();</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="n">String</span> <span class="n">doInBackground</span><span class="p">(</span><span class="n">File</span><span class="p">...</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 保存需上传文件信息</span>
-        <span class="n">MultipartEntityBuilder</span> <span class="n">entitys</span> <span class="o">=</span> <span class="n">MultipartEntityBuilder</span><span class="p">.</span><span class="n">create</span><span class="p">();</span>
-        <span class="n">entitys</span><span class="p">.</span><span class="n">setMode</span><span class="p">(</span><span class="n">HttpMultipartMode</span><span class="p">.</span><span class="n">BROWSER_COMPATIBLE</span><span class="p">);</span>
-        <span class="n">entitys</span><span class="p">.</span><span class="n">setCharset</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="n">forName</span><span class="p">(</span><span class="n">HTTP</span><span class="p">.</span><span class="n">UTF_8</span><span class="p">));</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">String</span> <span class="nt">doInBackground</span><span class="o">(</span><span class="nt">File</span><span class="o">...</span> <span class="nt">params</span><span class="o">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="err">保存需上传文件信息</span>
+        <span class="nt">MultipartEntityBuilder</span> <span class="nt">entitys</span> <span class="o">=</span> <span class="nt">MultipartEntityBuilder</span><span class="nc">.create</span><span class="o">();</span>
+        <span class="nt">entitys</span><span class="nc">.setMode</span><span class="o">(</span><span class="nt">HttpMultipartMode</span><span class="nc">.BROWSER_COMPATIBLE</span><span class="o">);</span>
+        <span class="nt">entitys</span><span class="nc">.setCharset</span><span class="o">(</span><span class="nt">Charset</span><span class="nc">.forName</span><span class="o">(</span><span class="nt">HTTP</span><span class="nc">.UTF_8</span><span class="o">));</span>
 
-        <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="n">entitys</span><span class="p">.</span><span class="n">addPart</span><span class="p">(</span><span class="s">&quot;file&quot;</span><span class="p">,</span> <span class="n">new</span> <span class="n">FileBody</span><span class="p">(</span><span class="n">file</span><span class="p">));</span>
-        <span class="n">HttpEntity</span> <span class="n">httpEntity</span> <span class="o">=</span> <span class="n">entitys</span><span class="p">.</span><span class="n">build</span><span class="p">();</span>
-        <span class="n">totalSize</span> <span class="o">=</span> <span class="n">httpEntity</span><span class="p">.</span><span class="n">getContentLength</span><span class="p">();</span>
-        <span class="n">ProgressOutHttpEntity</span> <span class="n">progressHttpEntity</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ProgressOutHttpEntity</span><span class="p">(</span>
-                <span class="n">httpEntity</span><span class="p">,</span> <span class="n">new</span> <span class="n">ProgressListener</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="err">@</span><span class="n">Override</span>
-                    <span class="n">public</span> <span class="kt">void</span> <span class="n">transferred</span><span class="p">(</span><span class="kt">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">publishProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="n">totalSize</span><span class="p">));</span>
+        <span class="nt">File</span> <span class="nt">file</span> <span class="o">=</span> <span class="nt">params</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span>
+        <span class="nt">entitys</span><span class="nc">.addPart</span><span class="o">(</span><span class="s2">&quot;file&quot;</span><span class="o">,</span> <span class="nt">new</span> <span class="nt">FileBody</span><span class="o">(</span><span class="nt">file</span><span class="o">));</span>
+        <span class="nt">HttpEntity</span> <span class="nt">httpEntity</span> <span class="o">=</span> <span class="nt">entitys</span><span class="nc">.build</span><span class="o">();</span>
+        <span class="nt">totalSize</span> <span class="o">=</span> <span class="nt">httpEntity</span><span class="nc">.getContentLength</span><span class="o">();</span>
+        <span class="nt">ProgressOutHttpEntity</span> <span class="nt">progressHttpEntity</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ProgressOutHttpEntity</span><span class="o">(</span>
+                <span class="nt">httpEntity</span><span class="o">,</span> <span class="nt">new</span> <span class="nt">ProgressListener</span><span class="o">()</span> <span class="p">{</span>
+                    <span class="o">@</span><span class="n">Override</span>
+                    <span class="n">public</span> <span class="n">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="err">{</span>
+                        <span class="n">publishProgress</span><span class="p">((</span><span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="n">totalSize</span><span class="p">));</span>
                     <span class="p">}</span>
-                <span class="p">});</span>
-        <span class="k">return</span> <span class="nf">uploadFile</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">progressHttpEntity</span><span class="p">);</span>
+                <span class="p">}</span><span class="o">);</span>
+        <span class="nt">return</span> <span class="nt">uploadFile</span><span class="o">(</span><span class="nt">url</span><span class="o">,</span> <span class="nt">progressHttpEntity</span><span class="o">);</span>
+    <span class="err">}</span>
+
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onProgressUpdate</span><span class="o">(</span><span class="nt">Integer</span><span class="o">...</span> <span class="nt">progress</span><span class="o">)</span> <span class="p">{</span>
+        <span class="nt">pd</span><span class="nc">.setProgress</span><span class="o">((</span><span class="nt">int</span><span class="o">)</span> <span class="o">(</span><span class="nt">progress</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">));</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onProgressUpdate</span><span class="p">(</span><span class="n">Integer</span><span class="p">...</span> <span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">setProgress</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">progress</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+    <span class="k">@Override</span>
+    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPostExecute</span><span class="o">(</span><span class="nt">String</span> <span class="nt">result</span><span class="o">)</span> <span class="p">{</span>
+        <span class="nt">pd</span><span class="nc">.dismiss</span><span class="o">();</span>
+        <span class="nt">Toast</span><span class="nc">.makeText</span><span class="o">(</span><span class="nt">context</span><span class="o">,</span> <span class="nt">result</span><span class="o">,</span> <span class="nt">Toast</span><span class="nc">.LENGTH_SHORT</span><span class="o">)</span><span class="nc">.show</span><span class="o">();</span>
     <span class="p">}</span>
 
-    <span class="err">@</span><span class="n">Override</span>
-    <span class="n">protected</span> <span class="kt">void</span> <span class="n">onPostExecute</span><span class="p">(</span><span class="n">String</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">pd</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-        <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_SHORT</span><span class="p">).</span><span class="n">show</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="cm">/**</span>
-<span class="cm">     * 上传文件到服务器</span>
-<span class="cm">     * </span>
-<span class="cm">     * @param url</span>
-<span class="cm">     *            服务器地址</span>
-<span class="cm">     * @param entity</span>
-<span class="cm">     *            文件</span>
-<span class="cm">     * @return</span>
-<span class="cm">     */</span>
-    <span class="n">public</span> <span class="k">static</span> <span class="n">String</span> <span class="n">uploadFile</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">ProgressOutHttpEntity</span> <span class="n">entity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c">/**</span>
+<span class="c">     * 上传文件到服务器</span>
+<span class="c">     * </span>
+<span class="c">     * @param url</span>
+<span class="c">     *            服务器地址</span>
+<span class="c">     * @param entity</span>
+<span class="c">     *            文件</span>
+<span class="c">     * @return</span>
+<span class="c">     */</span>
+    <span class="nt">public</span> <span class="nt">static</span> <span class="nt">String</span> <span class="nt">uploadFile</span><span class="o">(</span><span class="nt">String</span> <span class="nt">url</span><span class="o">,</span> <span class="nt">ProgressOutHttpEntity</span> <span class="nt">entity</span><span class="o">)</span> <span class="p">{</span>
         <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="n">new</span> <span class="n">DefaultHttpClient</span><span class="p">();</span>
-        <span class="n">httpClient</span><span class="p">.</span><span class="n">getParams</span><span class="p">().</span><span class="n">setParameter</span><span class="p">(</span>
-                <span class="n">CoreProtocolPNames</span><span class="p">.</span><span class="n">PROTOCOL_VERSION</span><span class="p">,</span> <span class="n">HttpVersion</span><span class="p">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
-        <span class="c1">// 设置连接超时时间</span>
-        <span class="n">httpClient</span><span class="p">.</span><span class="n">getParams</span><span class="p">().</span><span class="n">setParameter</span><span class="p">(</span>
-                <span class="n">CoreConnectionPNames</span><span class="p">.</span><span class="n">CONNECTION_TIMEOUT</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
-        <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-        <span class="n">httpPost</span><span class="p">.</span><span class="n">setEntity</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="n">try</span> <span class="p">{</span>
-            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="p">.</span><span class="n">getStatusLine</span><span class="p">().</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="s">&quot;文件上传成功&quot;</span><span class="p">;</span>
+        <span class="n">httpClient</span><span class="o">.</span><span class="n">getParams</span><span class="p">()</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span>
+                <span class="n">CoreProtocolPNames</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
+        <span class="o">//</span> <span class="err">设置连接超时时间</span>
+        <span class="n">httpClient</span><span class="o">.</span><span class="n">getParams</span><span class="p">()</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span>
+                <span class="n">CoreConnectionPNames</span><span class="o">.</span><span class="n">CONNECTION_TIMEOUT</span><span class="o">,</span> <span class="m">5000</span><span class="p">);</span>
+        <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="k">url</span><span class="p">);</span>
+        <span class="n">httpPost</span><span class="o">.</span><span class="n">setEntity</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
+        <span class="n">try</span> <span class="err">{</span>
+            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
+            <span class="n">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="n">getStatusLine</span><span class="p">()</span><span class="o">.</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="o">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="err">{</span>
+                <span class="n">return</span> <span class="s2">&quot;文件上传成功&quot;</span><span class="p">;</span>
             <span class="p">}</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ClientProtocolException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ConnectTimeoutException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">httpClient</span><span class="p">.</span><span class="n">getConnectionManager</span><span class="p">().</span><span class="n">shutdown</span><span class="p">();</span>
+        <span class="err">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ClientProtocolException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ConnectTimeoutException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">Exception</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="nt">finally</span> <span class="p">{</span>
+            <span class="n">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="err">{</span>
+                <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span><span class="o">.</span><span class="n">shutdown</span><span class="p">();</span>
             <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="s">&quot;文件上传失败&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+        <span class="err">}</span>
+        <span class="nt">return</span> <span class="s2">&quot;文件上传失败&quot;</span><span class="o">;</span>
+    <span class="err">}</span>
 
-<span class="p">}</span>
+<span class="err">}</span>
 </pre></div>
 
 
@@ -344,14 +344,6 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 		</ul>
 </div>
 

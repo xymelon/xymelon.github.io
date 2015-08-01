@@ -87,15 +87,15 @@
             </header>
             <footer class="post-info">
               <!--
-			  <abbr class="published" title="2013-11-22T08:00:00">
-                周五 22 十一月 2013
+			  <abbr class="published" title="2013-11-22T08:00:00+08:00">
+                五 22 十一月 2013
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				周五 22 十一月 2013
+				五 22 十一月 2013
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -114,41 +114,41 @@
 <h3>URL配置</h3>
 <p>一个好的URL地址不光搜索引擎友好，也让自己看得舒心，pelican中也完全考虑到这一点，只需简单的配置就可打造出漂亮的URL。</p>
 <p>打开<code>pelicanconf.py</code>配置文件，按照如下修改或添加，具体配置请参见<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
-<div class="highlight"><pre><span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pages</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">Y</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">m</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">d</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">slug</span><span class="p">}</span><span class="o">/</span><span class="err">&#39;</span>
-<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pages</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">Y</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">m</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">date</span><span class="o">:%</span><span class="n">d</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">slug</span><span class="p">}</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">html</span><span class="err">&#39;</span>
+<div class="highlight"><pre>ARTICLE_URL = &#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/&#39;
+ARTICLE_SAVE_AS = &#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html&#39;
 </pre></div>
 
 
 <h3>pelican插件</h3>
 <p>插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了<code>sitemap</code>,<code>summary</code>,<code>neighbors</code>等插件。首先，和主题一样，选择一个文件夹，去<a href="https://github.com/getpelican/pelican-plugins">pelican插件开源库</a>clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。</p>
-<div class="highlight"><pre><span class="c1">//clone插件</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="nl">https:</span><span class="c1">//github.com/getpelican/pelican-plugins</span>
+<div class="highlight"><pre>//clone插件
+git clone https://github.com/getpelican/pelican-plugins
 </pre></div>
 
 
 <p>打开<code>pelicanconf.py</code>配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。</p>
-<div class="highlight"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">pelican</span><span class="o">-</span><span class="n">plugins</span><span class="err">&#39;</span>     <span class="c1">//设置路径</span>
-<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">summary</span><span class="sc">&#39;,&#39;</span><span class="n">sitemap</span><span class="sc">&#39;,&#39;</span><span class="n">neighbors</span><span class="err">&#39;</span><span class="p">]</span> <span class="c1">//选用插件</span>
+<div class="highlight"><pre>PLUGIN_PATH = &#39;pelican-plugins&#39;     //设置路径
+PLUGINS = [&#39;summary&#39;,&#39;sitemap&#39;,&#39;neighbors&#39;] //选用插件
 
-<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="err">&#39;</span><span class="n">format</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">xml</span><span class="err">&#39;</span><span class="p">,</span>
-    <span class="err">&#39;</span><span class="n">priorities</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="err">&#39;</span><span class="n">articles</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.7</span><span class="p">,</span>
-        <span class="err">&#39;</span><span class="n">indexes</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="err">&#39;</span><span class="n">pages</span><span class="err">&#39;</span><span class="o">:</span> <span class="mf">0.5</span>
-    <span class="p">},</span>
-    <span class="err">&#39;</span><span class="n">changefreqs</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="err">&#39;</span><span class="n">articles</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">monthly</span><span class="err">&#39;</span><span class="p">,</span>
-        <span class="err">&#39;</span><span class="n">indexes</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">daily</span><span class="err">&#39;</span><span class="p">,</span>
-        <span class="err">&#39;</span><span class="n">pages</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">monthly</span><span class="err">&#39;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+SITEMAP = {
+    &#39;format&#39;: &#39;xml&#39;,
+    &#39;priorities&#39;: {
+        &#39;articles&#39;: 0.7,
+        &#39;indexes&#39;: 0.5,
+        &#39;pages&#39;: 0.5
+    },
+    &#39;changefreqs&#39;: {
+        &#39;articles&#39;: &#39;monthly&#39;,
+        &#39;indexes&#39;: &#39;daily&#39;,
+        &#39;pages&#39;: &#39;monthly&#39;
+    }
+}
 </pre></div>
 
 
 <h3>Google Analytics和Google Webmasters</h3>
 <p>注册<a href="http://www.google.com/analytics/">Google Analytics</a>和<a href="http://www.google.com/webmasters/">Google Webmasters</a>可以更好的管理自己的站点，更好的让google收录等。具体教程非常简单，注册完基本就能知道~最后记得在<code>pelicanconf.py</code>中进行配置。</p>
-<div class="highlight"><pre><span class="n">GOOGLE_ANALYTICS</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">Tracking</span> <span class="n">ID</span><span class="err">&#39;</span>
+<div class="highlight"><pre>GOOGLE_ANALYTICS = &#39;Tracking ID&#39;
 </pre></div>
 
 
@@ -213,14 +213,6 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
 		</ul>
 </div>
 
