@@ -181,7 +181,7 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
         <span class="nt">AsyncTask</span><span class="o">&lt;</span><span class="nt">ImageView</span><span class="o">,</span> <span class="nt">Integer</span><span class="o">,</span> <span class="nt">Bitmap</span><span class="o">&gt;</span> <span class="p">{</span>
 
     <span class="o">//</span> <span class="err">图片下载地址</span>
-    <span class="n">private</span> <span class="n">String</span> <span class="k">url</span> <span class="o">=</span> <span class="s2">&quot;http://192.168.83.213/upload/1.jpg&quot;</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">String</span> <span class="k">url</span> <span class="o">=</span> <span class="s2">&quot;http://img0.bdstatic.com/img/image/shouye/leimu/mingxing.jpg&quot;</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">Context</span> <span class="n">context</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">ProgressDialog</span> <span class="n">pd</span><span class="p">;</span>
     <span class="n">private</span> <span class="n">ImageView</span> <span class="n">image</span><span class="p">;</span>
@@ -212,8 +212,8 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
         <span class="nt">try</span> <span class="p">{</span>
             <span class="n">httpClient</span><span class="o">.</span><span class="n">getParams</span><span class="p">()</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span>
                     <span class="n">CoreProtocolPNames</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
-            <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpPost</span><span class="p">(</span><span class="k">url</span><span class="p">);</span>
-            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpPost</span><span class="p">);</span>
+            <span class="n">HttpGet</span> <span class="n">httpGet</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpGet</span><span class="p">(</span><span class="k">url</span><span class="p">);</span>
+            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpGet</span><span class="p">);</span>
             <span class="n">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="n">getStatusLine</span><span class="p">()</span><span class="o">.</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="o">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="err">{</span>
                 <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">httpResponse</span><span class="o">.</span><span class="n">getEntity</span><span class="p">();</span>
                 <span class="n">final</span> <span class="n">long</span> <span class="k">size</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getContentLength</span><span class="p">();</span>
@@ -316,7 +316,7 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 <p>最后的最后，下载效果图如下：</p>
 <p><img alt="dowmload" src="/images/image-download.png" /></p>
 <p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
-<p><a href="http://download.csdn.net/detail/q541959443/7692621">DownLoad源码下载：DEMO</a></p>
+<p><a href="https://github.com/cowfighting/ImageWithProgress">GitHub源码下载：DEMO</a></p>
             </div><!-- /.entry-content -->
 			
 			
@@ -373,14 +373,10 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/layout.html">layout</a></li>
 			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/quan-xian-guan-li.html">权限管理</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">linux</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
 			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/github-pages.html">github pages</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/sed.html">sed</a></li>
 		</ul>
 </div>
 
