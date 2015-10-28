@@ -1,0 +1,416 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+        <title>Android仿腾讯新闻创意截屏</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		
+        <meta charset="utf-8" />
+        <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/pygment.css" />
+
+        <script src="http://www.xycoding.com/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+              <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-46026074-1', 'www.xycoding.com');
+                ga('send', 'pageview');
+
+              </script>
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+<!-- Fork me on github -->
+<a target="_blank" href="https://github.com/cowfighting">
+	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
+</a>
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="http://www.xycoding.com">Coding Our World <strong>Life is not fair -- Get used to it!</strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
+					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+				<li><a href="/functions/archives.html">Archives</a></li>
+				<li><a href="/functions/random.html">Random Article</a></li>
+				<!--
+					<li><a href="/functions/categories.html">Categories</a></li>
+					<li><a href="/functions/tags.html">Tags</a></li>
+					<li><a href="/functions/archives.html">Archives</a></li>
+					<li><a href="/functions/random.html">Random Article</a></li>
+				
+				-->
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/" rel="bookmark"
+                   title="Permalink to Android仿腾讯新闻创意截屏">Android仿腾讯新闻创意截屏</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <!--
+			  <abbr class="published" title="2015-10-27T19:34:00+08:00">
+                二 27 十月 2015
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+              </address>
+			  -->
+			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
+				二 27 十月 2015
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
+	
+			  </address>
+			  <hr />			  
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。</p>
+
+
+<h3>截屏预览</h3>
+<p>首先看看实现后的整个创意截屏的样子吧，最直观。PS：在我的几个测试机上基本没有卡顿现象，很流畅。</p>
+<p><img alt="dowmload" src="/images/novcapture_1.png.png" /></p>
+<p>（图1）打开APP后，显示主界面。</p>
+<p><img alt="dowmload" src="/images/novcapture_2.png" /></p>
+<p>（图2）点击图1中“截取屏幕”按钮，即可截取主界面并显示。</p>
+<p><img alt="dowmload" src="/images/novcapture_3.png" /></p>
+<p>（图3）点击屏幕下方“盖章”按钮，即可在截图中添加标签。</p>
+<p><img alt="dowmload" src="/images/novcapture_4.png" /></p>
+<p>（图4）点击添加的标签，即可更改文字内容。</p>
+<h3>关键细节</h3>
+<p>起初看到创意截屏这个功能，私以为比较简单，结果在进行编码过程中，才发现里面有很多细节需要进行考虑。</p>
+<ol>
+<li>
+<p>标签（图中虚线框容器）不能完全使用ViewGroup进行拼装，不然进行缩放、旋转、拖动时会出现两个问题：</p>
+<ul>
+<li>性能问题，会出现明显的卡顿现象；</li>
+<li>显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。</li>
+</ul>
+<p>在本文中，<strong>关键解决方案在于将整个标签内容ViewGroup生成Bitmap，然后维护标签、删除、拖放按钮等的绘制矩阵，在onDraw中自定义绘画</strong>，非常灵活，性能很不错。</p>
+</li>
+<li>
+<p>缩放、旋转、拖动相关，其中每个功能都有多种实现方式，比如旋转可用库函数setRotation或canvas.rotate画布操作、拖动可动态改变margin或使用canvas.translate实现等。先不说使用库函数会遇到兼容低版本问题，而且对性能也有很大影响，如当缩放比例很大时，拖动过程中会出现非常明显的卡顿现象。在本文中，<strong>针对标签的使用场景（频繁缩放、旋转、拖动等）选用画布Canvas操作才是上策</strong>。</p>
+</li>
+<li>
+<p>事件分发，当容器中存在多个标签时（如图3），就会判断是哪个标签接收并处理事件。通过上段知道，我放弃使用库函数进行缩放、旋转、拖动，选用画布Canvas进行操作，同样，Canvas操作也带来了另外的问题，如：</p>
+<ul>
+<li>事件接收的坐标点不会跟着Canvas改变，如View在A坐标canvas.translate移动到B坐标后，View接收事件的坐标点还是会停留在原A坐标。因此，我们还需<strong>手动维护虚线框、删除、缩放与旋转按钮的当前绘制矩阵，以便事件分发时判定</strong>。</li>
+<li>
+<p>当View旋转后，如何判定坐标是否在View区域内。如下面图5所示，假设蓝色矩形为我们维护的原始矩阵matrix，当我们调用matrix.postRotate进行旋转操作后，matrix会变成图5中的虚线框区域，而实际上应该为绿色区域，若不进行处理，则会判断错误。<strong>本文中使用了小技巧，即我们维护一个未旋转的matrix(包含缩放、拖动)和一个旋转角度变量rotation。当判断图中点A是否在绿色区域内，则可将其反向旋转rotation后变成点B，判断点B是否在蓝色矩形中即可</strong>。</p>
+<p><img alt="dowmload" src="/images/novcapture_5.png" /></p>
+<p>（图5）坐标点判断示例。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>虚线框绘画，使用<a href="http://developer.android.com/reference/android/graphics/DashPathEffect.html" target="_blank">DashPathEffect</a>绘制虚线框时，为了能让其动起来，不可避免地会根据phase创建很多对象，若不能有效处理，则会导致频繁地内存回收，影响性能。本文中优化方式是根据虚线框实、虚线长度创建多个对象循环使用，如：</p>
+<div class="highlight"><pre>private PathEffect getPathEffect() {
+    // phase值在 0 - mDashMinSize 之间循环
+    mDashPhase %= mDashMinSize;
+    PathEffect effect = mPathEffects[mDashPhase];
+    // 判定当前phase的DashPathEffect对象是否创建，是则循环使用，反之新建
+    if (effect == null) {
+        effect = new DashPathEffect(mDashFloats, mDashPhase);
+        mPathEffects[mDashPhase] = effect;
+    }
+    mDashPhase++;
+    return effect;
+}
+</pre></div>
+
+
+</li>
+<li>
+<p>软键盘遮挡输入框或界面上移。当我们需要编辑文本的时候，基本都会遇到软键盘把输入框遮挡或导致界面整个上提的问题，google一圈下来基本都是说调整android:windowSoftInputMode属性为"adjustResize"或"adjustPan"，而这并不能完全解决问题还需要调整布局，比较麻烦。本文使用的方法是将输入框放入dialog或popupwindow中，这不但可以解决前述问题，还能将代码组织得更模块化。</p>
+</li>
+</ol>
+<h3>代码分析</h3>
+<p><img alt="dowmload" src="/images/novcapture_6.png" /></p>
+<p>（图5）代码组织结构。</p>
+<p>先说说整个代码结构吧，核心在图5 labeller 库中的<code>CaptureView</code>和<code>DashFrameLayout</code>。</p>
+<h4>CaptureView</h4>
+<p>本类主要负责整个创意截屏界面处理，即图2中绿色标题栏以下部分，包含内容、下方添加标签、输入框等区域。
+有个关键地方就是当设置完成图片内容后，内容区域的高宽度需要完全匹配图片大小，否则当进行拖动操作时，标签会移出图片，最后的保存操作时也会出现空白区域，非常不美观。关键代码如下：</p>
+<div class="highlight"><pre>    private void setImageBitmap(Bitmap bitmap) {
+        mContainerLayout.getLayoutParams().width = bitmap.getWidth();
+        mContainerLayout.getLayoutParams().height = bitmap.getHeight();
+        mImageIV.getLayoutParams().width = bitmap.getWidth();
+        mImageIV.getLayoutParams().height = bitmap.getHeight();
+        mImageIV.setImageBitmap(bitmap);
+    }
+</pre></div>
+
+
+<p>添加标签时，还需维护当前处于焦点的标签，以便处理是否显示虚线框，如下：</p>
+<div class="highlight"><pre>    private void addLabel(View view) {
+        final DashFrameLayout dashFrameLayout = new DashFrameLayout(getContext());
+        // 添加监听器，记录状态
+        dashFrameLayout.setLabelListener(new DashFrameLayout.LabelListener() {
+            @Override
+            public void onFocus() {
+                mFocusLabel = dashFrameLayout;
+            }
+
+            @Override
+            public void onClick() {
+                onLabelClick();
+            }
+        });
+        dashFrameLayout.addView(view);
+
+        hideFocusLabelDashBorder();
+        mFocusLabel = dashFrameLayout;
+
+        mContainerLayout.addView(dashFrameLayout);
+    }
+</pre></div>
+
+
+<h4>DashFrameLayout</h4>
+<p>本类应该是创意截屏功能的核心所在，即标签（虚线框容器），包含几大部分：左上角删除按钮、右下角拖放与旋转按钮、中间虚线框容器、标签内容。</p>
+<p>初始时，需计算各个部分的绘制矩阵，并将标签内容生成bitmap，提高性能。核心代码如下：</p>
+<div class="highlight"><pre>        Rect rect = new Rect();
+        mChildView.getLocalVisibleRect(rect);
+
+        // 计算虚线框绘制位置，注意虚线框与label之间存在margin
+        mDashRectF.left = rect.left - margin;
+        mDashRectF.top = rect.top - margin;
+        mDashRectF.right = rect.right + margin;
+        mDashRectF.bottom = rect.bottom + margin;
+
+        // 计算删除按钮初始中心坐标
+        mDelPoint[0] = mDashRectF.left;
+        mDelPoint[1] = mDashRectF.top;
+
+        // 计算拖放按钮初始中心坐标
+        mDragPoint[0] = mDashRectF.right;
+        mDragPoint[1] = mDashRectF.bottom;
+
+        // 将view转换为bitmap，便于旋转、缩放时提高性能
+        mLabelBitmap = ImageUtils.captureScreenByDraw(mChildView);
+</pre></div>
+
+
+<p>然后根据维护的矩阵，自定义onDraw方法，如下：</p>
+<div class="highlight"><pre>    @Override
+    protected void onDraw(Canvas canvas) {
+        // 画标签
+        canvas.drawBitmap(mLabelBitmap, mViewMatrix, null);
+        if (mShowDashBorder) {
+            // 画虚线框
+            mDashPaint.setPathEffect(getPathEffect());
+            canvas.save();
+            canvas.concat(mViewMatrix);
+            canvas.drawPath(mDashPath, mDashPaint);
+            canvas.restore();
+
+            // 画删除按钮：左上角
+            canvas.drawBitmap(mDelBitmap, null, mDelDrawRectF, null);
+
+            // 画拖放按钮：右下角
+            canvas.drawBitmap(mDragBitmap, null, mDragDrawRectF, null);
+        }
+    }
+</pre></div>
+
+
+<p>其他很关键的比如事件分发，因代码过长，不在此累述，请参考源代码中onTouchEvent实现方法。PS：单手旋转、缩放操作，可将其认为双手操作，只不过其中一只手固定在标签中心。</p>
+<p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
+<p><a href="https://github.com/cowfighting/NovCapture" target="_blank">GitHub源码下载</a></p>
+            </div><!-- /.entry-content -->
+			
+			
+			<ul style="float:right;">
+				<li>
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2014/11/21/android-clipimage/">
+						Android仿微信上传头像（缩放、拖动、裁剪）
+					</a>
+				</li>
+			</ul>
+			
+			
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "articles/2015/10/27/android-novcapture/";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://xycoding.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<div class="sidebarbg">
+	<h4>Pages</h4>
+	<ul>
+		  <li><a href="/functions/categories.html">Categories</a></li>
+		  <li><a href="/functions/tags.html">Tags</a></li>
+		  <li><a href="/functions/archives.html">Archives</a></li>
+		  <li><a href="/functions/random.html">Random Article</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+<h4>Categories</h4>
+	<ul>
+			<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+			<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+	<h4>Tags</h4>
+		<ul>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+		</ul>
+</div>
+
+
+<div class="social sidebarbg">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
+		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
+		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
+		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
+		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
+		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
+	  </ul>
+	</nav>
+</div>
+
+<nav class="widget sidebarbg">
+  <h4>Links</h4>
+  <ul>
+	<li><a target="_blank" href="http://python.org/">Python</a></li>
+	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
+	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
+                   <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
+					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
+					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
+				   </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+
+                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
+
+                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
+
+                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'xycoding';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
+</body>
+</html>
