@@ -4,13 +4,13 @@
 
 &lt;h3&gt;截屏预览&lt;/h3&gt;
 &lt;p&gt;首先看看实现后的整个创意截屏的样子吧，最直观。PS：在我的几个测试机上基本没有卡顿现象，很流畅。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_1.png.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图1）打开APP后，显示主界面。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_2.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图2）点击图1中“截取屏幕”按钮，即可截取主界面并显示。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_3.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图3）点击屏幕下方“盖章”按钮，即可在截图中添加标签。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_4.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_4.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图4）点击添加的标签，即可更改文字内容。&lt;/p&gt;
 &lt;h3&gt;关键细节&lt;/h3&gt;
 &lt;p&gt;起初看到创意截屏这个功能，私以为比较简单，结果在进行编码过程中，才发现里面有很多细节需要进行考虑。&lt;/p&gt;
@@ -32,7 +32,7 @@
 &lt;li&gt;事件接收的坐标点不会跟着Canvas改变，如View在A坐标canvas.translate移动到B坐标后，View接收事件的坐标点还是会停留在原A坐标。因此，我们还需&lt;strong&gt;手动维护虚线框、删除、缩放与旋转按钮的当前绘制矩阵，以便事件分发时判定&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;当View旋转后，如何判定坐标是否在View区域内。如下面图5所示，假设蓝色矩形为我们维护的原始矩阵matrix，当我们调用matrix.postRotate进行旋转操作后，matrix会变成图5中的虚线框区域，而实际上应该为绿色区域，若不进行处理，则会判断错误。&lt;strong&gt;本文中使用了小技巧，即我们维护一个未旋转的matrix(包含缩放、拖动)和一个旋转角度变量rotation。当判断图中点A是否在绿色区域内，则可将其反向旋转rotation后变成点B，判断点B是否在蓝色矩形中即可&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_5.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图5）坐标点判断示例。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -60,7 +60,7 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;代码分析&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/novcapture_6.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_6.png" /&gt;&lt;/p&gt;
 &lt;p&gt;（图5）代码组织结构。&lt;/p&gt;
 &lt;p&gt;先说说整个代码结构吧，核心在图5 labeller 库中的&lt;code&gt;CaptureView&lt;/code&gt;和&lt;code&gt;DashFrameLayout&lt;/code&gt;。&lt;/p&gt;
 &lt;h4&gt;CaptureView&lt;/h4&gt;
