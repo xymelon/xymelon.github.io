@@ -5,7 +5,7 @@
         <title>Android仿微信上传头像（缩放、拖动、裁剪）</title>
 		
 		<meta name="description" content="">
-		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		<meta name="keywords" content="Android, Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
 		
         <meta charset="utf-8" />
         <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
@@ -40,7 +40,7 @@
 <body id="index" class="home">
 
 <!-- Fork me on github -->
-<a target="_blank" href="https://github.com/cowfighting">
+<a target="_blank" href="https://github.com/xymelon">
 	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
 </a>
 
@@ -88,14 +88,14 @@
             <footer class="post-info">
               <!--
 			  <abbr class="published" title="2014-11-21T17:18:00+08:00">
-                五 21 十一月 2014
+                Fri 21 November 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				五 21 十一月 2014
+				Fri 21 November 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -111,7 +111,7 @@
 <h3>自定义裁剪框</h3>
 <p>如微信上传头像界面，裁剪框的作用是在屏幕上呈现一个白色的矩形边框，边框以外的界面都是半透明的形式。当图片在屏幕中拖动时，可以非常明确地提醒矩形框中的图片才是我们所需要的。以下的代码即自定义裁剪框，大家可看代码中注释，非常简单（即在屏幕中画出一个白色的矩形线框，边框以外的上下左右画出半透明背景）。</p>
 <p>在本代码中，自定义了一个<code>OnDrawListenerComplete</code>接口，里面定义了<code>onDrawCompelete</code>方法。它的作用是什么？不知大家仔细观察过微信上传头像功能没，当我们选择图片后，不管图片多大多小，多宽多窄，它总能保证图片的宽度满足裁剪框或者高度满足裁剪框，即按裁剪框的比例缩放图片，这样用户在上传时就非常方便呢。该接口的作用就是当裁剪框绘画完成后即可调用回调函数，进行图片处理，以满足裁剪框的大小。</p>
-<div class="highlight"><pre>public class ClipView extends View {
+<div class="highlight"><pre><span></span>public class ClipView extends View {
     private Paint paint = new Paint();
     private Paint borderPaint = new Paint();
 
@@ -286,7 +286,7 @@
 
 <h3>使用裁剪框</h3>
 <p>使用裁剪框就非常简单了，将该裁剪框以<code>this.addContentView</code>的方式添加到要使用的Activity中。本代码中，即<code>initClipView</code>方法，至于为什么要在<code>observer.addOnGlobalLayoutListener</code>中初始化裁剪框，是因为本例的顶部栏是自定义的，需等该头部的高度确定以后才能对裁剪框进行初始化，如果你没有使用自定义顶部栏，那么就无所谓了。大家可以看到在<code>observer.addOnGlobalLayoutListener</code>回调接口中，有一大段计算缩放、平移等的语句，这些代码的作用即是上文所讨论的，让用户无论选择多大的图片，都让它满足裁剪框的高宽度。然后再加上针对<code>ImageView</code>容器的拖动、缩放等效果即可。</p>
-<div class="highlight"><pre>public class ClipPictureActivity extends Activity implements OnTouchListener,
+<div class="highlight"><pre><span></span>public class ClipPictureActivity extends Activity implements OnTouchListener,
         OnClickListener {
     private ImageView srcPic;
     private View sure;
@@ -489,17 +489,17 @@
 
 
 <p>最后，效果图如下：</p>
-<p><img alt="dowmload" src="/images/clip_1_1.png" /></p>
+<p><img alt="dowmload" src="/images/clip_1_1.png"></p>
 <p>（图1.1）当用户选择图片后，初始化界面，大家可以看到，图片的高度符合裁剪框的高度，相应的图片宽度也按比例缩放。</p>
-<p><img alt="dowmload" src="/images/clip_1_2.png" /></p>
+<p><img alt="dowmload" src="/images/clip_1_2.png"></p>
 <p>（图1.2）针对初始界面进行裁剪截图操作。</p>
-<p><img alt="dowmload" src="/images/clip_2_1.png" /></p>
+<p><img alt="dowmload" src="/images/clip_2_1.png"></p>
 <p>（图2.1）往上拖动图片，大家可以看到白云飘出裁剪框了。</p>
-<p><img alt="dowmload" src="/images/clip_2_2.png" /></p>
+<p><img alt="dowmload" src="/images/clip_2_2.png"></p>
 <p>（图2.2）针对拖动图片进行裁剪截图操作，可以看到截图中没有白云了。</p>
-<p><img alt="dowmload" src="/images/clip_3_1.png" /></p>
+<p><img alt="dowmload" src="/images/clip_3_1.png"></p>
 <p>（图3.1）缩放图片，大家可以看到图片被放大了，只有一半白云，下方的湖面也少了。</p>
-<p><img alt="dowmload" src="/images/clip_3_2.png" /></p>
+<p><img alt="dowmload" src="/images/clip_3_2.png"></p>
 <p>（图3.2）针对缩放图片进行裁剪截图操作，同样可以发现操作成功了。</p>
 <h3>注意</h3>
 <p>本例中，Activity之间传递截图是以Bitmap形式传递的，这是大忌，这有可能因Bitmap过大而导致APP崩溃。本文完全是出于方便，读者在实际使用中需注意。</p>
@@ -561,10 +561,10 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 		</ul>
 </div>
 
@@ -574,13 +574,9 @@
 	  <h4>Social</h4>
 	  <ul>
 		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
-		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
-		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
-		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="https://github.com/xymelon">GitHub</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/7881867">StackOverFlow</a></li>
 		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
-		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
-		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
-		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
 	  </ul>
 	</nav>
 </div>
@@ -590,7 +586,6 @@
   <ul>
 	<li><a target="_blank" href="http://python.org/">Python</a></li>
 	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
-	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
   </ul>
 </nav>
 
@@ -610,8 +605,8 @@
           <div class="seven columns left-center">
 				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
                    <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
-					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
-					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					知之者不如好之者，好之者不如乐之者<br/>
+					Email:xymelon@163.com&nbsp;<br/>
 					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
 				   </address>
           </div>
@@ -621,13 +616,10 @@
             <div class="row">
               <ul class="socbtns">
 
-                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+                <li><div class="btn primary"><a href="https://github.com/xymelon" target="_blank">Github</a></div></li>
 
-                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
 
-                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
 
-                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
 
               </ul>
             </div>

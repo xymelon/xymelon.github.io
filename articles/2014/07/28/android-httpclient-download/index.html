@@ -5,7 +5,7 @@
         <title>Android使用HttpClient实现下载，并监控进度</title>
 		
 		<meta name="description" content="">
-		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		<meta name="keywords" content="Android, Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
 		
         <meta charset="utf-8" />
         <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
@@ -40,7 +40,7 @@
 <body id="index" class="home">
 
 <!-- Fork me on github -->
-<a target="_blank" href="https://github.com/cowfighting">
+<a target="_blank" href="https://github.com/xymelon">
 	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
 </a>
 
@@ -88,14 +88,14 @@
             <footer class="post-info">
               <!--
 			  <abbr class="published" title="2014-07-28T19:50:00+08:00">
-                一 28 七月 2014
+                Mon 28 July 2014
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				一 28 七月 2014
+				Mon 28 July 2014
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -109,7 +109,7 @@
 <h3>监控进度实现</h3>
 <p>关于HttpClient的资料，可去其官方查阅。本例简单的使用它进行图片下载，如想实现批量下载图片，请参见<a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/">Android异步批量下载图片并缓存</a>。</p>
 <p>首先定义监听器接口，如下所示：</p>
-<div class="highlight"><pre><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
 <span class="cm"> * 进度监听器接口</span>
 <span class="cm"> */</span><span class="w"></span>
 public<span class="w"> </span>interface<span class="w"> </span>ProgressListener<span class="w"> </span><span class="err">{</span><span class="w"></span>
@@ -119,7 +119,7 @@ public<span class="w"> </span>interface<span class="w"> </span>ProgressListener<
 
 
 <p>然后自定义一个<code>CountingInputStream</code>类继承于<code>FilterInputStream</code>，重写其中的关键方法，实现进度监听的功能，如下所示：</p>
-<div class="highlight"><pre><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
 <span class="cm"> * 重写FilterInputStream，实现进度监听的功能</span>
 <span class="cm"> * </span>
 <span class="cm"> * @author Cow</span>
@@ -177,108 +177,108 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 
 
 <p>最后就是使用上述实现的类和Httpclient进行下载并显示进度的功能，非常简单，代码如下，使用AsyncTask异步下载。</p>
-<div class="highlight"><pre><span class="nt">public</span> <span class="nt">class</span> <span class="nt">FileDownLoadAsyncTask</span> <span class="nt">extends</span>
+<div class="highlight"><pre><span></span><span class="nt">public</span> <span class="nt">class</span> <span class="nt">FileDownLoadAsyncTask</span> <span class="nt">extends</span>
         <span class="nt">AsyncTask</span><span class="o">&lt;</span><span class="nt">ImageView</span><span class="o">,</span> <span class="nt">Integer</span><span class="o">,</span> <span class="nt">Bitmap</span><span class="o">&gt;</span> <span class="p">{</span>
 
-    <span class="o">//</span> <span class="err">图片下载地址</span>
-    <span class="n">private</span> <span class="n">String</span> <span class="k">url</span> <span class="o">=</span> <span class="s2">&quot;http://img0.bdstatic.com/img/image/shouye/leimu/mingxing.jpg&quot;</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">Context</span> <span class="n">context</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">ProgressDialog</span> <span class="n">pd</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">ImageView</span> <span class="n">image</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">int</span> <span class="k">width</span> <span class="o">=</span> <span class="m">150</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">int</span> <span class="k">height</span> <span class="o">=</span> <span class="m">150</span><span class="p">;</span>
+    <span class="err">//</span> <span class="err">图片下载地址</span>
+    <span class="err">private</span> <span class="err">String</span> <span class="err">url</span> <span class="err">=</span> <span class="err">&quot;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">img0</span><span class="o">.</span><span class="n">bdstatic</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">image</span><span class="o">/</span><span class="n">shouye</span><span class="o">/</span><span class="n">leimu</span><span class="o">/</span><span class="n">mingxing</span><span class="o">.</span><span class="n">jpg</span><span class="s2">&quot;;</span>
+<span class="s2">    private Context context;</span>
+<span class="s2">    private ProgressDialog pd;</span>
+<span class="s2">    private ImageView image;</span>
+<span class="s2">    private int width = 150;</span>
+<span class="s2">    private int height = 150;</span>
 
-    <span class="n">public</span> <span class="n">FileDownLoadAsyncTask</span><span class="p">(</span><span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="err">{</span>
-        <span class="n">this</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="s2">    public FileDownLoadAsyncTask(Context context) {</span>
+<span class="s2">        this.context = context;</span>
+<span class="s2">    }</span>
 
-    <span class="k">@Override</span>
-    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPreExecute</span><span class="o">()</span> <span class="p">{</span>
-        <span class="nt">pd</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ProgressDialog</span><span class="o">(</span><span class="nt">context</span><span class="o">);</span>
-        <span class="nt">pd</span><span class="nc">.setProgressStyle</span><span class="o">(</span><span class="nt">ProgressDialog</span><span class="nc">.STYLE_HORIZONTAL</span><span class="o">);</span>
-        <span class="nt">pd</span><span class="nc">.setMessage</span><span class="o">(</span><span class="s2">&quot;下载中....&quot;</span><span class="o">);</span>
-        <span class="nt">pd</span><span class="nc">.setCancelable</span><span class="o">(</span><span class="nt">false</span><span class="o">);</span>
-        <span class="nt">pd</span><span class="nc">.show</span><span class="o">();</span>
-    <span class="p">}</span>
+<span class="s2">    @Override</span>
+<span class="s2">    protected void onPreExecute() {</span>
+<span class="s2">        pd = new ProgressDialog(context);</span>
+<span class="s2">        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);</span>
+<span class="s2">        pd.setMessage(&quot;</span><span class="err">下载中</span><span class="o">....</span><span class="s2">&quot;);</span>
+<span class="s2">        pd.setCancelable(false);</span>
+<span class="s2">        pd.show();</span>
+<span class="s2">    }</span>
 
-    <span class="c">/**</span>
-<span class="c">     * 下载图片，并按指定高度和宽度压缩</span>
-<span class="c">     */</span>
-    <span class="k">@Override</span>
-    <span class="nt">protected</span> <span class="nt">Bitmap</span> <span class="nt">doInBackground</span><span class="o">(</span><span class="nt">ImageView</span><span class="o">...</span> <span class="nt">params</span><span class="o">)</span> <span class="p">{</span>
-        <span class="nt">this</span><span class="nc">.image</span> <span class="o">=</span> <span class="nt">params</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span>
-        <span class="nt">Bitmap</span> <span class="nt">bitmap</span> <span class="o">=</span> <span class="nt">null</span><span class="o">;</span>
-        <span class="nt">HttpClient</span> <span class="nt">httpClient</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">DefaultHttpClient</span><span class="o">();</span>
-        <span class="nt">try</span> <span class="p">{</span>
-            <span class="n">httpClient</span><span class="o">.</span><span class="n">getParams</span><span class="p">()</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span>
-                    <span class="n">CoreProtocolPNames</span><span class="o">.</span><span class="n">PROTOCOL_VERSION</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="n">HTTP_1_1</span><span class="p">);</span>
-            <span class="n">HttpGet</span> <span class="n">httpGet</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpGet</span><span class="p">(</span><span class="k">url</span><span class="p">);</span>
-            <span class="n">HttpResponse</span> <span class="n">httpResponse</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">httpGet</span><span class="p">);</span>
-            <span class="n">if</span> <span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="n">getStatusLine</span><span class="p">()</span><span class="o">.</span><span class="n">getStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">HttpStatus</span><span class="o">.</span><span class="n">SC_OK</span><span class="p">)</span> <span class="err">{</span>
-                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">httpResponse</span><span class="o">.</span><span class="n">getEntity</span><span class="p">();</span>
-                <span class="n">final</span> <span class="n">long</span> <span class="k">size</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getContentLength</span><span class="p">();</span>
-                <span class="n">CountingInputStream</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CountingInputStream</span><span class="p">(</span>
-                        <span class="n">entity</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span><span class="o">,</span> <span class="n">new</span> <span class="n">ProgressListener</span><span class="p">()</span> <span class="err">{</span>
+<span class="s2">    /**</span>
+<span class="s2">     * 下载图片，并按指定高度和宽度压缩</span>
+<span class="s2">     */</span>
+<span class="s2">    @Override</span>
+<span class="s2">    protected Bitmap doInBackground(ImageView... params) {</span>
+<span class="s2">        this.image = params</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="s2">;</span>
+<span class="s2">        Bitmap bitmap = null;</span>
+<span class="s2">        HttpClient httpClient = new DefaultHttpClient();</span>
+<span class="s2">        try {</span>
+<span class="s2">            httpClient.getParams().setParameter(</span>
+<span class="s2">                    CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);</span>
+<span class="s2">            HttpGet httpGet = new HttpGet(url);</span>
+<span class="s2">            HttpResponse httpResponse = httpClient.execute(httpGet);</span>
+<span class="s2">            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {</span>
+<span class="s2">                HttpEntity entity = httpResponse.getEntity();</span>
+<span class="s2">                final long size = entity.getContentLength();</span>
+<span class="s2">                CountingInputStream cis = new CountingInputStream(</span>
+<span class="s2">                        entity.getContent(), new ProgressListener() {</span>
 
-                            <span class="o">@</span><span class="n">Override</span>
-                            <span class="n">public</span> <span class="n">void</span> <span class="n">transferred</span><span class="p">(</span><span class="n">long</span> <span class="n">transferedBytes</span><span class="p">)</span> <span class="err">{</span>
-                                <span class="n">Log</span><span class="o">.</span><span class="n">i</span><span class="p">(</span><span class="s2">&quot;FileDownLoadAsyncTask&quot;</span><span class="o">,</span> <span class="s2">&quot;总字节数：&quot;</span> <span class="o">+</span> <span class="k">size</span>
-                                        <span class="o">+</span> <span class="s2">&quot; 已下载字节数：&quot;</span> <span class="o">+</span> <span class="n">transferedBytes</span><span class="p">);</span>
-                                <span class="n">publishProgress</span><span class="p">((</span><span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">transferedBytes</span> <span class="o">/</span> <span class="k">size</span><span class="p">));</span>
-                            <span class="p">}</span>
-                        <span class="p">}</span><span class="o">);</span>
-                <span class="o">//</span> <span class="err">需将</span><span class="nt">Inputstream</span><span class="err">转化为</span><span class="nt">byte</span><span class="err">数组，以备</span><span class="nt">decodeByteArray</span><span class="err">用</span>
-                <span class="o">//</span> <span class="err">如直接使用</span><span class="nt">decodeStream</span><span class="err">会将</span><span class="nt">stream</span><span class="err">破坏，然后第二次</span><span class="nt">decodeStream</span><span class="err">时，会出现</span><span class="nt">SkImageDecoder</span><span class="o">:</span><span class="nd">:Factory</span> <span class="nt">returned</span> <span class="nt">null</span><span class="err">错误</span>
-                <span class="o">//</span> <span class="err">我试过将获得的</span><span class="nt">Inputstream</span><span class="err">转化为</span><span class="nt">BufferedInputStream</span><span class="err">，然后使用</span><span class="nt">mark</span><span class="err">、</span><span class="nt">reset</span><span class="err">方法，但是我试了试没成功，不知道为啥，还请成功的各位告知</span>
-                <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">byteIn</span> <span class="o">=</span> <span class="nt">toByteArray</span><span class="o">(</span><span class="nt">cis</span><span class="o">,</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">size</span><span class="o">);</span>
-                <span class="nt">BitmapFactory</span><span class="nc">.Options</span> <span class="nt">bmpFactoryOptions</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">BitmapFactory</span><span class="nc">.Options</span><span class="o">();</span>
-                <span class="o">//</span> <span class="err">第一次</span><span class="nt">decode</span><span class="err">时，需设置</span><span class="nt">inJustDecodeBounds</span><span class="err">属性为</span><span class="nt">true</span><span class="o">,</span><span class="err">这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在</span><span class="nt">Options</span><span class="err">中</span>
-                <span class="nt">bmpFactoryOptions</span><span class="nc">.inJustDecodeBounds</span> <span class="o">=</span> <span class="nt">true</span><span class="o">;</span>
-                <span class="o">//</span> <span class="err">第一次</span><span class="nt">decode</span><span class="err">，获取图片高宽度等属性</span>
-                <span class="nt">BitmapFactory</span><span class="nc">.decodeByteArray</span><span class="o">(</span><span class="nt">byteIn</span><span class="o">,</span> <span class="nt">0</span><span class="o">,</span> <span class="nt">byteIn</span><span class="nc">.length</span><span class="o">,</span>
-                        <span class="nt">bmpFactoryOptions</span><span class="o">);</span>
-                <span class="o">//</span> <span class="err">根据显示控件大小获取压缩比率，有效避免</span><span class="nt">OOM</span>
-                <span class="nt">int</span> <span class="nt">heightRatio</span> <span class="o">=</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">Math</span><span class="nc">.ceil</span><span class="o">(</span><span class="nt">bmpFactoryOptions</span><span class="nc">.outHeight</span>
-                        <span class="o">/</span> <span class="nt">height</span><span class="o">);</span>
-                <span class="nt">int</span> <span class="nt">widthRatio</span> <span class="o">=</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span> <span class="nt">Math</span><span class="nc">.ceil</span><span class="o">(</span><span class="nt">bmpFactoryOptions</span><span class="nc">.outWidth</span>
-                        <span class="o">/</span> <span class="nt">width</span><span class="o">);</span>
-                <span class="nt">if</span> <span class="o">(</span><span class="nt">heightRatio</span> <span class="o">&gt;</span> <span class="nt">1</span> <span class="o">&amp;&amp;</span> <span class="nt">widthRatio</span> <span class="o">&gt;</span> <span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
-                    <span class="n">bmpFactoryOptions</span><span class="o">.</span><span class="n">inSampleSize</span> <span class="o">=</span> <span class="n">heightRatio</span> <span class="o">&gt;</span> <span class="n">widthRatio</span> <span class="o">?</span> <span class="n">heightRatio</span>
-                            <span class="o">:</span> <span class="n">widthRatio</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="o">//</span> <span class="err">第二次</span><span class="nt">decode</span><span class="err">时，需设置</span><span class="nt">inJustDecodeBounds</span><span class="err">属性为</span><span class="nt">fasle</span><span class="o">,</span><span class="err">系统才会根据传入的</span><span class="nt">BitmapFactory</span><span class="nc">.Options</span><span class="err">真正的压缩图片并返回</span>
-                <span class="nt">bmpFactoryOptions</span><span class="nc">.inJustDecodeBounds</span> <span class="o">=</span> <span class="nt">false</span><span class="o">;</span>
-                <span class="nt">bitmap</span> <span class="o">=</span> <span class="nt">BitmapFactory</span><span class="nc">.decodeByteArray</span><span class="o">(</span><span class="nt">byteIn</span><span class="o">,</span> <span class="nt">0</span><span class="o">,</span>
-                        <span class="nt">byteIn</span><span class="nc">.length</span><span class="o">,</span> <span class="nt">bmpFactoryOptions</span><span class="o">);</span>
-            <span class="err">}</span>
-        <span class="err">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ClientProtocolException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">ConnectTimeoutException</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="nt">catch</span> <span class="o">(</span><span class="nt">Exception</span> <span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span> <span class="nt">finally</span> <span class="p">{</span>
-            <span class="n">if</span> <span class="p">(</span><span class="n">httpClient</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="err">{</span>
-                <span class="n">httpClient</span><span class="o">.</span><span class="n">getConnectionManager</span><span class="p">()</span><span class="o">.</span><span class="n">shutdown</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="err">}</span>
-        <span class="nt">return</span> <span class="nt">bitmap</span><span class="o">;</span>
-    <span class="err">}</span>
+<span class="s2">                            @Override</span>
+<span class="s2">                            public void transferred(long transferedBytes) {</span>
+<span class="s2">                                Log.i(&quot;</span><span class="n">FileDownLoadAsyncTask</span><span class="s2">&quot;, &quot;</span><span class="err">总字节数：</span><span class="s2">&quot; + size</span>
+<span class="s2">                                        + &quot;</span> <span class="err">已下载字节数：</span><span class="s2">&quot; + transferedBytes);</span>
+<span class="s2">                                publishProgress((int) (100 * transferedBytes / size));</span>
+<span class="s2">                            }</span>
+<span class="s2">                        });</span>
+<span class="s2">                // 需将Inputstream转化为byte数组，以备decodeByteArray用</span>
+<span class="s2">                // 如直接使用decodeStream会将stream破坏，然后第二次decodeStream时，会出现SkImageDecoder::Factory returned null错误</span>
+<span class="s2">                // 我试过将获得的Inputstream转化为BufferedInputStream，然后使用mark、reset方法，但是我试了试没成功，不知道为啥，还请成功的各位告知</span>
+<span class="s2">                byte</span><span class="cp">[]</span><span class="s2"> byteIn = toByteArray(cis, (int) size);</span>
+<span class="s2">                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();</span>
+<span class="s2">                // 第一次decode时，需设置inJustDecodeBounds属性为true,这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在Options中</span>
+<span class="s2">                bmpFactoryOptions.inJustDecodeBounds = true;</span>
+<span class="s2">                // 第一次decode，获取图片高宽度等属性</span>
+<span class="s2">                BitmapFactory.decodeByteArray(byteIn, 0, byteIn.length,</span>
+<span class="s2">                        bmpFactoryOptions);</span>
+<span class="s2">                // 根据显示控件大小获取压缩比率，有效避免OOM</span>
+<span class="s2">                int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight</span>
+<span class="s2">                        / height);</span>
+<span class="s2">                int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth</span>
+<span class="s2">                        / width);</span>
+<span class="s2">                if (heightRatio &gt; 1 &amp;&amp; widthRatio &gt; 1) {</span>
+<span class="s2">                    bmpFactoryOptions.inSampleSize = heightRatio &gt; widthRatio ? heightRatio</span>
+<span class="s2">                            : widthRatio;</span>
+<span class="s2">                }</span>
+<span class="s2">                // 第二次decode时，需设置inJustDecodeBounds属性为fasle,系统才会根据传入的BitmapFactory.Options真正的压缩图片并返回</span>
+<span class="s2">                bmpFactoryOptions.inJustDecodeBounds = false;</span>
+<span class="s2">                bitmap = BitmapFactory.decodeByteArray(byteIn, 0,</span>
+<span class="s2">                        byteIn.length, bmpFactoryOptions);</span>
+<span class="s2">            }</span>
+<span class="s2">        } catch (ClientProtocolException e) {</span>
+<span class="s2">            e.printStackTrace();</span>
+<span class="s2">        } catch (ConnectTimeoutException e) {</span>
+<span class="s2">            e.printStackTrace();</span>
+<span class="s2">        } catch (Exception e) {</span>
+<span class="s2">            e.printStackTrace();</span>
+<span class="s2">        } finally {</span>
+<span class="s2">            if (httpClient != null &amp;&amp; httpClient.getConnectionManager() != null) {</span>
+<span class="s2">                httpClient.getConnectionManager().shutdown();</span>
+<span class="s2">            }</span>
+<span class="s2">        }</span>
+<span class="s2">        return bitmap;</span>
+<span class="s2">    }</span>
 
-    <span class="k">@Override</span>
-    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onProgressUpdate</span><span class="o">(</span><span class="nt">Integer</span><span class="o">...</span> <span class="nt">progress</span><span class="o">)</span> <span class="p">{</span>
-        <span class="nt">pd</span><span class="nc">.setProgress</span><span class="o">((</span><span class="nt">int</span><span class="o">)</span> <span class="o">(</span><span class="nt">progress</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">));</span>
-    <span class="p">}</span>
+<span class="s2">    @Override</span>
+<span class="s2">    protected void onProgressUpdate(Integer... progress) {</span>
+<span class="s2">        pd.setProgress((int) (progress</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="s2">));</span>
+<span class="s2">    }</span>
 
-    <span class="k">@Override</span>
-    <span class="nt">protected</span> <span class="nt">void</span> <span class="nt">onPostExecute</span><span class="o">(</span><span class="nt">Bitmap</span> <span class="nt">bm</span><span class="o">)</span> <span class="p">{</span>
-        <span class="nt">pd</span><span class="nc">.dismiss</span><span class="o">();</span>
-        <span class="nt">if</span> <span class="o">(</span><span class="nt">bm</span> <span class="o">!=</span> <span class="nt">null</span><span class="o">)</span> <span class="p">{</span>
-            <span class="n">image</span><span class="o">.</span><span class="n">setImageBitmap</span><span class="p">(</span><span class="n">bm</span><span class="p">);</span>
-        <span class="p">}</span> <span class="nt">else</span> <span class="p">{</span>
-            <span class="n">Toast</span><span class="o">.</span><span class="n">makeText</span><span class="p">(</span><span class="n">context</span><span class="o">,</span> <span class="s2">&quot;图片下载失败&quot;</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="n">LENGTH_SHORT</span><span class="p">)</span><span class="o">.</span><span class="k">show</span><span class="p">();</span>
+<span class="s2">    @Override</span>
+<span class="s2">    protected void onPostExecute(Bitmap bm) {</span>
+<span class="s2">        pd.dismiss();</span>
+<span class="s2">        if (bm != null) {</span>
+<span class="s2">            image.setImageBitmap(bm);</span>
+<span class="s2">        } else {</span>
+<span class="s2">            Toast.makeText(context, &quot;</span><span class="err">图片下载失败&quot;</span><span class="p">,</span> <span class="n">Toast</span><span class="o">.</span><span class="n">LENGTH_SHORT</span><span class="p">)</span><span class="o">.</span><span class="nf">show</span><span class="p">();</span>
         <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="err">}</span>
 
     <span class="c">/**</span>
 <span class="c">     * InputStream转化为Byte数组</span>
@@ -290,22 +290,22 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 <span class="c">     */</span>
     <span class="nt">public</span> <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">toByteArray</span><span class="o">(</span><span class="nt">InputStream</span> <span class="nt">instream</span><span class="o">,</span> <span class="nt">int</span> <span class="nt">contentLength</span><span class="o">)</span>
             <span class="nt">throws</span> <span class="nt">IOException</span> <span class="p">{</span>
-        <span class="n">if</span> <span class="p">(</span><span class="n">instream</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="err">{</span>
-            <span class="n">return</span> <span class="n">null</span><span class="p">;</span>
+        <span class="err">if</span> <span class="err">(instream</span> <span class="err">==</span> <span class="err">null)</span> <span class="err">{</span>
+            <span class="err">return</span> <span class="err">null</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="nt">try</span> <span class="p">{</span>
-            <span class="n">if</span> <span class="p">(</span><span class="n">contentLength</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="err">{</span>
-                <span class="n">contentLength</span> <span class="o">=</span> <span class="m">4096</span><span class="p">;</span>
+            <span class="err">if</span> <span class="err">(contentLength</span> <span class="err">&lt;</span> <span class="err">0)</span> <span class="err">{</span>
+                <span class="err">contentLength</span> <span class="err">=</span> <span class="err">4096</span><span class="p">;</span>
             <span class="p">}</span>
             <span class="nt">final</span> <span class="nt">ByteArrayBuffer</span> <span class="nt">buffer</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">ByteArrayBuffer</span><span class="o">(</span><span class="nt">contentLength</span><span class="o">);</span>
             <span class="nt">final</span> <span class="nt">byte</span><span class="cp">[]</span> <span class="nt">tmp</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">byte</span><span class="cp">[</span><span class="mi">4096</span><span class="cp">]</span><span class="o">;</span>
             <span class="nt">int</span> <span class="nt">l</span><span class="o">;</span>
-            <span class="nt">while</span> <span class="o">((</span><span class="nt">l</span> <span class="o">=</span> <span class="nt">instream</span><span class="nc">.read</span><span class="o">(</span><span class="nt">tmp</span><span class="o">))</span> <span class="o">!=</span> <span class="nt">-1</span><span class="o">)</span> <span class="p">{</span>
-                <span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="n">l</span><span class="p">);</span>
+            <span class="nt">while</span> <span class="o">((</span><span class="nt">l</span> <span class="o">=</span> <span class="nt">instream</span><span class="p">.</span><span class="nc">read</span><span class="o">(</span><span class="nt">tmp</span><span class="o">))</span> <span class="o">!=</span> <span class="nt">-1</span><span class="o">)</span> <span class="p">{</span>
+                <span class="err">buffer.append(tmp,</span> <span class="err">0,</span> <span class="err">l)</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="nt">return</span> <span class="nt">buffer</span><span class="nc">.toByteArray</span><span class="o">();</span>
+            <span class="nt">return</span> <span class="nt">buffer</span><span class="p">.</span><span class="nc">toByteArray</span><span class="o">();</span>
         <span class="err">}</span> <span class="nt">finally</span> <span class="p">{</span>
-            <span class="n">instream</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+            <span class="err">instream.close()</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="err">}</span>
 
@@ -314,7 +314,7 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 
 
 <p>最后的最后，下载效果图如下：</p>
-<p><img alt="dowmload" src="/images/image-download.png" /></p>
+<p><img alt="dowmload" src="/images/image-download.png"></p>
 <p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
 <p><a href="https://github.com/cowfighting/ImageWithProgress" target="_blank">GitHub源码下载：DEMO</a></p>
             </div><!-- /.entry-content -->
@@ -373,10 +373,10 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 		</ul>
 </div>
 
@@ -386,13 +386,9 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
 	  <h4>Social</h4>
 	  <ul>
 		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
-		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
-		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
-		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="https://github.com/xymelon">GitHub</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/7881867">StackOverFlow</a></li>
 		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
-		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
-		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
-		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
 	  </ul>
 	</nav>
 </div>
@@ -402,7 +398,6 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
   <ul>
 	<li><a target="_blank" href="http://python.org/">Python</a></li>
 	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
-	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
   </ul>
 </nav>
 
@@ -422,8 +417,8 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
           <div class="seven columns left-center">
 				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
                    <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
-					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
-					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					知之者不如好之者，好之者不如乐之者<br/>
+					Email:xymelon@163.com&nbsp;<br/>
 					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
 				   </address>
           </div>
@@ -433,13 +428,10 @@ public<span class="w"> </span>class<span class="w"> </span>CountingInputStream<s
             <div class="row">
               <ul class="socbtns">
 
-                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+                <li><div class="btn primary"><a href="https://github.com/xymelon" target="_blank">Github</a></div></li>
 
-                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
 
-                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
 
-                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
 
               </ul>
             </div>
