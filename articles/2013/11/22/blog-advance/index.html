@@ -5,7 +5,7 @@
         <title>使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇</title>
 		
 		<meta name="description" content="">
-		<meta name="keywords" content="Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		<meta name="keywords" content="Android, Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
 		
         <meta charset="utf-8" />
         <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
@@ -40,7 +40,7 @@
 <body id="index" class="home">
 
 <!-- Fork me on github -->
-<a target="_blank" href="https://github.com/cowfighting">
+<a target="_blank" href="https://github.com/xymelon">
 	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
 </a>
 
@@ -88,14 +88,14 @@
             <footer class="post-info">
               <!--
 			  <abbr class="published" title="2013-11-22T08:00:00+08:00">
-                五 22 十一月 2013
+                Fri 22 November 2013
               </abbr>
               <address class="vcard author">
                 By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
-				五 22 十一月 2013
+				Fri 22 November 2013
 					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
@@ -114,20 +114,20 @@
 <h3>URL配置</h3>
 <p>一个好的URL地址不光搜索引擎友好，也让自己看得舒心，pelican中也完全考虑到这一点，只需简单的配置就可打造出漂亮的URL。</p>
 <p>打开<code>pelicanconf.py</code>配置文件，按照如下修改或添加，具体配置请参见<a href="http://docs.getpelican.com/en/3.3.0/settings.html">官方文档</a>。</p>
-<div class="highlight"><pre>ARTICLE_URL = &#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/&#39;
+<div class="highlight"><pre><span></span>ARTICLE_URL = &#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/&#39;
 ARTICLE_SAVE_AS = &#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html&#39;
 </pre></div>
 
 
 <h3>pelican插件</h3>
 <p>插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了<code>sitemap</code>,<code>summary</code>,<code>neighbors</code>等插件。首先，和主题一样，选择一个文件夹，去<a href="https://github.com/getpelican/pelican-plugins">pelican插件开源库</a>clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。</p>
-<div class="highlight"><pre>//clone插件
+<div class="highlight"><pre><span></span>//clone插件
 git clone https://github.com/getpelican/pelican-plugins
 </pre></div>
 
 
 <p>打开<code>pelicanconf.py</code>配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。</p>
-<div class="highlight"><pre>PLUGIN_PATH = &#39;pelican-plugins&#39;     //设置路径
+<div class="highlight"><pre><span></span>PLUGIN_PATH = &#39;pelican-plugins&#39;     //设置路径
 PLUGINS = [&#39;summary&#39;,&#39;sitemap&#39;,&#39;neighbors&#39;] //选用插件
 
 SITEMAP = {
@@ -148,15 +148,15 @@ SITEMAP = {
 
 <h3>Google Analytics和Google Webmasters</h3>
 <p>注册<a href="http://www.google.com/analytics/">Google Analytics</a>和<a href="http://www.google.com/webmasters/">Google Webmasters</a>可以更好的管理自己的站点，更好的让google收录等。具体教程非常简单，注册完基本就能知道~最后记得在<code>pelicanconf.py</code>中进行配置。</p>
-<div class="highlight"><pre>GOOGLE_ANALYTICS = &#39;Tracking ID&#39;
+<div class="highlight"><pre><span></span>GOOGLE_ANALYTICS = &#39;Tracking ID&#39;
 </pre></div>
 
 
 <h3>最后</h3>
 <p>博客到此为此基本介绍完毕，以后想起什么再补充吧。其实我对现在这个主题还有不满意的地方，比如<code>key words，description</code>等没有地方设置，这对搜索引擎不友好；还有左边栏没有热门文章等~接下来再慢慢完善。</p>
-<hr />
-<p>博客源码地址：<a href="https://github.com/cowfighting/cowfighting.github.io">https://github.com/cowfighting/cowfighting.github.io</a></p>
-<p>博客主题地址：<a href="https://github.com/cowfighting/xycoding-gum">https://github.com/cowfighting/xycoding-gum</a></p>
+<hr>
+<p>博客源码地址：<a href="https://github.com/xymelon/xymelon.github.io">https://github.com/xymelon/xymelon.github.io</a></p>
+<p>博客主题地址：<a href="https://github.com/xymelon/xycoding-gum">https://github.com/xymelon/xycoding-gum</a></p>
             </div><!-- /.entry-content -->
 			
 			
@@ -213,10 +213,10 @@ SITEMAP = {
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 		</ul>
 </div>
 
@@ -226,13 +226,9 @@ SITEMAP = {
 	  <h4>Social</h4>
 	  <ul>
 		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
-		<li><a target="_blank" href="https://github.com/cowfighting">GitHub</a></li>
-		<li><a target="_blank" href="https://www.facebook.com/yang.xu.96558061">FaceBook</a></li>
-		<li><a target="_blank" href="http://stackoverflow.com/users/2664546/cow">StackOverFlow</a></li>
+		<li><a target="_blank" href="https://github.com/xymelon">GitHub</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/7881867">StackOverFlow</a></li>
 		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
-		<li><a target="_blank" href="http://t.qq.com/xuyang1121">腾讯微博</a></li>
-		<li><a target="_blank" href="http://user.qzone.qq.com/541959443">Qzone</a></li>
-		<li><a target="_blank" href="http://www.douban.com/people/38146008/">豆瓣</a></li>
 	  </ul>
 	</nav>
 </div>
@@ -242,7 +238,6 @@ SITEMAP = {
   <ul>
 	<li><a target="_blank" href="http://python.org/">Python</a></li>
 	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
-	<li><a target="_blank" href="http://www.9hao.info/">9Hao</a></li>
   </ul>
 </nav>
 
@@ -262,8 +257,8 @@ SITEMAP = {
           <div class="seven columns left-center">
 				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
                    <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
-					博主目前就读于北邮，一名技术渣硕，码得了代码，调得了BUG。<br/>
-					Email:xuyangfighting@gmail.com&nbsp;欢迎添加友链~<br/>
+					知之者不如好之者，好之者不如乐之者<br/>
+					Email:xymelon@163.com&nbsp;<br/>
 					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
 				   </address>
           </div>
@@ -273,13 +268,10 @@ SITEMAP = {
             <div class="row">
               <ul class="socbtns">
 
-                <li><div class="btn primary"><a href="https://github.com/cowfighting" target="_blank">Github</a></div></li>
+                <li><div class="btn primary"><a href="https://github.com/xymelon" target="_blank">Github</a></div></li>
 
-                <li><div class="btn twitter"><a href="https://twitter.com/xuyangfighting" target="_blank">Twitter</a></div></li>
 
-                <li><div class="btn facebook"><a href="https://www.facebook.com/yang.xu.96558061" target="_blank">Facebook</a></div></li>
 
-                <li><div class="btn danger"><a href="https://plus.google.com/u/0/117263032165097338865" target="_blank">Google+</a></div></li>
 
               </ul>
             </div>

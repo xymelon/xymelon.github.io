@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2015-10-27T19:34:00+08:00</updated><entry><title>Android仿腾讯新闻创意截屏</title><link href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/" rel="alternate"></link><updated>2015-10-27T19:34:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2015-10-27:articles/2015/10/27/android-novcapture/</id><summary type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/all.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2015-10-27T19:34:00+08:00</updated><entry><title>Android仿腾讯新闻创意截屏</title><link href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/" rel="alternate"></link><published>2015-10-27T19:34:00+08:00</published><updated>2015-10-27T19:34:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2015-10-27:/articles/2015/10/27/android-novcapture/</id><summary type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
 
 
 &lt;h3&gt;截屏预览&lt;/h3&gt;
 &lt;p&gt;首先看看实现后的整个创意截屏的样子吧，最直观。PS：在我的几个测试机上基本没有卡顿现象，很流畅。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_1.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图1）打开APP后，显示主界面。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_2.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图2）点击图1中“截取屏幕”按钮，即可截取主界面并显示。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_3.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图3）点击屏幕下方“盖章”按钮，即可在截图中添加标签。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_4.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_4.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图4）点击添加的标签，即可更改文字内容。&lt;/p&gt;
 &lt;h3&gt;关键细节&lt;/h3&gt;
 &lt;p&gt;起初看到创意截屏这个功能，私以为比较简单，结果在进行编码过程中，才发现里面有很多细节需要进行考虑。&lt;/p&gt;
@@ -18,7 +19,7 @@
 &lt;li&gt;
 &lt;p&gt;标签（图中虚线框容器）不能完全使用ViewGroup进行拼装，不然进行缩放、旋转、拖动时会出现两个问题：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;性能问题，会出现明显的卡顿现象；&lt;/li&gt;
+&lt;li&gt;性能问题，会出现明显的卡顿现象;&lt;/li&gt;
 &lt;li&gt;显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;在本文中，&lt;strong&gt;关键解决方案在于将整个标签内容ViewGroup生成Bitmap，然后维护标签、删除、拖放按钮等的绘制矩阵，在onDraw中自定义绘画&lt;/strong&gt;，非常灵活，性能很不错。&lt;/p&gt;
@@ -32,14 +33,14 @@
 &lt;li&gt;事件接收的坐标点不会跟着Canvas改变，如View在A坐标canvas.translate移动到B坐标后，View接收事件的坐标点还是会停留在原A坐标。因此，我们还需&lt;strong&gt;手动维护虚线框、删除、缩放与旋转按钮的当前绘制矩阵，以便事件分发时判定&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;当View旋转后，如何判定坐标是否在View区域内。如下面图5所示，假设蓝色矩形为我们维护的原始矩阵matrix，当我们调用matrix.postRotate进行旋转操作后，matrix会变成图5中的虚线框区域，而实际上应该为绿色区域，若不进行处理，则会判断错误。&lt;strong&gt;本文中使用了小技巧，即我们维护一个未旋转的matrix(包含缩放、拖动)和一个旋转角度变量rotation。当判断图中点A是否在绿色区域内，则可将其反向旋转rotation后变成点B，判断点B是否在蓝色矩形中即可&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_5.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图5）坐标点判断示例。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;虚线框绘画，使用&lt;a href="http://developer.android.com/reference/android/graphics/DashPathEffect.html" target="_blank"&gt;DashPathEffect&lt;/a&gt;绘制虚线框时，为了能让其动起来，不可避免地会根据phase创建很多对象，若不能有效处理，则会导致频繁地内存回收，影响性能。本文中优化方式是根据虚线框实、虚线长度创建多个对象循环使用，如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;private PathEffect getPathEffect() {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;private PathEffect getPathEffect() {
     // phase值在 0 - mDashMinSize 之间循环
     mDashPhase %= mDashMinSize;
     PathEffect effect = mPathEffects[mDashPhase];
@@ -60,13 +61,13 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;代码分析&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="image" src="/images/novcapture_6.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/novcapture_6.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图5）代码组织结构。&lt;/p&gt;
 &lt;p&gt;先说说整个代码结构吧，核心在图5 labeller 库中的&lt;code&gt;CaptureView&lt;/code&gt;和&lt;code&gt;DashFrameLayout&lt;/code&gt;。&lt;/p&gt;
 &lt;h4&gt;CaptureView&lt;/h4&gt;
 &lt;p&gt;本类主要负责整个创意截屏界面处理，即图2中绿色标题栏以下部分，包含内容、下方添加标签、输入框等区域。
 有个关键地方就是当设置完成图片内容后，内容区域的高宽度需要完全匹配图片大小，否则当进行拖动操作时，标签会移出图片，最后的保存操作时也会出现空白区域，非常不美观。关键代码如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    private void setImageBitmap(Bitmap bitmap) {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    private void setImageBitmap(Bitmap bitmap) {
         mContainerLayout.getLayoutParams().width = bitmap.getWidth();
         mContainerLayout.getLayoutParams().height = bitmap.getHeight();
         mImageIV.getLayoutParams().width = bitmap.getWidth();
@@ -77,7 +78,7 @@
 
 
 &lt;p&gt;添加标签时，还需维护当前处于焦点的标签，以便处理是否显示虚线框，如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    private void addLabel(View view) {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    private void addLabel(View view) {
         final DashFrameLayout dashFrameLayout = new DashFrameLayout(getContext());
         // 添加监听器，记录状态
         dashFrameLayout.setLabelListener(new DashFrameLayout.LabelListener() {
@@ -104,7 +105,7 @@
 &lt;h4&gt;DashFrameLayout&lt;/h4&gt;
 &lt;p&gt;本类应该是创意截屏功能的核心所在，即标签（虚线框容器），包含几大部分：左上角删除按钮、右下角拖放与旋转按钮、中间虚线框容器、标签内容。&lt;/p&gt;
 &lt;p&gt;初始时，需计算各个部分的绘制矩阵，并将标签内容生成bitmap，提高性能。核心代码如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;        Rect rect = new Rect();
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;        Rect rect = new Rect();
         mChildView.getLocalVisibleRect(rect);
 
         // 计算虚线框绘制位置，注意虚线框与label之间存在margin
@@ -127,7 +128,7 @@
 
 
 &lt;p&gt;然后根据维护的矩阵，自定义onDraw方法，如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    @Override
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    @Override
     protected void onDraw(Canvas canvas) {
         // 画标签
         canvas.drawBitmap(mLabelBitmap, mViewMatrix, null);
@@ -151,7 +152,8 @@
 
 &lt;p&gt;其他很关键的比如事件分发，因代码过长，不在此累述，请参考源代码中onTouchEvent实现方法。PS：单手旋转、缩放操作，可将其认为双手操作，只不过其中一只手固定在标签中心。&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/cowfighting/NovCapture" target="_blank"&gt;GitHub源码下载&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android仿微信上传头像（缩放、拖动、裁剪）</title><link href="http://www.xycoding.com/articles/2014/11/21/android-clipimage/" rel="alternate"></link><updated>2014-11-21T17:18:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-11-21:articles/2014/11/21/android-clipimage/</id><summary type="html">&lt;p&gt;相信大多数做过Android APP的同学们都会上传头像，而用户选择的图片可能并不符合我们APP的要求且不美观，所以对于图片尺寸的控制（缩放、拖动、裁剪等）就非常重要了。本文就讲讲我在项目中使用的仿微信上传头像功能，欢迎大家指正。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/cowfighting/NovCapture" target="_blank"&gt;GitHub源码下载&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>Android仿微信上传头像（缩放、拖动、裁剪）</title><link href="http://www.xycoding.com/articles/2014/11/21/android-clipimage/" rel="alternate"></link><published>2014-11-21T17:18:00+08:00</published><updated>2014-11-21T17:18:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-11-21:/articles/2014/11/21/android-clipimage/</id><summary type="html">&lt;p&gt;相信大多数做过Android APP的同学们都会上传头像，而用户选择的图片可能并不符合我们APP的要求且不美观，所以对于图片尺寸的控制（缩放、拖动、裁剪等）就非常重要了。本文就讲讲我在项目中使用的仿微信上传头像功能，欢迎大家指正。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;相信大多数做过Android APP的同学们都会上传头像，而用户选择的图片可能并不符合我们APP的要求且不美观，所以对于图片尺寸的控制（缩放、拖动、裁剪等）就非常重要了。本文就讲讲我在项目中使用的仿微信上传头像功能，欢迎大家指正。&lt;/p&gt;
 
 
 &lt;h3&gt;裁剪图片原理&lt;/h3&gt;
@@ -159,7 +161,7 @@
 &lt;h3&gt;自定义裁剪框&lt;/h3&gt;
 &lt;p&gt;如微信上传头像界面，裁剪框的作用是在屏幕上呈现一个白色的矩形边框，边框以外的界面都是半透明的形式。当图片在屏幕中拖动时，可以非常明确地提醒矩形框中的图片才是我们所需要的。以下的代码即自定义裁剪框，大家可看代码中注释，非常简单（即在屏幕中画出一个白色的矩形线框，边框以外的上下左右画出半透明背景）。&lt;/p&gt;
 &lt;p&gt;在本代码中，自定义了一个&lt;code&gt;OnDrawListenerComplete&lt;/code&gt;接口，里面定义了&lt;code&gt;onDrawCompelete&lt;/code&gt;方法。它的作用是什么？不知大家仔细观察过微信上传头像功能没，当我们选择图片后，不管图片多大多小，多宽多窄，它总能保证图片的宽度满足裁剪框或者高度满足裁剪框，即按裁剪框的比例缩放图片，这样用户在上传时就非常方便呢。该接口的作用就是当裁剪框绘画完成后即可调用回调函数，进行图片处理，以满足裁剪框的大小。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;public class ClipView extends View {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;public class ClipView extends View {
     private Paint paint = new Paint();
     private Paint borderPaint = new Paint();
 
@@ -334,7 +336,7 @@
 
 &lt;h3&gt;使用裁剪框&lt;/h3&gt;
 &lt;p&gt;使用裁剪框就非常简单了，将该裁剪框以&lt;code&gt;this.addContentView&lt;/code&gt;的方式添加到要使用的Activity中。本代码中，即&lt;code&gt;initClipView&lt;/code&gt;方法，至于为什么要在&lt;code&gt;observer.addOnGlobalLayoutListener&lt;/code&gt;中初始化裁剪框，是因为本例的顶部栏是自定义的，需等该头部的高度确定以后才能对裁剪框进行初始化，如果你没有使用自定义顶部栏，那么就无所谓了。大家可以看到在&lt;code&gt;observer.addOnGlobalLayoutListener&lt;/code&gt;回调接口中，有一大段计算缩放、平移等的语句，这些代码的作用即是上文所讨论的，让用户无论选择多大的图片，都让它满足裁剪框的高宽度。然后再加上针对&lt;code&gt;ImageView&lt;/code&gt;容器的拖动、缩放等效果即可。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;public class ClipPictureActivity extends Activity implements OnTouchListener,
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;public class ClipPictureActivity extends Activity implements OnTouchListener,
         OnClickListener {
     private ImageView srcPic;
     private View sure;
@@ -537,22 +539,34 @@
 
 
 &lt;p&gt;最后，效果图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_1_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_1_1.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图1.1）当用户选择图片后，初始化界面，大家可以看到，图片的高度符合裁剪框的高度，相应的图片宽度也按比例缩放。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_1_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_1_2.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图1.2）针对初始界面进行裁剪截图操作。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_2_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_2_1.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图2.1）往上拖动图片，大家可以看到白云飘出裁剪框了。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_2_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_2_2.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图2.2）针对拖动图片进行裁剪截图操作，可以看到截图中没有白云了。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_3_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_3_1.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图3.1）缩放图片，大家可以看到图片被放大了，只有一半白云，下方的湖面也少了。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_3_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/clip_3_2.png"&gt;&lt;/p&gt;
 &lt;p&gt;（图3.2）针对缩放图片进行裁剪截图操作，同样可以发现操作成功了。&lt;/p&gt;
 &lt;h3&gt;注意&lt;/h3&gt;
 &lt;p&gt;本例中，Activity之间传递截图是以Bitmap形式传递的，这是大忌，这有可能因Bitmap过大而导致APP崩溃。本文完全是出于方便，读者在实际使用中需注意。&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/cowfighting/clippicture" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android异步批量下载图片并缓存</title><link href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="alternate"></link><updated>2014-07-29T19:55:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-async-images-download/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/cowfighting/clippicture" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>Android异步批量下载图片并缓存</title><link href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/" rel="alternate"></link><published>2014-07-29T19:55:00+08:00</published><updated>2014-07-29T19:55:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:/articles/2014/07/29/android-async-images-download/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;接触android开发不久，近段时间需实现一个批量下载图片并显示的小功能。在网上搜索了一圈，发现国内外网上异步加载的例子太多太杂，要么是加载大图decode时报OOM异常，要么内存急剧上升不稳定。所以在前辈们的基础上，做了一些优化，特共享出来，欢迎大家指正。这里主要参见了以下两篇文章，非常感谢：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/guolin_blog/article/details/9526203" target="_blank"&gt;Android照片墙应用实现，再多的图片也不怕崩溃&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/xiaanming/article/details/9825113" target="_blank"&gt;Android 异步加载图片，使用LruCache和SD卡或手机缓存，效果非常的流畅&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在巨人的肩膀上，主要优化了以下几个地方：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下载大图decode时，可根据View大小自动缩放图片，不在出现&lt;code&gt;OOM&lt;/code&gt;和&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误&lt;/li&gt;
+&lt;li&gt;图片下载失败时，可自定义失败重试次数&lt;/li&gt;
+&lt;li&gt;记录正在下载的任务，防止屏幕滚动时多次下载&lt;/li&gt;
+&lt;li&gt;缓存目录容量大于给定限制时，清空文件缓存&lt;/li&gt;
+&lt;li&gt;其他一些小问题&lt;/li&gt;
+&lt;/ol&gt;
+</summary><content type="html">&lt;h3&gt;前言&lt;/h3&gt;
 &lt;p&gt;接触android开发不久，近段时间需实现一个批量下载图片并显示的小功能。在网上搜索了一圈，发现国内外网上异步加载的例子太多太杂，要么是加载大图decode时报OOM异常，要么内存急剧上升不稳定。所以在前辈们的基础上，做了一些优化，特共享出来，欢迎大家指正。这里主要参见了以下两篇文章，非常感谢：&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/guolin_blog/article/details/9526203" target="_blank"&gt;Android照片墙应用实现，再多的图片也不怕崩溃&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/xiaanming/article/details/9825113" target="_blank"&gt;Android 异步加载图片，使用LruCache和SD卡或手机缓存，效果非常的流畅&lt;/a&gt;&lt;/p&gt;
@@ -568,7 +582,7 @@
 
 &lt;h3&gt;工具类Utils&lt;/h3&gt;
 &lt;p&gt;Utils类主要封装了一些文件操作的基本方法，包括创建、删除、获取文件大小等。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;Utils&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;Utils&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kr"&gt;private&lt;/span&gt; &lt;span class="kr"&gt;static&lt;/span&gt; &lt;span class="kr"&gt;final&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt; &lt;span class="nx"&gt;Util_LOG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;makeLogTag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Utils&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
     &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;static&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt; &lt;span class="nx"&gt;makeLogTag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Class&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -714,40 +728,40 @@
 
 &lt;h3&gt;图片下载管理类ImageDownLoader&lt;/h3&gt;
 &lt;p&gt;ImageDownLoader类主要是图片下载管理，包括缓存管理、异步下载管理等。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;ImageDownLoader&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;ImageDownLoader_Log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Utils&lt;/span&gt;
-            &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;makeLogTag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ImageDownLoader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;ImageDownLoader&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;static&lt;/span&gt; &lt;span class="err"&gt;final&lt;/span&gt; &lt;span class="err"&gt;String&lt;/span&gt; &lt;span class="err"&gt;ImageDownLoader_Log&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;Utils&lt;/span&gt;
+            &lt;span class="err"&gt;.makeLogTag(ImageDownLoader.class)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="c"&gt;/** 保存正在下载或等待下载的URL和相应失败下载次数（初始为0），防止滚动时多次下载 */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Hashtable&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;taskCollection&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;Hashtable&amp;lt;String,&lt;/span&gt; &lt;span class="err"&gt;Integer&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;taskCollection&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 缓存类 */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;LruCache&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Bitmap&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;lruCache&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;LruCache&amp;lt;String,&lt;/span&gt; &lt;span class="err"&gt;Bitmap&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;lruCache&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 线程池 */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ExecutorService&lt;/span&gt; &lt;span class="n"&gt;threadPool&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;ExecutorService&lt;/span&gt; &lt;span class="err"&gt;threadPool&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 缓存文件目录 （如无SD卡，则data目录下） */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;cacheFileDir&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;File&lt;/span&gt; &lt;span class="err"&gt;cacheFileDir&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 缓存文件夹 */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;DIR_CACHE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cache&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;static&lt;/span&gt; &lt;span class="err"&gt;final&lt;/span&gt; &lt;span class="err"&gt;String&lt;/span&gt; &lt;span class="err"&gt;DIR_CACHE&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;cache&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 缓存文件夹最大容量限制（10M） */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="n"&gt;DIR_CACHE_LIMIT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;static&lt;/span&gt; &lt;span class="err"&gt;final&lt;/span&gt; &lt;span class="err"&gt;long&lt;/span&gt; &lt;span class="err"&gt;DIR_CACHE_LIMIT&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;10&lt;/span&gt; &lt;span class="err"&gt;*&lt;/span&gt; &lt;span class="err"&gt;1024&lt;/span&gt; &lt;span class="err"&gt;*&lt;/span&gt; &lt;span class="err"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;/** 图片下载失败重试次数 */&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;IMAGE_DOWNLOAD_FAIL_TIMES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;static&lt;/span&gt; &lt;span class="err"&gt;final&lt;/span&gt; &lt;span class="err"&gt;int&lt;/span&gt; &lt;span class="err"&gt;IMAGE_DOWNLOAD_FAIL_TIMES&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ImageDownLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;获取系统分配给每个应用程序的最大内存&lt;/span&gt;
-        &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;maxMemory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Runtime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getRuntime&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maxMemory&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;给&lt;/span&gt;&lt;span class="n"&gt;LruCache&lt;/span&gt;&lt;span class="err"&gt;分配最大内存的&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;
-        &lt;span class="n"&gt;lruCache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;LruCache&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Bitmap&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxMemory&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;必须重写此方法，来测量&lt;/span&gt;&lt;span class="n"&gt;Bitmap&lt;/span&gt;&lt;span class="err"&gt;的大小&lt;/span&gt;
-            &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Override&lt;/span&gt;
-            &lt;span class="n"&gt;protected&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;sizeOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getRowBytes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getHeight&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;public&lt;/span&gt; &lt;span class="err"&gt;ImageDownLoader(Context&lt;/span&gt; &lt;span class="err"&gt;context)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;//&lt;/span&gt; &lt;span class="err"&gt;获取系统分配给每个应用程序的最大内存&lt;/span&gt;
+        &lt;span class="err"&gt;int&lt;/span&gt; &lt;span class="err"&gt;maxMemory&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;(int)&lt;/span&gt; &lt;span class="err"&gt;Runtime.getRuntime().maxMemory()&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;//&lt;/span&gt; &lt;span class="err"&gt;给LruCache分配最大内存的1/8&lt;/span&gt;
+        &lt;span class="err"&gt;lruCache&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;new&lt;/span&gt; &lt;span class="err"&gt;LruCache&amp;lt;String,&lt;/span&gt; &lt;span class="err"&gt;Bitmap&amp;gt;(maxMemory&lt;/span&gt; &lt;span class="err"&gt;/&lt;/span&gt; &lt;span class="err"&gt;8)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;//&lt;/span&gt; &lt;span class="err"&gt;必须重写此方法，来测量Bitmap的大小&lt;/span&gt;
+            &lt;span class="err"&gt;@Override&lt;/span&gt;
+            &lt;span class="err"&gt;protected&lt;/span&gt; &lt;span class="err"&gt;int&lt;/span&gt; &lt;span class="err"&gt;sizeOf(String&lt;/span&gt; &lt;span class="err"&gt;key,&lt;/span&gt; &lt;span class="err"&gt;Bitmap&lt;/span&gt; &lt;span class="err"&gt;value)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;return&lt;/span&gt; &lt;span class="err"&gt;value.getRowBytes()&lt;/span&gt; &lt;span class="err"&gt;*&lt;/span&gt; &lt;span class="err"&gt;value.getHeight()&lt;/span&gt; &lt;span class="err"&gt;/&lt;/span&gt; &lt;span class="err"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
         &lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
         &lt;span class="nt"&gt;taskCollection&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;Hashtable&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;();&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;创建线程数&lt;/span&gt;
-        &lt;span class="nt"&gt;threadPool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;Executors&lt;/span&gt;&lt;span class="nc"&gt;.newFixedThreadPool&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;cacheFileDir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;Utils&lt;/span&gt;&lt;span class="nc"&gt;.createFileDir&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;context&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;DIR_CACHE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="nt"&gt;创建线程数&lt;/span&gt;
+        &lt;span class="nt"&gt;threadPool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;Executors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;newFixedThreadPool&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="nt"&gt;cacheFileDir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;Utils&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;createFileDir&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;context&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;DIR_CACHE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
     &lt;span class="err"&gt;}&lt;/span&gt;
 
     &lt;span class="c"&gt;/**&lt;/span&gt;
@@ -757,8 +771,8 @@
 &lt;span class="c"&gt;     * @param bitmap&lt;/span&gt;
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;private&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;addLruCache&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;key&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;bitmap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getBitmapFromMemCache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;lruCache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;put&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="err"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(getBitmapFromMemCache(key)&lt;/span&gt; &lt;span class="err"&gt;==&lt;/span&gt; &lt;span class="err"&gt;null&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="err"&gt;bitmap&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="err"&gt;null)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;lruCache.put(key,&lt;/span&gt; &lt;span class="err"&gt;bitmap)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="err"&gt;}&lt;/span&gt;
 
@@ -769,7 +783,7 @@
 &lt;span class="c"&gt;     * @return&lt;/span&gt;
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;private&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;getBitmapFromMemCache&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;key&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;lruCache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="err"&gt;return&lt;/span&gt; &lt;span class="err"&gt;lruCache.get(key)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 
     &lt;span class="c"&gt;/**&lt;/span&gt;
@@ -783,116 +797,116 @@
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;loadImage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;final&lt;/span&gt; &lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;final&lt;/span&gt; &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;width&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;final&lt;/span&gt; &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;height&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
             &lt;span class="nt"&gt;AsyncImageLoaderListener&lt;/span&gt; &lt;span class="nt"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;Log&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ImageDownLoader_Log&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;download:&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;ImageHandler&lt;/span&gt; &lt;span class="n"&gt;handler&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ImageHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;Runnable&lt;/span&gt; &lt;span class="n"&gt;runnable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Runnable&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Override&lt;/span&gt;
-            &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;void&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;downloadImage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;Message&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;handler&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;obtainMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;handler&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sendMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;将&lt;/span&gt;&lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="err"&gt;加入内存缓存&lt;/span&gt;
-                &lt;span class="n"&gt;addLruCache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;加入文件缓存前，需判断缓存目录大小是否超过限制，超过则清空缓存再加入&lt;/span&gt;
-                &lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="n"&gt;cacheFileSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Utils&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getFileSize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cacheFileDir&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cacheFileSize&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;DIR_CACHE_LIMIT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                    &lt;span class="n"&gt;Log&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ImageDownLoader_Log&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cacheFileDir&lt;/span&gt;
-                            &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; size has exceed limit.&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;cacheFileSize&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                    &lt;span class="n"&gt;Utils&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cacheFileDir&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                    &lt;span class="n"&gt;taskCollection&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="k"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;缓存文件名称（&lt;/span&gt; &lt;span class="err"&gt;替换&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="err"&gt;中非字母和非数字的字符，防止系统误认为文件路径）&lt;/span&gt;
-                &lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;urlKey&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="nc"&gt;.replaceAll&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="p"&gt;^&lt;/span&gt;&lt;span class="o"&gt;\\&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;将&lt;/span&gt;&lt;span class="nt"&gt;Bitmap&lt;/span&gt;&lt;span class="err"&gt;加入文件缓存&lt;/span&gt;
-                &lt;span class="nt"&gt;Utils&lt;/span&gt;&lt;span class="nc"&gt;.savaBitmap&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;cacheFileDir&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;urlKey&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;bitmap&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-            &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;记录该&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="err"&gt;，防止滚动时多次下载，&lt;/span&gt;&lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="err"&gt;代表该&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="err"&gt;下载失败次数&lt;/span&gt;
-        &lt;span class="nt"&gt;taskCollection&lt;/span&gt;&lt;span class="nc"&gt;.put&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;threadPool&lt;/span&gt;&lt;span class="nc"&gt;.execute&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;runnable&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-    &lt;span class="err"&gt;}&lt;/span&gt;
+        &lt;span class="err"&gt;Log.i(ImageDownLoader_Log,&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; + url);&lt;/span&gt;
+&lt;span class="s2"&gt;        final ImageHandler handler = new ImageHandler(listener);&lt;/span&gt;
+&lt;span class="s2"&gt;        Runnable runnable = new Runnable() {&lt;/span&gt;
+&lt;span class="s2"&gt;            @Override&lt;/span&gt;
+&lt;span class="s2"&gt;            public void run() {&lt;/span&gt;
+&lt;span class="s2"&gt;                Bitmap bitmap = downloadImage(url, width, height);&lt;/span&gt;
+&lt;span class="s2"&gt;                Message msg = handler.obtainMessage();&lt;/span&gt;
+&lt;span class="s2"&gt;                msg.obj = bitmap;&lt;/span&gt;
+&lt;span class="s2"&gt;                handler.sendMessage(msg);&lt;/span&gt;
+&lt;span class="s2"&gt;                // 将Bitmap 加入内存缓存&lt;/span&gt;
+&lt;span class="s2"&gt;                addLruCache(url, bitmap);&lt;/span&gt;
+&lt;span class="s2"&gt;                // 加入文件缓存前，需判断缓存目录大小是否超过限制，超过则清空缓存再加入&lt;/span&gt;
+&lt;span class="s2"&gt;                long cacheFileSize = Utils.getFileSize(cacheFileDir);&lt;/span&gt;
+&lt;span class="s2"&gt;                if (cacheFileSize &amp;gt; DIR_CACHE_LIMIT) {&lt;/span&gt;
+&lt;span class="s2"&gt;                    Log.i(ImageDownLoader_Log, cacheFileDir&lt;/span&gt;
+&lt;span class="s2"&gt;                            + &amp;quot;&lt;/span&gt; &lt;span class="k"&gt;size&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;exceed&lt;/span&gt; &lt;span class="n"&gt;limit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; + cacheFileSize);&lt;/span&gt;
+&lt;span class="s2"&gt;                    Utils.delFile(cacheFileDir, false);&lt;/span&gt;
+&lt;span class="s2"&gt;                    taskCollection.clear();&lt;/span&gt;
+&lt;span class="s2"&gt;                }&lt;/span&gt;
+&lt;span class="s2"&gt;                // 缓存文件名称（ 替换url中非字母和非数字的字符，防止系统误认为文件路径）&lt;/span&gt;
+&lt;span class="s2"&gt;                String urlKey = url.replaceAll(&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="p"&gt;^&lt;/span&gt;&lt;span class="o"&gt;\\&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&amp;quot;);&lt;/span&gt;
+&lt;span class="s2"&gt;                // 将Bitmap加入文件缓存&lt;/span&gt;
+&lt;span class="s2"&gt;                Utils.savaBitmap(cacheFileDir, urlKey, bitmap);&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        };&lt;/span&gt;
+&lt;span class="s2"&gt;        // 记录该url，防止滚动时多次下载，0代表该url下载失败次数&lt;/span&gt;
+&lt;span class="s2"&gt;        taskCollection.put(url, 0);&lt;/span&gt;
+&lt;span class="s2"&gt;        threadPool.execute(runnable);&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="c"&gt;/**&lt;/span&gt;
-&lt;span class="c"&gt;     * 获取Bitmap, 若内存缓存为空，则去文件缓存中获取&lt;/span&gt;
-&lt;span class="c"&gt;     * &lt;/span&gt;
-&lt;span class="c"&gt;     * @param url&lt;/span&gt;
-&lt;span class="c"&gt;     * @return 若缓存中没找到，则返回null&lt;/span&gt;
-&lt;span class="c"&gt;     */&lt;/span&gt;
-    &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;getBitmapCache&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;去处&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="err"&gt;中特殊字符作为文件缓存的名称&lt;/span&gt;
-        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;urlKey&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replaceAll&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="p"&gt;^&lt;/span&gt;&lt;span class="o"&gt;\\&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getBitmapFromMemCache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;getBitmapFromMemCache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;else&lt;/span&gt; &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Utils&lt;/span&gt;&lt;span class="nc"&gt;.isFileExists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;cacheFileDir&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;urlKey&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-                &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nt"&gt;Utils&lt;/span&gt;&lt;span class="nc"&gt;.getFileSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;File&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;cacheFileDir&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;urlKey&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;从文件缓存中获取&lt;/span&gt;&lt;span class="n"&gt;Bitmap&lt;/span&gt;
-            &lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BitmapFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;decodeFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cacheFileDir&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getPath&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-                    &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;separator&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;urlKey&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;将&lt;/span&gt;&lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="err"&gt;加入内存缓存&lt;/span&gt;
-            &lt;span class="n"&gt;addLruCache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="s2"&gt;    /**&lt;/span&gt;
+&lt;span class="s2"&gt;     * 获取Bitmap, 若内存缓存为空，则去文件缓存中获取&lt;/span&gt;
+&lt;span class="s2"&gt;     * &lt;/span&gt;
+&lt;span class="s2"&gt;     * @param url&lt;/span&gt;
+&lt;span class="s2"&gt;     * @return 若缓存中没找到，则返回null&lt;/span&gt;
+&lt;span class="s2"&gt;     */&lt;/span&gt;
+&lt;span class="s2"&gt;    public Bitmap getBitmapCache(String url) {&lt;/span&gt;
+&lt;span class="s2"&gt;        // 去处url中特殊字符作为文件缓存的名称&lt;/span&gt;
+&lt;span class="s2"&gt;        String urlKey = url.replaceAll(&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="p"&gt;^&lt;/span&gt;&lt;span class="o"&gt;\\&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&amp;quot;);&lt;/span&gt;
+&lt;span class="s2"&gt;        if (getBitmapFromMemCache(url) != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;            return getBitmapFromMemCache(url);&lt;/span&gt;
+&lt;span class="s2"&gt;        } else if (Utils.isFileExists(cacheFileDir, urlKey)&lt;/span&gt;
+&lt;span class="s2"&gt;                &amp;amp;&amp;amp; Utils.getFileSize(new File(cacheFileDir, urlKey)) &amp;gt; 0) {&lt;/span&gt;
+&lt;span class="s2"&gt;            // 从文件缓存中获取Bitmap&lt;/span&gt;
+&lt;span class="s2"&gt;            Bitmap bitmap = BitmapFactory.decodeFile(cacheFileDir.getPath()&lt;/span&gt;
+&lt;span class="s2"&gt;                    + File.separator + urlKey);&lt;/span&gt;
+&lt;span class="s2"&gt;            // 将Bitmap 加入内存缓存&lt;/span&gt;
+&lt;span class="s2"&gt;            addLruCache(url, bitmap);&lt;/span&gt;
+&lt;span class="s2"&gt;            return bitmap;&lt;/span&gt;
+&lt;span class="s2"&gt;        }&lt;/span&gt;
+&lt;span class="s2"&gt;        return null;&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="c"&gt;/**&lt;/span&gt;
-&lt;span class="c"&gt;     * 下载图片，并按指定高度和宽度压缩&lt;/span&gt;
-&lt;span class="c"&gt;     * &lt;/span&gt;
-&lt;span class="c"&gt;     * @param url&lt;/span&gt;
-&lt;span class="c"&gt;     * @param width&lt;/span&gt;
-&lt;span class="c"&gt;     * @param height&lt;/span&gt;
-&lt;span class="c"&gt;     * @return&lt;/span&gt;
-&lt;span class="c"&gt;     */&lt;/span&gt;
-    &lt;span class="nt"&gt;private&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;downloadImage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;width&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;height&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;HttpClient&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultHttpClient&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;try&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getParams&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setParameter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-                    &lt;span class="n"&gt;CoreProtocolPNames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PROTOCOL_VERSION&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;HttpVersion&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTP_1_1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;HttpPost&lt;/span&gt; &lt;span class="n"&gt;httpPost&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;HttpPost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;HttpResponse&lt;/span&gt; &lt;span class="n"&gt;httpResponse&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpPost&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpResponse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusLine&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusCode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;HttpStatus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SC_OK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;HttpEntity&lt;/span&gt; &lt;span class="n"&gt;entity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;httpResponse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getEntity&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="err"&gt;解决缩放大图时出现&lt;/span&gt;&lt;span class="n"&gt;SkImageDecoder&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Factory&lt;/span&gt; &lt;span class="n"&gt;returned&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="err"&gt;错误&lt;/span&gt;
-                &lt;span class="n"&gt;byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;byteIn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;EntityUtils&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;toByteArray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entity&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;BitmapFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt; &lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;BitmapFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inJustDecodeBounds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;BitmapFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;decodeByteArray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;byteIn&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;byteIn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
-                        &lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ceil&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;outHeight&lt;/span&gt;
-                        &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ceil&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;outWidth&lt;/span&gt;
-                        &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                    &lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inSampleSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;heightRatio&lt;/span&gt;
-                            &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="nc"&gt;.inJustDecodeBounds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-                &lt;span class="nt"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.decodeByteArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
-                        &lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="nc"&gt;.length&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-            &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ClientProtocolException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ConnectTimeoutException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Exception&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shutdown&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;下载失败，再重新下载&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;本例是图片下载失败则再次下载，可根据需要改变，比如记录下载失败的图片&lt;/span&gt;&lt;span class="nt"&gt;URL&lt;/span&gt;&lt;span class="err"&gt;，在某个时刻再次下载&lt;/span&gt;
-        &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;taskCollection&lt;/span&gt;&lt;span class="nc"&gt;.get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nt"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="n"&gt;times&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;taskCollection&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;
-                    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;times&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;IMAGE_DOWNLOAD_FAIL_TIMES&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;times&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;taskCollection&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;put&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;times&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;downloadImage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;Log&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ImageDownLoader_Log&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Re-download &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;url&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;times&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="s2"&gt;    /**&lt;/span&gt;
+&lt;span class="s2"&gt;     * 下载图片，并按指定高度和宽度压缩&lt;/span&gt;
+&lt;span class="s2"&gt;     * &lt;/span&gt;
+&lt;span class="s2"&gt;     * @param url&lt;/span&gt;
+&lt;span class="s2"&gt;     * @param width&lt;/span&gt;
+&lt;span class="s2"&gt;     * @param height&lt;/span&gt;
+&lt;span class="s2"&gt;     * @return&lt;/span&gt;
+&lt;span class="s2"&gt;     */&lt;/span&gt;
+&lt;span class="s2"&gt;    private Bitmap downloadImage(String url, int width, int height) {&lt;/span&gt;
+&lt;span class="s2"&gt;        Bitmap bitmap = null;&lt;/span&gt;
+&lt;span class="s2"&gt;        HttpClient httpClient = new DefaultHttpClient();&lt;/span&gt;
+&lt;span class="s2"&gt;        try {&lt;/span&gt;
+&lt;span class="s2"&gt;            httpClient.getParams().setParameter(&lt;/span&gt;
+&lt;span class="s2"&gt;                    CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);&lt;/span&gt;
+&lt;span class="s2"&gt;            HttpPost httpPost = new HttpPost(url);&lt;/span&gt;
+&lt;span class="s2"&gt;            HttpResponse httpResponse = httpClient.execute(httpPost);&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {&lt;/span&gt;
+&lt;span class="s2"&gt;                HttpEntity entity = httpResponse.getEntity();&lt;/span&gt;
+&lt;span class="s2"&gt;                //解决缩放大图时出现SkImageDecoder::Factory returned null错误&lt;/span&gt;
+&lt;span class="s2"&gt;                byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="s2"&gt; byteIn = EntityUtils.toByteArray(entity);&lt;/span&gt;
+&lt;span class="s2"&gt;                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();&lt;/span&gt;
+&lt;span class="s2"&gt;                bmpFactoryOptions.inJustDecodeBounds = true;&lt;/span&gt;
+&lt;span class="s2"&gt;                BitmapFactory.decodeByteArray(byteIn, 0, byteIn.length,&lt;/span&gt;
+&lt;span class="s2"&gt;                        bmpFactoryOptions);&lt;/span&gt;
+&lt;span class="s2"&gt;                int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight&lt;/span&gt;
+&lt;span class="s2"&gt;                        / height);&lt;/span&gt;
+&lt;span class="s2"&gt;                int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth&lt;/span&gt;
+&lt;span class="s2"&gt;                        / width);&lt;/span&gt;
+&lt;span class="s2"&gt;                if (heightRatio &amp;gt; 1 &amp;amp;&amp;amp; widthRatio &amp;gt; 1) {&lt;/span&gt;
+&lt;span class="s2"&gt;                    bmpFactoryOptions.inSampleSize = heightRatio &amp;gt; widthRatio ? heightRatio&lt;/span&gt;
+&lt;span class="s2"&gt;                            : widthRatio;&lt;/span&gt;
+&lt;span class="s2"&gt;                }&lt;/span&gt;
+&lt;span class="s2"&gt;                bmpFactoryOptions.inJustDecodeBounds = false;&lt;/span&gt;
+&lt;span class="s2"&gt;                bitmap = BitmapFactory.decodeByteArray(byteIn, 0,&lt;/span&gt;
+&lt;span class="s2"&gt;                        byteIn.length, bmpFactoryOptions);&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ClientProtocolException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ConnectTimeoutException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (Exception e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } finally {&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpClient != null &amp;amp;&amp;amp; httpClient.getConnectionManager() != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;                httpClient.getConnectionManager().shutdown();&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        }&lt;/span&gt;
+&lt;span class="s2"&gt;        // 下载失败，再重新下载&lt;/span&gt;
+&lt;span class="s2"&gt;        // 本例是图片下载失败则再次下载，可根据需要改变，比如记录下载失败的图片URL，在某个时刻再次下载&lt;/span&gt;
+&lt;span class="s2"&gt;        if (taskCollection.get(url) != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;            int times = taskCollection.get(url);&lt;/span&gt;
+&lt;span class="s2"&gt;            if (bitmap == null&lt;/span&gt;
+&lt;span class="s2"&gt;                    &amp;amp;&amp;amp; times &amp;lt; IMAGE_DOWNLOAD_FAIL_TIMES) {&lt;/span&gt;
+&lt;span class="s2"&gt;                times++;&lt;/span&gt;
+&lt;span class="s2"&gt;                taskCollection.put(url, times);&lt;/span&gt;
+&lt;span class="s2"&gt;                bitmap = downloadImage(url, width, height);&lt;/span&gt;
+&lt;span class="s2"&gt;                Log.i(ImageDownLoader_Log, &amp;quot;&lt;/span&gt;&lt;span class="n"&gt;Re-download&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; + url + &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;times&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
         &lt;span class="err"&gt;}&lt;/span&gt;
         &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;bitmap&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
@@ -902,9 +916,9 @@
 &lt;span class="c"&gt;     * 取消正在下载的任务&lt;/span&gt;
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;synchronized&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;cancelTasks&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;threadPool&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;threadPool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shutdownNow&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="n"&gt;threadPool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(threadPool&lt;/span&gt; &lt;span class="err"&gt;!=&lt;/span&gt; &lt;span class="err"&gt;null)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;threadPool.shutdownNow()&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="err"&gt;threadPool&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="err"&gt;}&lt;/span&gt;
 
@@ -914,27 +928,27 @@
 &lt;span class="c"&gt;     * @return&lt;/span&gt;
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;Hashtable&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;getTaskCollection&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;taskCollection&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;return&lt;/span&gt; &lt;span class="err"&gt;taskCollection&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 
     &lt;span class="c"&gt;/** 异步加载图片接口 */&lt;/span&gt;
     &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;interface&lt;/span&gt; &lt;span class="nt"&gt;AsyncImageLoaderListener&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;void&lt;/span&gt; &lt;span class="n"&gt;onImageLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Bitmap&lt;/span&gt; &lt;span class="n"&gt;bitmap&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="err"&gt;void&lt;/span&gt; &lt;span class="err"&gt;onImageLoader(Bitmap&lt;/span&gt; &lt;span class="err"&gt;bitmap)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 
     &lt;span class="c"&gt;/** 异步加载完成后，图片处理 */&lt;/span&gt;
     &lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;ImageHandler&lt;/span&gt; &lt;span class="nt"&gt;extends&lt;/span&gt; &lt;span class="nt"&gt;Handler&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 
-        &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;AsyncImageLoaderListener&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;AsyncImageLoaderListener&lt;/span&gt; &lt;span class="err"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-        &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ImageHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AsyncImageLoaderListener&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;public&lt;/span&gt; &lt;span class="err"&gt;ImageHandler(AsyncImageLoaderListener&lt;/span&gt; &lt;span class="err"&gt;listener)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;this.listener&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
 
-        &lt;span class="k"&gt;@Override&lt;/span&gt;
+        &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;Override&lt;/span&gt;
         &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;handleMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Message&lt;/span&gt; &lt;span class="nt"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="nt"&gt;super&lt;/span&gt;&lt;span class="nc"&gt;.handleMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-            &lt;span class="nt"&gt;listener&lt;/span&gt;&lt;span class="nc"&gt;.onImageLoader&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;Bitmap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;msg&lt;/span&gt;&lt;span class="nc"&gt;.obj&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="nt"&gt;super&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;handleMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="nt"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;onImageLoader&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;Bitmap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="err"&gt;}&lt;/span&gt;
 &lt;span class="err"&gt;}&lt;/span&gt;
@@ -943,7 +957,7 @@
 
 &lt;h3&gt;GridView适配器类ImageGridViewAdapter&lt;/h3&gt;
 &lt;p&gt;该类为GridView适配器，并实现滚动监听等的功能。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;public class ImageGridViewAdapter extends BaseAdapter implements OnScrollListener {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;public class ImageGridViewAdapter extends BaseAdapter implements OnScrollListener {
 
     /** 数据源 */
     private List&amp;lt;String&amp;gt; data;
@@ -1073,20 +1087,21 @@
 
 
 &lt;p&gt;最后的最后，别忘加上权限，并附效果图如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;lt;uses-permission android:name=&amp;quot;android.permission.INTERNET&amp;quot; /&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;uses-permission android:name=&amp;quot;android.permission.INTERNET&amp;quot; /&amp;gt;
 &amp;lt;uses-permission android:name=&amp;quot;android.permission.MOUNT_UNMOUNT_FILESYSTEMS&amp;quot; /&amp;gt;
 &amp;lt;uses-permission android:name=&amp;quot;android.permission.WRITE_EXTERNAL_STORAGE&amp;quot; /&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;img alt="upload" src="/images/download-images.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="upload" src="/images/download-images.png"&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692557" target="_blank"&gt;ImagesDownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现文件上传到PHP服务器，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="alternate"></link><updated>2014-07-29T10:35:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:articles/2014/07/29/android-httpclient-upload/</id><summary type="html">&lt;p&gt;上一篇文章&lt;a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/"&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://download.csdn.net/detail/q541959443/7692557" target="_blank"&gt;ImagesDownLoad源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>Android使用HttpClient实现文件上传到PHP服务器，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/" rel="alternate"></link><published>2014-07-29T10:35:00+08:00</published><updated>2014-07-29T10:35:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-29:/articles/2014/07/29/android-httpclient-upload/</id><summary type="html">&lt;p&gt;上一篇文章&lt;a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/"&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;上一篇文章&lt;a href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/"&gt;Android使用HttpClient实现下载，并监控进度&lt;/a&gt;，本文继续讲解实现上传进度监控，原理其实一样，只不过这次重载的是&lt;code&gt;FilterOutputStream&lt;/code&gt;，服务器端使用PHP进行文件的接收。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
 
 
 &lt;h3&gt;服务器端PHP&lt;/h3&gt;
 &lt;p&gt;废话不多说，直接上代码：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
     &lt;span class="nv"&gt;$target_path&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;./tmp/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="c1"&gt;//接收文件目录  &lt;/span&gt;
     &lt;span class="nv"&gt;$target_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$target_path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$_FILES&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;file&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
     &lt;span class="nv"&gt;$target_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;iconv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;gb2312&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$target_path&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -1101,7 +1116,7 @@
 
 &lt;h3&gt;监控进度实现&lt;/h3&gt;
 &lt;p&gt;首先定义监听器接口，这和上文中是一样的，如下所示：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt; * 进度监听器接口&lt;/span&gt;
 &lt;span class="cm"&gt; */&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 public&lt;span class="w"&gt; &lt;/span&gt;interface&lt;span class="w"&gt; &lt;/span&gt;ProgressListener&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
@@ -1111,7 +1126,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;interface&lt;span class="w"&gt; &lt;/s
 
 
 &lt;p&gt;实现监控进度的关键部分就在于记录已传输字节数，所以我们需重载&lt;code&gt;FilterOutputStream&lt;/code&gt;，重写其中的关键方法，实现进度监听的功能，如下所示，本例中首先重载的是&lt;code&gt;HttpEntityWrapper&lt;/code&gt;，顾名思义，就是将需发送的&lt;code&gt;HttpEntity&lt;/code&gt;打包，以便计算总字节数，代码如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt; * ProgressOutHttpEntity：输出流(OutputStream)时记录已发送字节数&lt;/span&gt;
 &lt;span class="cm"&gt; * &lt;/span&gt;
 &lt;span class="cm"&gt; * @author Cow&lt;/span&gt;
@@ -1169,109 +1184,110 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 
 
 &lt;p&gt;最后就是使用上述实现的类和Httpclient进行上传并显示进度的功能，非常简单，代码如下，使用AsyncTask异步上传。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;FileUploadAsyncTask&lt;/span&gt; &lt;span class="nt"&gt;extends&lt;/span&gt; &lt;span class="nt"&gt;AsyncTask&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;File&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;FileUploadAsyncTask&lt;/span&gt; &lt;span class="nt"&gt;extends&lt;/span&gt; &lt;span class="nt"&gt;AsyncTask&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;File&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="k"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;http://192.168.83.213/receive_file.php&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ProgressDialog&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="n"&gt;totalSize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;String&lt;/span&gt; &lt;span class="err"&gt;url&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="mf"&gt;192.168.83.213&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;receive_file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;;&lt;/span&gt;
+&lt;span class="s2"&gt;    private Context context;&lt;/span&gt;
+&lt;span class="s2"&gt;    private ProgressDialog pd;&lt;/span&gt;
+&lt;span class="s2"&gt;    private long totalSize;&lt;/span&gt;
 
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;FileUploadAsyncTask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="s2"&gt;    public FileUploadAsyncTask(Context context) {&lt;/span&gt;
+&lt;span class="s2"&gt;        this.context = context;&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
+
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onPreExecute() {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd = new ProgressDialog(context);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setMessage(&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;上传中&lt;/span&gt;&lt;span class="o"&gt;....&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setCancelable(false);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.show();&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
+
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected String doInBackground(File... params) {&lt;/span&gt;
+&lt;span class="s2"&gt;        // 保存需上传文件信息&lt;/span&gt;
+&lt;span class="s2"&gt;        MultipartEntityBuilder entitys = MultipartEntityBuilder.create();&lt;/span&gt;
+&lt;span class="s2"&gt;        entitys.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);&lt;/span&gt;
+&lt;span class="s2"&gt;        entitys.setCharset(Charset.forName(HTTP.UTF_8));&lt;/span&gt;
+
+&lt;span class="s2"&gt;        File file = params&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;;&lt;/span&gt;
+&lt;span class="s2"&gt;        entitys.addPart(&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, new FileBody(file));&lt;/span&gt;
+&lt;span class="s2"&gt;        HttpEntity httpEntity = entitys.build();&lt;/span&gt;
+&lt;span class="s2"&gt;        totalSize = httpEntity.getContentLength();&lt;/span&gt;
+&lt;span class="s2"&gt;        ProgressOutHttpEntity progressHttpEntity = new ProgressOutHttpEntity(&lt;/span&gt;
+&lt;span class="s2"&gt;                httpEntity, new ProgressListener() {&lt;/span&gt;
+&lt;span class="s2"&gt;                    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;                    public void transferred(long transferedBytes) {&lt;/span&gt;
+&lt;span class="s2"&gt;                        publishProgress((int) (100 * transferedBytes / totalSize));&lt;/span&gt;
+&lt;span class="s2"&gt;                    }&lt;/span&gt;
+&lt;span class="s2"&gt;                });&lt;/span&gt;
+&lt;span class="s2"&gt;        return uploadFile(url, progressHttpEntity);&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
+
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onProgressUpdate(Integer... progress) {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setProgress((int) (progress&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;));&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
+
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onPostExecute(String result) {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.dismiss();&lt;/span&gt;
+&lt;span class="s2"&gt;        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
+
+&lt;span class="s2"&gt;    /**&lt;/span&gt;
+&lt;span class="s2"&gt;     * 上传文件到服务器&lt;/span&gt;
+&lt;span class="s2"&gt;     * &lt;/span&gt;
+&lt;span class="s2"&gt;     * @param url&lt;/span&gt;
+&lt;span class="s2"&gt;     *            服务器地址&lt;/span&gt;
+&lt;span class="s2"&gt;     * @param entity&lt;/span&gt;
+&lt;span class="s2"&gt;     *            文件&lt;/span&gt;
+&lt;span class="s2"&gt;     * @return&lt;/span&gt;
+&lt;span class="s2"&gt;     */&lt;/span&gt;
+&lt;span class="s2"&gt;    public static String uploadFile(String url, ProgressOutHttpEntity entity) {&lt;/span&gt;
+&lt;span class="s2"&gt;        HttpClient httpClient = new DefaultHttpClient();&lt;/span&gt;
+&lt;span class="s2"&gt;        httpClient.getParams().setParameter(&lt;/span&gt;
+&lt;span class="s2"&gt;                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);&lt;/span&gt;
+&lt;span class="s2"&gt;        // 设置连接超时时间&lt;/span&gt;
+&lt;span class="s2"&gt;        httpClient.getParams().setParameter(&lt;/span&gt;
+&lt;span class="s2"&gt;                CoreConnectionPNames.CONNECTION_TIMEOUT, 5000);&lt;/span&gt;
+&lt;span class="s2"&gt;        HttpPost httpPost = new HttpPost(url);&lt;/span&gt;
+&lt;span class="s2"&gt;        httpPost.setEntity(entity);&lt;/span&gt;
+&lt;span class="s2"&gt;        try {&lt;/span&gt;
+&lt;span class="s2"&gt;            HttpResponse httpResponse = httpClient.execute(httpPost);&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {&lt;/span&gt;
+&lt;span class="s2"&gt;                return &amp;quot;&lt;/span&gt;&lt;span class="err"&gt;文件上传成功&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;;&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ClientProtocolException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ConnectTimeoutException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (Exception e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } finally {&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpClient != null &amp;amp;&amp;amp; httpClient.getConnectionManager() != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;                httpClient.getConnectionManager().shutdown();&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        }&lt;/span&gt;
+&lt;span class="s2"&gt;        return &amp;quot;&lt;/span&gt;&lt;span class="err"&gt;文件上传失败&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onPreExecute&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;ProgressDialog&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;context&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setProgressStyle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ProgressDialog&lt;/span&gt;&lt;span class="nc"&gt;.STYLE_HORIZONTAL&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;上传中....&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setCancelable&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.show&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;doInBackground&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;File&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="nt"&gt;params&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;保存需上传文件信息&lt;/span&gt;
-        &lt;span class="nt"&gt;MultipartEntityBuilder&lt;/span&gt; &lt;span class="nt"&gt;entitys&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;MultipartEntityBuilder&lt;/span&gt;&lt;span class="nc"&gt;.create&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;entitys&lt;/span&gt;&lt;span class="nc"&gt;.setMode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;HttpMultipartMode&lt;/span&gt;&lt;span class="nc"&gt;.BROWSER_COMPATIBLE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;entitys&lt;/span&gt;&lt;span class="nc"&gt;.setCharset&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Charset&lt;/span&gt;&lt;span class="nc"&gt;.forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;HTTP&lt;/span&gt;&lt;span class="nc"&gt;.UTF_8&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
-
-        &lt;span class="nt"&gt;File&lt;/span&gt; &lt;span class="nt"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;params&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-        &lt;span class="nt"&gt;entitys&lt;/span&gt;&lt;span class="nc"&gt;.addPart&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;file&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;FileBody&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;file&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
-        &lt;span class="nt"&gt;HttpEntity&lt;/span&gt; &lt;span class="nt"&gt;httpEntity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;entitys&lt;/span&gt;&lt;span class="nc"&gt;.build&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;totalSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;httpEntity&lt;/span&gt;&lt;span class="nc"&gt;.getContentLength&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;ProgressOutHttpEntity&lt;/span&gt; &lt;span class="nt"&gt;progressHttpEntity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;ProgressOutHttpEntity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
-                &lt;span class="nt"&gt;httpEntity&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;ProgressListener&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Override&lt;/span&gt;
-                    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;void&lt;/span&gt; &lt;span class="n"&gt;transferred&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="n"&gt;transferedBytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                        &lt;span class="n"&gt;publishProgress&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;transferedBytes&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;totalSize&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-                    &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;uploadFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;progressHttpEntity&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-    &lt;span class="err"&gt;}&lt;/span&gt;
-
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onProgressUpdate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="nt"&gt;progress&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setProgress&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;progress&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onPostExecute&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;result&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.dismiss&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;Toast&lt;/span&gt;&lt;span class="nc"&gt;.makeText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;context&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;result&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Toast&lt;/span&gt;&lt;span class="nc"&gt;.LENGTH_SHORT&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nc"&gt;.show&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="c"&gt;/**&lt;/span&gt;
-&lt;span class="c"&gt;     * 上传文件到服务器&lt;/span&gt;
-&lt;span class="c"&gt;     * &lt;/span&gt;
-&lt;span class="c"&gt;     * @param url&lt;/span&gt;
-&lt;span class="c"&gt;     *            服务器地址&lt;/span&gt;
-&lt;span class="c"&gt;     * @param entity&lt;/span&gt;
-&lt;span class="c"&gt;     *            文件&lt;/span&gt;
-&lt;span class="c"&gt;     * @return&lt;/span&gt;
-&lt;span class="c"&gt;     */&lt;/span&gt;
-    &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;uploadFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;String&lt;/span&gt; &lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;ProgressOutHttpEntity&lt;/span&gt; &lt;span class="nt"&gt;entity&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;HttpClient&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultHttpClient&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getParams&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setParameter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-                &lt;span class="n"&gt;CoreProtocolPNames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PROTOCOL_VERSION&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;HttpVersion&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTP_1_1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;设置连接超时时间&lt;/span&gt;
-        &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getParams&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setParameter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-                &lt;span class="n"&gt;CoreConnectionPNames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CONNECTION_TIMEOUT&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;HttpPost&lt;/span&gt; &lt;span class="n"&gt;httpPost&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;HttpPost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;httpPost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setEntity&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entity&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;try&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;HttpResponse&lt;/span&gt; &lt;span class="n"&gt;httpResponse&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpPost&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpResponse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusLine&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusCode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;HttpStatus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SC_OK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;文件上传成功&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ClientProtocolException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ConnectTimeoutException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Exception&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shutdown&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;文件上传失败&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="err"&gt;}&lt;/span&gt;
 
 &lt;span class="err"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;最后的最后，上传效果图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="upload" src="/images/image-upload.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="upload" src="/images/image-upload.png"&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/cowfighting/ImageWithProgress" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android使用HttpClient实现下载，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="alternate"></link><updated>2014-07-28T19:50:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-28:articles/2014/07/28/android-httpclient-download/</id><summary type="html">&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/"&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/cowfighting/ImageWithProgress" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>Android使用HttpClient实现下载，并监控进度</title><link href="http://www.xycoding.com/articles/2014/07/28/android-httpclient-download/" rel="alternate"></link><published>2014-07-28T19:50:00+08:00</published><updated>2014-07-28T19:50:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-07-28:/articles/2014/07/28/android-httpclient-download/</id><summary type="html">&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/"&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Android程序开发中使用网络上传下载是必不可少的，前不久使用&lt;a href="http://hc.apache.org/"&gt;Apache Httpclient&lt;/a&gt;组件进行图片上传下载，并监控进度等功能的了解与实现，并解决了缩放图片时出现&lt;code&gt;SkImageDecoder::Factory returned null&lt;/code&gt;错误。本文是在httpcore-4.3.jar,httpmime-4.3.4.jar基础上实现，文章末尾提供的Demo下载中包含了它们。关于上传，请移步&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-httpclient-upload/"&gt;Android使用HttpClient实现文件上传到PHP服务器，并监控进度&lt;/a&gt;。好记性不如烂笔头，方便以后查阅，不当之处，还请指正。&lt;/p&gt;
 
 
 &lt;h3&gt;监控进度实现&lt;/h3&gt;
 &lt;p&gt;关于HttpClient的资料，可去其官方查阅。本例简单的使用它进行图片下载，如想实现批量下载图片，请参见&lt;a href="http://www.xycoding.com/articles/2014/07/29/android-async-images-download/"&gt;Android异步批量下载图片并缓存&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;首先定义监听器接口，如下所示：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt; * 进度监听器接口&lt;/span&gt;
 &lt;span class="cm"&gt; */&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 public&lt;span class="w"&gt; &lt;/span&gt;interface&lt;span class="w"&gt; &lt;/span&gt;ProgressListener&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
@@ -1281,7 +1297,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;interface&lt;span class="w"&gt; &lt;/s
 
 
 &lt;p&gt;然后自定义一个&lt;code&gt;CountingInputStream&lt;/code&gt;类继承于&lt;code&gt;FilterInputStream&lt;/code&gt;，重写其中的关键方法，实现进度监听的功能，如下所示：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt; * 重写FilterInputStream，实现进度监听的功能&lt;/span&gt;
 &lt;span class="cm"&gt; * &lt;/span&gt;
 &lt;span class="cm"&gt; * @author Cow&lt;/span&gt;
@@ -1339,108 +1355,108 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 
 
 &lt;p&gt;最后就是使用上述实现的类和Httpclient进行下载并显示进度的功能，非常简单，代码如下，使用AsyncTask异步下载。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;FileDownLoadAsyncTask&lt;/span&gt; &lt;span class="nt"&gt;extends&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;class&lt;/span&gt; &lt;span class="nt"&gt;FileDownLoadAsyncTask&lt;/span&gt; &lt;span class="nt"&gt;extends&lt;/span&gt;
         &lt;span class="nt"&gt;AsyncTask&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;ImageView&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 
-    &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;图片下载地址&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="k"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;http://img0.bdstatic.com/img/image/shouye/leimu/mingxing.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ProgressDialog&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ImageView&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="k"&gt;width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;150&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="k"&gt;height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;150&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;//&lt;/span&gt; &lt;span class="err"&gt;图片下载地址&lt;/span&gt;
+    &lt;span class="err"&gt;private&lt;/span&gt; &lt;span class="err"&gt;String&lt;/span&gt; &lt;span class="err"&gt;url&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;img0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bdstatic&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;shouye&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;leimu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mingxing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jpg&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;;&lt;/span&gt;
+&lt;span class="s2"&gt;    private Context context;&lt;/span&gt;
+&lt;span class="s2"&gt;    private ProgressDialog pd;&lt;/span&gt;
+&lt;span class="s2"&gt;    private ImageView image;&lt;/span&gt;
+&lt;span class="s2"&gt;    private int width = 150;&lt;/span&gt;
+&lt;span class="s2"&gt;    private int height = 150;&lt;/span&gt;
 
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;FileDownLoadAsyncTask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="s2"&gt;    public FileDownLoadAsyncTask(Context context) {&lt;/span&gt;
+&lt;span class="s2"&gt;        this.context = context;&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onPreExecute&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;ProgressDialog&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;context&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setProgressStyle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ProgressDialog&lt;/span&gt;&lt;span class="nc"&gt;.STYLE_HORIZONTAL&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;下载中....&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setCancelable&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.show&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onPreExecute() {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd = new ProgressDialog(context);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setMessage(&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;下载中&lt;/span&gt;&lt;span class="o"&gt;....&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setCancelable(false);&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.show();&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="c"&gt;/**&lt;/span&gt;
-&lt;span class="c"&gt;     * 下载图片，并按指定高度和宽度压缩&lt;/span&gt;
-&lt;span class="c"&gt;     */&lt;/span&gt;
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;doInBackground&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ImageView&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="nt"&gt;params&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;this&lt;/span&gt;&lt;span class="nc"&gt;.image&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;params&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-        &lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-        &lt;span class="nt"&gt;HttpClient&lt;/span&gt; &lt;span class="nt"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;DefaultHttpClient&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getParams&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setParameter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-                    &lt;span class="n"&gt;CoreProtocolPNames&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PROTOCOL_VERSION&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;HttpVersion&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTP_1_1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;HttpGet&lt;/span&gt; &lt;span class="n"&gt;httpGet&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;HttpGet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;url&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;HttpResponse&lt;/span&gt; &lt;span class="n"&gt;httpResponse&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpGet&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpResponse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusLine&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getStatusCode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;HttpStatus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SC_OK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;HttpEntity&lt;/span&gt; &lt;span class="n"&gt;entity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;httpResponse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getEntity&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="k"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;entity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getContentLength&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-                &lt;span class="n"&gt;CountingInputStream&lt;/span&gt; &lt;span class="n"&gt;cis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;CountingInputStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-                        &lt;span class="n"&gt;entity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getContent&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ProgressListener&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;span class="s2"&gt;    /**&lt;/span&gt;
+&lt;span class="s2"&gt;     * 下载图片，并按指定高度和宽度压缩&lt;/span&gt;
+&lt;span class="s2"&gt;     */&lt;/span&gt;
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected Bitmap doInBackground(ImageView... params) {&lt;/span&gt;
+&lt;span class="s2"&gt;        this.image = params&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;;&lt;/span&gt;
+&lt;span class="s2"&gt;        Bitmap bitmap = null;&lt;/span&gt;
+&lt;span class="s2"&gt;        HttpClient httpClient = new DefaultHttpClient();&lt;/span&gt;
+&lt;span class="s2"&gt;        try {&lt;/span&gt;
+&lt;span class="s2"&gt;            httpClient.getParams().setParameter(&lt;/span&gt;
+&lt;span class="s2"&gt;                    CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);&lt;/span&gt;
+&lt;span class="s2"&gt;            HttpGet httpGet = new HttpGet(url);&lt;/span&gt;
+&lt;span class="s2"&gt;            HttpResponse httpResponse = httpClient.execute(httpGet);&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {&lt;/span&gt;
+&lt;span class="s2"&gt;                HttpEntity entity = httpResponse.getEntity();&lt;/span&gt;
+&lt;span class="s2"&gt;                final long size = entity.getContentLength();&lt;/span&gt;
+&lt;span class="s2"&gt;                CountingInputStream cis = new CountingInputStream(&lt;/span&gt;
+&lt;span class="s2"&gt;                        entity.getContent(), new ProgressListener() {&lt;/span&gt;
 
-                            &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Override&lt;/span&gt;
-                            &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;void&lt;/span&gt; &lt;span class="n"&gt;transferred&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;long&lt;/span&gt; &lt;span class="n"&gt;transferedBytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                                &lt;span class="n"&gt;Log&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;FileDownLoadAsyncTask&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;总字节数：&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;size&lt;/span&gt;
-                                        &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; 已下载字节数：&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;transferedBytes&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                                &lt;span class="n"&gt;publishProgress&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;transferedBytes&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="k"&gt;size&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-                            &lt;span class="p"&gt;}&lt;/span&gt;
-                        &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;需将&lt;/span&gt;&lt;span class="nt"&gt;Inputstream&lt;/span&gt;&lt;span class="err"&gt;转化为&lt;/span&gt;&lt;span class="nt"&gt;byte&lt;/span&gt;&lt;span class="err"&gt;数组，以备&lt;/span&gt;&lt;span class="nt"&gt;decodeByteArray&lt;/span&gt;&lt;span class="err"&gt;用&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;如直接使用&lt;/span&gt;&lt;span class="nt"&gt;decodeStream&lt;/span&gt;&lt;span class="err"&gt;会将&lt;/span&gt;&lt;span class="nt"&gt;stream&lt;/span&gt;&lt;span class="err"&gt;破坏，然后第二次&lt;/span&gt;&lt;span class="nt"&gt;decodeStream&lt;/span&gt;&lt;span class="err"&gt;时，会出现&lt;/span&gt;&lt;span class="nt"&gt;SkImageDecoder&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;:Factory&lt;/span&gt; &lt;span class="nt"&gt;returned&lt;/span&gt; &lt;span class="nt"&gt;null&lt;/span&gt;&lt;span class="err"&gt;错误&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;我试过将获得的&lt;/span&gt;&lt;span class="nt"&gt;Inputstream&lt;/span&gt;&lt;span class="err"&gt;转化为&lt;/span&gt;&lt;span class="nt"&gt;BufferedInputStream&lt;/span&gt;&lt;span class="err"&gt;，然后使用&lt;/span&gt;&lt;span class="nt"&gt;mark&lt;/span&gt;&lt;span class="err"&gt;、&lt;/span&gt;&lt;span class="nt"&gt;reset&lt;/span&gt;&lt;span class="err"&gt;方法，但是我试了试没成功，不知道为啥，还请成功的各位告知&lt;/span&gt;
-                &lt;span class="nt"&gt;byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt; &lt;span class="nt"&gt;byteIn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;toByteArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;cis&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;size&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.Options&lt;/span&gt; &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.Options&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;第一次&lt;/span&gt;&lt;span class="nt"&gt;decode&lt;/span&gt;&lt;span class="err"&gt;时，需设置&lt;/span&gt;&lt;span class="nt"&gt;inJustDecodeBounds&lt;/span&gt;&lt;span class="err"&gt;属性为&lt;/span&gt;&lt;span class="nt"&gt;true&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="err"&gt;这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在&lt;/span&gt;&lt;span class="nt"&gt;Options&lt;/span&gt;&lt;span class="err"&gt;中&lt;/span&gt;
-                &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="nc"&gt;.inJustDecodeBounds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;true&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;第一次&lt;/span&gt;&lt;span class="nt"&gt;decode&lt;/span&gt;&lt;span class="err"&gt;，获取图片高宽度等属性&lt;/span&gt;
-                &lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.decodeByteArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="nc"&gt;.length&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
-                        &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;根据显示控件大小获取压缩比率，有效避免&lt;/span&gt;&lt;span class="nt"&gt;OOM&lt;/span&gt;
-                &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;Math&lt;/span&gt;&lt;span class="nc"&gt;.ceil&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="nc"&gt;.outHeight&lt;/span&gt;
-                        &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nt"&gt;height&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nt"&gt;Math&lt;/span&gt;&lt;span class="nc"&gt;.ceil&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="nc"&gt;.outWidth&lt;/span&gt;
-                        &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nt"&gt;width&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-                &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nt"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="n"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inSampleSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heightRatio&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;heightRatio&lt;/span&gt;
-                            &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;widthRatio&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="err"&gt;第二次&lt;/span&gt;&lt;span class="nt"&gt;decode&lt;/span&gt;&lt;span class="err"&gt;时，需设置&lt;/span&gt;&lt;span class="nt"&gt;inJustDecodeBounds&lt;/span&gt;&lt;span class="err"&gt;属性为&lt;/span&gt;&lt;span class="nt"&gt;fasle&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="err"&gt;系统才会根据传入的&lt;/span&gt;&lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.Options&lt;/span&gt;&lt;span class="err"&gt;真正的压缩图片并返回&lt;/span&gt;
-                &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="nc"&gt;.inJustDecodeBounds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-                &lt;span class="nt"&gt;bitmap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;BitmapFactory&lt;/span&gt;&lt;span class="nc"&gt;.decodeByteArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
-                        &lt;span class="nt"&gt;byteIn&lt;/span&gt;&lt;span class="nc"&gt;.length&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;bmpFactoryOptions&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-            &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ClientProtocolException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;ConnectTimeoutException&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Exception&lt;/span&gt; &lt;span class="nt"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httpClient&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;httpClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getConnectionManager&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shutdown&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="err"&gt;}&lt;/span&gt;
-        &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;bitmap&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="s2"&gt;                            @Override&lt;/span&gt;
+&lt;span class="s2"&gt;                            public void transferred(long transferedBytes) {&lt;/span&gt;
+&lt;span class="s2"&gt;                                Log.i(&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;FileDownLoadAsyncTask&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="err"&gt;总字节数：&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; + size&lt;/span&gt;
+&lt;span class="s2"&gt;                                        + &amp;quot;&lt;/span&gt; &lt;span class="err"&gt;已下载字节数：&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; + transferedBytes);&lt;/span&gt;
+&lt;span class="s2"&gt;                                publishProgress((int) (100 * transferedBytes / size));&lt;/span&gt;
+&lt;span class="s2"&gt;                            }&lt;/span&gt;
+&lt;span class="s2"&gt;                        });&lt;/span&gt;
+&lt;span class="s2"&gt;                // 需将Inputstream转化为byte数组，以备decodeByteArray用&lt;/span&gt;
+&lt;span class="s2"&gt;                // 如直接使用decodeStream会将stream破坏，然后第二次decodeStream时，会出现SkImageDecoder::Factory returned null错误&lt;/span&gt;
+&lt;span class="s2"&gt;                // 我试过将获得的Inputstream转化为BufferedInputStream，然后使用mark、reset方法，但是我试了试没成功，不知道为啥，还请成功的各位告知&lt;/span&gt;
+&lt;span class="s2"&gt;                byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="s2"&gt; byteIn = toByteArray(cis, (int) size);&lt;/span&gt;
+&lt;span class="s2"&gt;                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();&lt;/span&gt;
+&lt;span class="s2"&gt;                // 第一次decode时，需设置inJustDecodeBounds属性为true,这样系统就会只读取下载图片的属性而不分配空间，并将属性存储在Options中&lt;/span&gt;
+&lt;span class="s2"&gt;                bmpFactoryOptions.inJustDecodeBounds = true;&lt;/span&gt;
+&lt;span class="s2"&gt;                // 第一次decode，获取图片高宽度等属性&lt;/span&gt;
+&lt;span class="s2"&gt;                BitmapFactory.decodeByteArray(byteIn, 0, byteIn.length,&lt;/span&gt;
+&lt;span class="s2"&gt;                        bmpFactoryOptions);&lt;/span&gt;
+&lt;span class="s2"&gt;                // 根据显示控件大小获取压缩比率，有效避免OOM&lt;/span&gt;
+&lt;span class="s2"&gt;                int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight&lt;/span&gt;
+&lt;span class="s2"&gt;                        / height);&lt;/span&gt;
+&lt;span class="s2"&gt;                int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth&lt;/span&gt;
+&lt;span class="s2"&gt;                        / width);&lt;/span&gt;
+&lt;span class="s2"&gt;                if (heightRatio &amp;gt; 1 &amp;amp;&amp;amp; widthRatio &amp;gt; 1) {&lt;/span&gt;
+&lt;span class="s2"&gt;                    bmpFactoryOptions.inSampleSize = heightRatio &amp;gt; widthRatio ? heightRatio&lt;/span&gt;
+&lt;span class="s2"&gt;                            : widthRatio;&lt;/span&gt;
+&lt;span class="s2"&gt;                }&lt;/span&gt;
+&lt;span class="s2"&gt;                // 第二次decode时，需设置inJustDecodeBounds属性为fasle,系统才会根据传入的BitmapFactory.Options真正的压缩图片并返回&lt;/span&gt;
+&lt;span class="s2"&gt;                bmpFactoryOptions.inJustDecodeBounds = false;&lt;/span&gt;
+&lt;span class="s2"&gt;                bitmap = BitmapFactory.decodeByteArray(byteIn, 0,&lt;/span&gt;
+&lt;span class="s2"&gt;                        byteIn.length, bmpFactoryOptions);&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ClientProtocolException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (ConnectTimeoutException e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } catch (Exception e) {&lt;/span&gt;
+&lt;span class="s2"&gt;            e.printStackTrace();&lt;/span&gt;
+&lt;span class="s2"&gt;        } finally {&lt;/span&gt;
+&lt;span class="s2"&gt;            if (httpClient != null &amp;amp;&amp;amp; httpClient.getConnectionManager() != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;                httpClient.getConnectionManager().shutdown();&lt;/span&gt;
+&lt;span class="s2"&gt;            }&lt;/span&gt;
+&lt;span class="s2"&gt;        }&lt;/span&gt;
+&lt;span class="s2"&gt;        return bitmap;&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onProgressUpdate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="nt"&gt;progress&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.setProgress&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;progress&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onProgressUpdate(Integer... progress) {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.setProgress((int) (progress&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s2"&gt;));&lt;/span&gt;
+&lt;span class="s2"&gt;    }&lt;/span&gt;
 
-    &lt;span class="k"&gt;@Override&lt;/span&gt;
-    &lt;span class="nt"&gt;protected&lt;/span&gt; &lt;span class="nt"&gt;void&lt;/span&gt; &lt;span class="nt"&gt;onPostExecute&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Bitmap&lt;/span&gt; &lt;span class="nt"&gt;bm&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;pd&lt;/span&gt;&lt;span class="nc"&gt;.dismiss&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;bm&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nt"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setImageBitmap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bm&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;makeText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;图片下载失败&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LENGTH_SHORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="s2"&gt;    @Override&lt;/span&gt;
+&lt;span class="s2"&gt;    protected void onPostExecute(Bitmap bm) {&lt;/span&gt;
+&lt;span class="s2"&gt;        pd.dismiss();&lt;/span&gt;
+&lt;span class="s2"&gt;        if (bm != null) {&lt;/span&gt;
+&lt;span class="s2"&gt;            image.setImageBitmap(bm);&lt;/span&gt;
+&lt;span class="s2"&gt;        } else {&lt;/span&gt;
+&lt;span class="s2"&gt;            Toast.makeText(context, &amp;quot;&lt;/span&gt;&lt;span class="err"&gt;图片下载失败&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LENGTH_SHORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;show&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
 
     &lt;span class="c"&gt;/**&lt;/span&gt;
 &lt;span class="c"&gt;     * InputStream转化为Byte数组&lt;/span&gt;
@@ -1452,22 +1468,22 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;span class="c"&gt;     */&lt;/span&gt;
     &lt;span class="nt"&gt;public&lt;/span&gt; &lt;span class="nt"&gt;byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt; &lt;span class="nt"&gt;toByteArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;InputStream&lt;/span&gt; &lt;span class="nt"&gt;instream&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;contentLength&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
             &lt;span class="nt"&gt;throws&lt;/span&gt; &lt;span class="nt"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instream&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(instream&lt;/span&gt; &lt;span class="err"&gt;==&lt;/span&gt; &lt;span class="err"&gt;null)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;return&lt;/span&gt; &lt;span class="err"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
         &lt;span class="nt"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;contentLength&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;contentLength&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="err"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(contentLength&lt;/span&gt; &lt;span class="err"&gt;&amp;lt;&lt;/span&gt; &lt;span class="err"&gt;0)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;contentLength&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
             &lt;span class="nt"&gt;final&lt;/span&gt; &lt;span class="nt"&gt;ByteArrayBuffer&lt;/span&gt; &lt;span class="nt"&gt;buffer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;ByteArrayBuffer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;contentLength&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
             &lt;span class="nt"&gt;final&lt;/span&gt; &lt;span class="nt"&gt;byte&lt;/span&gt;&lt;span class="cp"&gt;[]&lt;/span&gt; &lt;span class="nt"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;new&lt;/span&gt; &lt;span class="nt"&gt;byte&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4096&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
             &lt;span class="nt"&gt;int&lt;/span&gt; &lt;span class="nt"&gt;l&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-            &lt;span class="nt"&gt;while&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;instream&lt;/span&gt;&lt;span class="nc"&gt;.read&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nt"&gt;-1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="nt"&gt;while&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="nt"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;instream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;read&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nt"&gt;-1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;buffer.append(tmp,&lt;/span&gt; &lt;span class="err"&gt;0,&lt;/span&gt; &lt;span class="err"&gt;l)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;buffer&lt;/span&gt;&lt;span class="nc"&gt;.toByteArray&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="nt"&gt;return&lt;/span&gt; &lt;span class="nt"&gt;buffer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;toByteArray&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
         &lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="nt"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;instream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+            &lt;span class="err"&gt;instream.close()&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="err"&gt;}&lt;/span&gt;
 
@@ -1476,9 +1492,11 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 
 
 &lt;p&gt;最后的最后，下载效果图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dowmload" src="/images/image-download.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dowmload" src="/images/image-download.png"&gt;&lt;/p&gt;
 &lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/cowfighting/ImageWithProgress" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>详解android:layout_weight</title><link href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="alternate"></link><updated>2014-03-28T17:51:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-28:articles/2014/03/28/android-layout-weight/</id><summary type="html">&lt;h3&gt;android:layout_weight&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/cowfighting/ImageWithProgress" target="_blank"&gt;GitHub源码下载：DEMO&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>详解android:layout_weight</title><link href="http://www.xycoding.com/articles/2014/03/28/android-layout-weight/" rel="alternate"></link><published>2014-03-28T17:51:00+08:00</published><updated>2014-03-28T17:51:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-28:/articles/2014/03/28/android-layout-weight/</id><summary type="html">&lt;h3&gt;android:layout_weight&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;android：weight&lt;/code&gt;是线性布局&lt;code&gt;LinearLayout&lt;/code&gt;中非常重要的概念，在创造兼容性APP中有不可替代的功劳。它主要作用为分配剩余空间，剩余空间是在线性布局中把子组件所占空间分配完毕后所剩余的部分。每个子组件占剩余空间的比例等于自身所设置参数除以所有子组件所设置参数之和。&lt;/p&gt;
+</summary><content type="html">&lt;h3&gt;android:layout_weight&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;android：weight&lt;/code&gt;是线性布局&lt;code&gt;LinearLayout&lt;/code&gt;中非常重要的概念，在创造兼容性APP中有不可替代的功劳。它主要作用为分配剩余空间，剩余空间是在线性布局中把子组件所占空间分配完毕后所剩余的部分。每个子组件占剩余空间的比例等于自身所设置参数除以所有子组件所设置参数之和。&lt;/p&gt;
 
 
@@ -1488,7 +1506,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;p&gt;剩余空间和子组件所占空间与&lt;code&gt;android:layout_width&lt;/code&gt;属性设置参数（&lt;code&gt;wrap_content&lt;/code&gt;和&lt;code&gt;match_parent&lt;/code&gt;）有很大关系，以下分别举例。&lt;/p&gt;
 &lt;h3&gt;设置参数&lt;code&gt;android:layout_width:"wrap_content"&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;首先看看如下布局xml：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class="na"&gt;xmlns:android=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
 &lt;span class="na"&gt;android:layout_width=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
 &lt;span class="na"&gt;android:layout_height=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
@@ -1521,7 +1539,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 
 
 &lt;p&gt;布局效果图1如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="布局效果1" src="/images/layout_weight1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="布局效果1" src="/images/layout_weight1.png"&gt;&lt;/p&gt;
 &lt;p&gt;此处各子组件&lt;code&gt;android:layout_weight&lt;/code&gt;之和为6，TextView1、TextView2、TextView3各占剩余空间比例为1/6、2/6、3/6。各子组件所设置&lt;code&gt;android:layout_width&lt;/code&gt;属性为&lt;code&gt;wrap_content&lt;/code&gt;，即依内容而定，此处为各自文本字符串1、2、3的宽度；父组件宽度属性为&lt;code&gt;android:layout_width="match_parent"&lt;/code&gt;，即撑满整个屏幕宽度。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;剩余空间 = 屏幕宽度 - 字符串1宽度 - 字符串2宽度 - 字符串3宽度&lt;/p&gt;
@@ -1532,7 +1550,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;p&gt;因字符串1、2、3宽度比较小，粗略估计为0。那么此处各子组件所占组件比例则近似于1：2：3，符合效果图1。&lt;/p&gt;
 &lt;h3&gt;设置参数&lt;code&gt;android:layout_width:"match_parent"&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;同样布局文件xml如下，和上文xml文件唯一不同的地方在于各子组件所设置宽度属性改为了&lt;code&gt;match_parent&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class="na"&gt;xmlns:android=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
 &lt;span class="na"&gt;android:layout_width=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
 &lt;span class="na"&gt;android:layout_height=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
@@ -1565,7 +1583,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 
 
 &lt;p&gt;效果图2如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="布局效果2" src="/images/layout_weight2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="布局效果2" src="/images/layout_weight2.png"&gt;&lt;/p&gt;
 &lt;p&gt;看到图片你可能非常惊讶，怎么只显示1、2，而3没显示出来。不着急，根据计算公式，你就会知道结果。&lt;/p&gt;
 &lt;p&gt;同样此处各子组件&lt;code&gt;android:layout_weight&lt;/code&gt;之和为6，TextView1、TextView2、TextView3各占剩余空间比例为1/6、2/6、3/6。各子组件和父组件宽度属性都为&lt;code&gt;android:layout_width="match_parent"&lt;/code&gt;，即都撑满整个屏幕宽度。&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1575,7 +1593,14 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;p&gt;组件3所占空间 = TextView3所设置宽度（即屏幕宽度） + 3/6 * （-2个屏幕宽度） = 0&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;根据计算，我们可以看到组件3所占空间为0，且组件1和组件2所占空间比为2：1，和效果图一样。&lt;/p&gt;
-&lt;p&gt;那么如果是属性&lt;code&gt;wrap_content&lt;/code&gt;和&lt;code&gt;match_parent&lt;/code&gt;混合使用的话，同样可应用公式算出，本文不在详述。&lt;/p&gt;</summary><category term="Android"></category></entry><entry><title>Android开发——ListView注意事项</title><link href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="alternate"></link><updated>2014-03-15T16:36:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-15:articles/2014/03/15/android-listview-notice/</id><summary type="html">&lt;h3&gt;ListView&lt;/h3&gt;
+&lt;p&gt;那么如果是属性&lt;code&gt;wrap_content&lt;/code&gt;和&lt;code&gt;match_parent&lt;/code&gt;混合使用的话，同样可应用公式算出，本文不在详述。&lt;/p&gt;</content><category term="Android"></category></entry><entry><title>Android开发——ListView注意事项</title><link href="http://www.xycoding.com/articles/2014/03/15/android-listview-notice/" rel="alternate"></link><published>2014-03-15T16:36:00+08:00</published><updated>2014-03-15T16:36:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2014-03-15:/articles/2014/03/15/android-listview-notice/</id><summary type="html">&lt;h3&gt;ListView&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;getChildAt(int index)&lt;/code&gt; 其中index范围在屏幕可见范围之内，使用&lt;code&gt;getChildCount&lt;/code&gt;获取index&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需更改ListView中内容，改变adapter绑定数组的数据。
+</summary><content type="html">&lt;h3&gt;ListView&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;getChildAt(int index)&lt;/code&gt; 其中index范围在屏幕可见范围之内，使用&lt;code&gt;getChildCount&lt;/code&gt;获取index&lt;/p&gt;
@@ -1584,13 +1609,16 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;p&gt;需更改ListView中内容，改变adapter绑定数组的数据。
 &lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Android"></category></entry><entry><title>Linux学习笔记——有效群组（effective group）与初始群组（initial group）</title><link href="http://www.xycoding.com/articles/2013/12/18/linux-group/" rel="alternate"></link><updated>2013-12-18T16:09:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-18:articles/2013/12/18/linux-group/</id><summary type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
+&lt;/ol&gt;</content><category term="Android"></category></entry><entry><title>Linux学习笔记——有效群组（effective group）与初始群组（initial group）</title><link href="http://www.xycoding.com/articles/2013/12/18/linux-group/" rel="alternate"></link><published>2013-12-18T16:09:00+08:00</published><updated>2013-12-18T16:09:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-18:/articles/2013/12/18/linux-group/</id><summary type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;初始群组：/etc/passwd中第四栏所标志的GID；当用户登入系统，立刻拥有该群组的相关权限。&lt;/p&gt;
+&lt;p&gt;有效群组：当以某个用户身份登入后，输入&lt;code&gt;groups&lt;/code&gt;命令第一出现的群组即为有效群组。它的作用是当用户建立新文件或目录时，所属群组为有效群组。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;有效群组（effective group）与初始群组（initial group）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;初始群组：/etc/passwd中第四栏所标志的GID；当用户登入系统，立刻拥有该群组的相关权限。&lt;/p&gt;
 &lt;p&gt;有效群组：当以某个用户身份登入后，输入&lt;code&gt;groups&lt;/code&gt;命令第一出现的群组即为有效群组。它的作用是当用户建立新文件或目录时，所属群组为有效群组。&lt;/p&gt;
 
 
 &lt;p&gt;&lt;strong&gt;/etc/group档案结构&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1604,13 +1632,16 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;切换有效群组&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用命令&lt;code&gt;newgrp&lt;/code&gt;切换，不过所切换的群组必须为该用户所加入的群组。&lt;code&gt;newgrp&lt;/code&gt;是以另一个shell来提供群组切换功能的，如果想回到原本的环境中，可输入&lt;code&gt;exit&lt;/code&gt;命令。&lt;/p&gt;</summary><category term="Linux"></category></entry><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><updated>2013-12-02T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;使用命令&lt;code&gt;newgrp&lt;/code&gt;切换，不过所切换的群组必须为该用户所加入的群组。&lt;code&gt;newgrp&lt;/code&gt;是以另一个shell来提供群组切换功能的，如果想回到原本的环境中，可输入&lt;code&gt;exit&lt;/code&gt;命令。&lt;/p&gt;</content><category term="Linux"></category></entry><entry><title>Linux学习笔记——'Pattern Space' and 'Hold Space' in sed</title><link href="http://www.xycoding.com/articles/2013/12/02/linux-sed-space/" rel="alternate"></link><published>2013-12-02T20:01:00+08:00</published><updated>2013-12-02T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-12-02:/articles/2013/12/02/linux-sed-space/</id><summary type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When sed reads a file line by line, the line that has been currently read is inserted into the pattern buffer (pattern space). Pattern buffer is like the temporary buffer, the scratchpad where the current information is stored. When you tell sed to print, it prints the pattern buffer.&lt;/p&gt;
+&lt;p&gt;Hold buffer / hold space is like a long-term storage, such that you can catch something, store it and reuse it later when sed is processing another line. You do not directly process the hold space, instead, you need to copy it or append to the pattern space if you want to do something with it. For example, the print command p prints the pattern space only. Likewise, s operates on the pattern space.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;来源：&lt;a href="http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed"&gt;http://stackoverflow.com/questions/12833714/the-concept-of-hold-space-and-pattern-space-in-sed&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;When sed reads a file line by line, the line that has been currently read is inserted into the pattern buffer (pattern space). Pattern buffer is like the temporary buffer, the scratchpad where the current information is stored. When you tell sed to print, it prints the pattern buffer.&lt;/p&gt;
 &lt;p&gt;Hold buffer / hold space is like a long-term storage, such that you can catch something, store it and reuse it later when sed is processing another line. You do not directly process the hold space, instead, you need to copy it or append to the pattern space if you want to do something with it. For example, the print command p prints the pattern space only. Likewise, s operates on the pattern space.&lt;/p&gt;
 
 
 &lt;p&gt;Here is an example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;sed -n &amp;#39;1!G;h;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;p&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sed -n &amp;#39;1!G;h;$p&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1626,7 +1657,15 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;li&gt;We proceed to line number three -- go to the point (3) above.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Finally, after the last line has been read and the hold space (containing all the previous lines in a reverse order) have been appended to the pattern space, pattern space is printed with &lt;code&gt;p&lt;/code&gt;. As you have guessed, the above does exactly what the tac command does -- prints the file in reverse.&lt;/p&gt;</summary><category term="Linux"></category></entry><entry><title>Linux学习笔记——权限管理(2)</title><link href="http://www.xycoding.com/articles/2013/11/23/linux-authority2/" rel="alternate"></link><updated>2013-11-23T23:10:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-23:articles/2013/11/23/linux-authority2/</id><summary type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Finally, after the last line has been read and the hold space (containing all the previous lines in a reverse order) have been appended to the pattern space, pattern space is printed with &lt;code&gt;p&lt;/code&gt;. As you have guessed, the above does exactly what the tac command does -- prints the file in reverse.&lt;/p&gt;</content><category term="Linux"></category></entry><entry><title>Linux学习笔记——权限管理(2)</title><link href="http://www.xycoding.com/articles/2013/11/23/linux-authority2/" rel="alternate"></link><published>2013-11-23T23:10:00+08:00</published><updated>2013-11-23T23:10:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-23:/articles/2013/11/23/linux-authority2/</id><summary type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SUID&lt;/strong&gt;：当s这个标志出现在&lt;strong&gt;文件拥有者&lt;/strong&gt;权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SUID权限仅对二进制程序（binary program）有效；&lt;/li&gt;
+&lt;li&gt;执行者对于该程序需要具有x的可执行权限；&lt;/li&gt;
+&lt;li&gt;本权限尽在执行该程序的过程中有效（run-time）；&lt;/li&gt;
+&lt;li&gt;执行者将具有该拥有者（owner）的权限。&lt;/li&gt;
+&lt;/ol&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;特殊文件权限：SUID,SGID,SBIT&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;SUID&lt;/strong&gt;：当s这个标志出现在&lt;strong&gt;文件拥有者&lt;/strong&gt;权限的x权限上时，如【-rwsr-xr-x】,此时被称为Set UID,简称为SUID的特殊权限，且只对文件有效。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;SUID权限仅对二进制程序（binary program）有效；&lt;/li&gt;
@@ -1647,7 +1686,13 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;ol&gt;
 &lt;li&gt;当用户对于此目录具有w,x的权限，亦即具有写入的权限时；&lt;/li&gt;
 &lt;li&gt;当用户在该目录下建立文件和目录时，仅有自己与root才有权力删除该文件。&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Linux"></category></entry><entry><title>Linux学习笔记——权限管理(1)</title><link href="http://www.xycoding.com/articles/2013/11/22/linux-authority1/" rel="alternate"></link><updated>2013-11-22T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:articles/2013/11/22/linux-authority1/</id><summary type="html">&lt;p&gt;&lt;strong&gt;权限对于文件&lt;/strong&gt;&lt;/p&gt;
+&lt;/ol&gt;</content><category term="Linux"></category></entry><entry><title>Linux学习笔记——权限管理(1)</title><link href="http://www.xycoding.com/articles/2013/11/22/linux-authority1/" rel="alternate"></link><published>2013-11-22T20:01:00+08:00</published><updated>2013-11-22T20:01:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:/articles/2013/11/22/linux-authority1/</id><summary type="html">&lt;p&gt;&lt;strong&gt;权限对于文件&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;r(read):可读，如读取文本内容&lt;/li&gt;
+&lt;li&gt;w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）&lt;/li&gt;
+&lt;li&gt;x(execute):可被系统执行&lt;/li&gt;
+&lt;/ol&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;权限对于文件&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;r(read):可读，如读取文本内容&lt;/li&gt;
 &lt;li&gt;w(write):可编辑、新增、修改该文件的内容（只针对内容，不能删除文件）&lt;/li&gt;
@@ -1663,7 +1708,7 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;经典范例&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;假设有个帐号名为cow，它对目录/home/cow/具有rwx权限。若在此目录下有个test的文件，该文件权限如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;rwx------ 1 root  root  4365 Sep 19 23:20 test
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rwx------ 1 root  root  4365 Sep 19 23:20 test
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1682,7 +1727,13 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;p&gt;例：umask数值为022&lt;/p&gt;
 &lt;p&gt;建立文件时默认权限：（-rw-rw-rw-）-（-----w--w-）= (-rw-r--r--)&lt;/p&gt;
 &lt;p&gt;建立目录时默认权限：（drwxrwxrwx）(d----w--w-) = (drwxr-xr-x)&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="Linux"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇</title><link href="http://www.xycoding.com/articles/2013/11/22/blog-advance/" rel="alternate"></link><updated>2013-11-27T12:11:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:articles/2013/11/22/blog-advance/</id><summary type="html">&lt;h3&gt;独立域名&lt;/h3&gt;
+&lt;/blockquote&gt;</content><category term="Linux"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 进阶篇</title><link href="http://www.xycoding.com/articles/2013/11/22/blog-advance/" rel="alternate"></link><published>2013-11-22T08:00:00+08:00</published><updated>2013-11-27T12:11:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-22:/articles/2013/11/22/blog-advance/</id><summary type="html">&lt;h3&gt;独立域名&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
+&lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;完成第二步后，需注册&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/tsid/177/"&gt;学会使用DNSPod，仅需三步&lt;/a&gt;，按照教程添加上刚购买的域名后，为让其指向github分配给我们的二级域名，只需在DNSPod中添加A记录，指向204.232.175.78，请参见github pages教程&lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;Setting up a custom domain with Pages&lt;/a&gt;，如有不懂之处，也可看看DNSPod的帮助中心，里面的介绍非常详细。&lt;/li&gt;
+&lt;li&gt;最后一步，登录github，进入我们所创建的cowfighting.github.io库中，在根目录创建一个名为CNAME的文件，内容为在godaddy购买的域名，例www.xycoding.com，到此为止，即大功告成。
+</summary><content type="html">&lt;h3&gt;独立域名&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;在&lt;a href="http://www.godaddy.com/"&gt;godaddy&lt;/a&gt;上购买域名，推荐使用国内优惠码（搜索一下，你就知道~），价格会非常便宜，比如我花了111.95元就购买了两年期限的域名，你说爽不爽。&lt;/li&gt;
 &lt;li&gt;购买成功后，需要将DNS服务解析转回到国内，推荐使用&lt;a href="https://www.dnspod.cn/"&gt;DNSPod&lt;/a&gt;，至于为啥需要转回国内，你猜呢？DNSPod官网上有详细介绍，请点击&lt;a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;amp;tsid=42"&gt;Godaddy注册商域名修改DNS地址&lt;/a&gt;。&lt;/li&gt;
@@ -1693,20 +1744,20 @@ public&lt;span class="w"&gt; &lt;/span&gt;class&lt;span class="w"&gt; &lt;/span&
 &lt;h3&gt;URL配置&lt;/h3&gt;
 &lt;p&gt;一个好的URL地址不光搜索引擎友好，也让自己看得舒心，pelican中也完全考虑到这一点，只需简单的配置就可打造出漂亮的URL。&lt;/p&gt;
 &lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，按照如下修改或添加，具体配置请参见&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ARTICLE_URL = &amp;#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/&amp;#39;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ARTICLE_URL = &amp;#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/&amp;#39;
 ARTICLE_SAVE_AS = &amp;#39;pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;pelican插件&lt;/h3&gt;
 &lt;p&gt;插件有很多种，比如带来便利性、观赏性、易搜索性等，大家可根据需要进行选择。本博客中选用了&lt;code&gt;sitemap&lt;/code&gt;,&lt;code&gt;summary&lt;/code&gt;,&lt;code&gt;neighbors&lt;/code&gt;等插件。首先，和主题一样，选择一个文件夹，去&lt;a href="https://github.com/getpelican/pelican-plugins"&gt;pelican插件开源库&lt;/a&gt;clone下来插件，选择自己喜欢的~所有插件的功能都可在开源库中找到答案。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;//clone插件
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;//clone插件
 git clone https://github.com/getpelican/pelican-plugins
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，按照如下修改或添加，插件的使用方法请进入相应的插件开源库进行了解。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;PLUGIN_PATH = &amp;#39;pelican-plugins&amp;#39;     //设置路径
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;PLUGIN_PATH = &amp;#39;pelican-plugins&amp;#39;     //设置路径
 PLUGINS = [&amp;#39;summary&amp;#39;,&amp;#39;sitemap&amp;#39;,&amp;#39;neighbors&amp;#39;] //选用插件
 
 SITEMAP = {
@@ -1727,15 +1778,18 @@ SITEMAP = {
 
 &lt;h3&gt;Google Analytics和Google Webmasters&lt;/h3&gt;
 &lt;p&gt;注册&lt;a href="http://www.google.com/analytics/"&gt;Google Analytics&lt;/a&gt;和&lt;a href="http://www.google.com/webmasters/"&gt;Google Webmasters&lt;/a&gt;可以更好的管理自己的站点，更好的让google收录等。具体教程非常简单，注册完基本就能知道~最后记得在&lt;code&gt;pelicanconf.py&lt;/code&gt;中进行配置。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;GOOGLE_ANALYTICS = &amp;#39;Tracking ID&amp;#39;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;GOOGLE_ANALYTICS = &amp;#39;Tracking ID&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;最后&lt;/h3&gt;
 &lt;p&gt;博客到此为此基本介绍完毕，以后想起什么再补充吧。其实我对现在这个主题还有不满意的地方，比如&lt;code&gt;key words，description&lt;/code&gt;等没有地方设置，这对搜索引擎不友好；还有左边栏没有热门文章等~接下来再慢慢完善。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</title><link href="http://www.xycoding.com/articles/2013/11/21/blog-create/" rel="alternate"></link><updated>2013-11-27T12:11:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-21:articles/2013/11/21/blog-create/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;博客源码地址：&lt;a href="https://github.com/xymelon/xymelon.github.io"&gt;https://github.com/xymelon/xymelon.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;博客主题地址：&lt;a href="https://github.com/xymelon/xycoding-gum"&gt;https://github.com/xymelon/xycoding-gum&lt;/a&gt;&lt;/p&gt;</content><category term="pelican"></category></entry><entry><title>使用Pelican和GitHub Pages搭建个人博客 —— 基础篇</title><link href="http://www.xycoding.com/articles/2013/11/21/blog-create/" rel="alternate"></link><published>2013-11-21T11:21:00+08:00</published><updated>2013-11-27T12:11:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-21:/articles/2013/11/21/blog-create/</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直以来都希望拥有属于自己的个人博客，随性发点信息，写点技术感想，记录自己的生活，重要的是不受广告的影响、不被河蟹、不会担心有一天被莫名其妙地消失。作为一名技术渣硕，抛弃拿来主义，勇于摸索，踏出第一步，不再纸上谈兵，从现在开始。&lt;/p&gt;
+&lt;p&gt;本博客是在windows下搭建完成。不过这和linux下是类似的，因为搭建过程是在git bash中进行，git bash的命令风格是仿linux的。
+</summary><content type="html">&lt;h3&gt;前言&lt;/h3&gt;
 &lt;p&gt;一直以来都希望拥有属于自己的个人博客，随性发点信息，写点技术感想，记录自己的生活，重要的是不受广告的影响、不被河蟹、不会担心有一天被莫名其妙地消失。作为一名技术渣硕，抛弃拿来主义，勇于摸索，踏出第一步，不再纸上谈兵，从现在开始。&lt;/p&gt;
 &lt;p&gt;本博客是在windows下搭建完成。不过这和linux下是类似的，因为搭建过程是在git bash中进行，git bash的命令风格是仿linux的。
 &lt;/p&gt;
@@ -1747,7 +1801,7 @@ SITEMAP = {
 &lt;p&gt;&lt;a href="http://pages.github.com/"&gt;github pages&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://git-scm.com/"&gt;git&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.python.org/"&gt;python&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://pypi.python.org/pypi"&gt;pip&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/pip"&gt;pip&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.getpelican.com/"&gt;pelican&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad&lt;/a&gt;&lt;/p&gt;
@@ -1757,7 +1811,6 @@ SITEMAP = {
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href="http://www.python.org/getit/"&gt;python3下载&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://msysgit.github.io/"&gt;git下载&lt;/a&gt; &lt;/p&gt;
-&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/distribute#downloads"&gt;pip下载&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://markdownpad.com/"&gt;markdownpad下载&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.equation.com/servlet/equation.cmd?fa=make"&gt;window下make下载&lt;/a&gt; &lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1765,8 +1818,8 @@ SITEMAP = {
 &lt;li&gt;安装python，这个就不用多说了吧~&lt;/li&gt;
 &lt;li&gt;安装git，简单。git bash使用教程请参见&lt;a href="http://www.git-scm.com/book/zh"&gt;官方文档&lt;/a&gt;~ &lt;/li&gt;
 &lt;li&gt;将python安装文件夹中scripts和make.exe加入环境变量。&lt;/li&gt;
-&lt;li&gt;安装pip，具体可以看&lt;a href="http://www.pip-installer.org/en/latest/installing.html"&gt;官网介绍&lt;/a&gt;，或者&lt;a href="http://tech.crandom.com/2011/10/21/python3_pip.html"&gt;Windows环境在python3装pip&lt;/a&gt;。&lt;/li&gt;
-&lt;li&gt;安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown教程&lt;/a&gt;和&lt;a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html"&gt;REST教程&lt;/a&gt;。&lt;div class="highlight"&gt;&lt;pre&gt;pip install pelican
+&lt;li&gt;安装pip（PS：Python 2 &amp;gt;=2.7.9 或 Python 3 &amp;gt;=3.4安装python时已包含），具体可以看&lt;a href="http://www.pip-installer.org/en/latest/installing.html"&gt;官网介绍&lt;/a&gt;，或者&lt;a href="http://tech.crandom.com/2011/10/21/python3_pip.html"&gt;Windows环境在python3装pip&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;安装pelican和markdown，至于为什么使用markdown语法，这就看个人喜好呢，下载的markdownpad就是window下markdown的编辑器呢，非常简单，linux等其它操作系统编辑器请自行google。你也可以选用REST语法，具体请参见&lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;markdown教程&lt;/a&gt;和&lt;a href="https://beinggeekbook.readthedocs.org/en/latest/rst.html"&gt;REST教程&lt;/a&gt;。&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install pelican
 pip install markdown
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1775,16 +1828,16 @@ pip install markdown
 &lt;/ol&gt;
 &lt;h3&gt;主体搭建&lt;/h3&gt;
 &lt;p&gt;打开git bash，进入一个自己喜欢的文件夹（注意文件夹名最好不为空，因为后续make html命令会出错），执行以下命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;mkdir blog //创建文件夹，名称可根据自己喜欢定
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkdir blog //创建文件夹，名称可根据自己喜欢定
 cd blog
 pelican-quickstart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;pelican-quickstart执行命令后，会提示输入博客的配置项，除了少数几个必填以外，其它都可以选择默认，而且都可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;文件中进行更改，所以你可以随意选择，如下图~&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pelican-quickstart" src="/images/pelican-quickstart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pelican-quickstart" src="/images/pelican-quickstart.png"&gt;&lt;/p&gt;
 &lt;p&gt;命令成功执行后，会出现pelican的框架，如下所示&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;blog/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;blog/
 ├── content                # 存放输入的markdown或RST源文件
 │   └── (pages)            # 存放手工创建的静态页面，可选
 ├── output                 # 存放最终生成的静态博客
@@ -1797,27 +1850,27 @@ pelican-quickstart
 
 &lt;h3&gt;书写博文&lt;/h3&gt;
 &lt;p&gt;完成上述博客主体搭建后，使用markdownpad创建一个&lt;code&gt;.md&lt;/code&gt;文件，保存于&lt;code&gt;content&lt;/code&gt;文件夹中。博文格式如下所示&lt;/p&gt;
-&lt;p&gt;&lt;img alt="markdown" src="/images/markdown.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="markdown" src="/images/markdown.png"&gt;&lt;/p&gt;
 &lt;p&gt;图中左侧是我们书写的markdown格式的源文件，右边则是即使预览效果，很棒吧~
 至于源文件顶部&lt;code&gt;Title,Date,Category等&lt;/code&gt;内容则是必须的，具体可参见&lt;a href="http://docs.getpelican.com/en/3.3.0/getting_started.html#writing-content-using-pelican"&gt;文档&lt;/a&gt;，它们各自意义如下&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Title: 文章标题
-Date: 创建日期
-Modified: 修改日期
-Category: 文章分类，标志本文处于该分类下
-Tags: 文章标签，标志本文处于该标签下
-Slug: URL中该文章的链接地址
-Author: 作者
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
+&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;创建日期&lt;/span&gt;
+&lt;span class="n"&gt;Modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;修改日期&lt;/span&gt;
+&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章分类，标志本文处于该分类下&lt;/span&gt;
+&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;文章标签，标志本文处于该标签下&lt;/span&gt;
+&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;URL中该文章的链接地址&lt;/span&gt;
+&lt;span class="n"&gt;Author&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;作者&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;写完后，回到&lt;code&gt;blog&lt;/code&gt;目录下，执行&lt;code&gt;make html&lt;/code&gt;命令进行博客的生成&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;make html
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make html
 (pelican e:/blog/content/ -o e:/blog/output -s e:/blog/pelicanconfg.py)
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;code&gt;make html&lt;/code&gt;命令将把刚才写的博文生成html，存放到output目录下，如果你没有make命令，也可执行第二行的pelican命令。接着执行&lt;code&gt;make serve&lt;/code&gt;开启测试服务器&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;make serve
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make serve
 (cd e:/blog/output/ &amp;amp;&amp;amp; python -m pelican.server)
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1825,27 +1878,27 @@ Author: 作者
 &lt;p&gt;&lt;code&gt;make serve&lt;/code&gt;命令也可由第二行替代，在浏览器中输入&lt;code&gt;http://localhost:8000&lt;/code&gt;即可看到博文效果。&lt;/p&gt;
 &lt;h3&gt;主题选择&lt;/h3&gt;
 &lt;p&gt;回到&lt;code&gt;blog&lt;/code&gt;目录下，按如下步骤下载pelican官方主题，从里面挑选出自己喜欢的主题吧，大多数主题预览界面你可以打开这个&lt;a href="http://pelicanthemes.com/"&gt;网页&lt;/a&gt;进行查看。不过如今pelican又新出了很多主题，所以你需看看&lt;a href="https://github.com/getpelican/pelican-themes"&gt;pelican主题开源库&lt;/a&gt;。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git clone https://github.com/getpelican/pelican-themes.git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/getpelican/pelican-themes.git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;打开&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件，更改或添加&lt;code&gt;THEME&lt;/code&gt;为自己喜欢的主题，例如本博客所挑选的gum，更多的配置含义请关注&lt;a href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;THEME = &amp;#39;pelican-themes/gum&amp;#39;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;THEME = &amp;#39;pelican-themes/gum&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;添加评论系统&lt;/h3&gt;
 &lt;p&gt;开启个人博客的原因在于分享知识，分享就需要交流，评论模块当然少不了。在&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt;上申请帐号，按照流程Disqus会分配给你站点的Shortname，记牢Shortname，如果忘了请进入admin/settings中查看。然后同理，在&lt;code&gt;pelicanconf.py&lt;/code&gt;添加&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;DISQUS_SITENAME = Shortname
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DISQUS_SITENAME = Shortname
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;博文发布&lt;/h3&gt;
-&lt;p&gt;经过以上的折腾，离成功只差最后一步呢。写好的博文总要找个站点发布吧，本文基于github pages，当然你也可以选择你熟悉的站点服务器。具体步骤如&lt;a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator"&gt;官方教程&lt;/a&gt;，非常简单。按照官方教程，你就拥有一个二级域名和一个&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;版本库&lt;/a&gt;，比如我的&lt;a href="http://cowfighting.github.com/"&gt;http://cowfighting.github.com/&lt;/a&gt;，当然现在访问会出现跳转，这在后面独立域名章节会介绍。&lt;/p&gt;
+&lt;p&gt;经过以上的折腾，离成功只差最后一步呢。写好的博文总要找个站点发布吧，本文基于github pages，当然你也可以选择你熟悉的站点服务器。具体步骤如&lt;a href="https://pages.github.com/"&gt;官方教程&lt;/a&gt;，非常简单。按照官方教程，你就拥有一个二级域名和一个&lt;a href="https://github.com/xymelon/xymelon.github.io"&gt;版本库&lt;/a&gt;，比如我的&lt;a href="http://xymelon.github.io/"&gt;http://xymelon.github.io/&lt;/a&gt;，当然现在访问会出现跳转，这在后面独立域名章节会介绍。&lt;/p&gt;
 &lt;p&gt;进入上一章节所示的&lt;code&gt;output&lt;/code&gt;目录下，依次执行以下命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git init
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git init
 git add .
-git remote add origin https://github.com/cowfighting/cowfighting.github.io
+git remote add origin https://github.com/xymelon/xymelon.github.io
 git pull origin master
 git commit -m &amp;#39;first blog&amp;#39;
 git push origin master
@@ -1854,10 +1907,10 @@ git push origin master
 
 &lt;p&gt;熟悉git的同学肯定知道上述命令表达的是什么意思吧，如果你还不甚了解，没关系，先照做或者看看git的&lt;a href="http://www.git-scm.com/book/zh"&gt;官方文档&lt;/a&gt;。上述命令很长，如果你比较熟悉了，可以修改Makefile文件进行一键上传~&lt;/p&gt;
 &lt;p&gt;最后打开浏览器输入github pages的二级域名，效果如下&lt;/p&gt;
-&lt;p&gt;&lt;img alt="article" src="/images/article.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="article" src="/images/article.png"&gt;&lt;/p&gt;
 &lt;p&gt;目前为止，还算比较成功。从上图可以看出，书写源文件的&lt;code&gt;Title,Date,Category,Slug等&lt;/code&gt;内容每个都有其的用武之处，具体你可以慢慢了解。&lt;/p&gt;
 &lt;h3&gt;TODO&lt;/h3&gt;
-&lt;p&gt;目前来说，博客的基本使用已经可以了，不过我们依然可以对其进行完善。接下来的一篇文章我会介绍以下几个方面&lt;/p&gt;
+&lt;p&gt;目前来说，博客的基本使用已经可以了，不过我们依然可以对其进行完善。接下来的一篇&lt;a href="http://www.xycoding.com/articles/2013/11/22/blog-advance/"&gt;文章&lt;/a&gt;我会介绍以下几个方面&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;独立域名&lt;/li&gt;
 &lt;li&gt;博文URL格式配置，例&lt;a href="http://www.xycoding.com/pages/2013/11/21/create-blog/"&gt;http://www.xycoding.com/pages/2013/11/21/create-blog/&lt;/a&gt;&lt;/li&gt;
@@ -1867,9 +1920,11 @@ git push origin master
 &lt;h3&gt;感想&lt;/h3&gt;
 &lt;p&gt;这是我第一次比较认真的写教程，参考了网上很多的例子，不过都觉得他们讲得不够详细，让我花了很多时间去看官方介绍，当然这可能是我太渣的缘故，看不懂大神们的教程，哈哈。不过从中我也学到了很多心得，比如不懂的地方第一选择是官方文档，本文基本给出了搭建博客过程的所有链接。&lt;/p&gt;
 &lt;p&gt;最后，不管怎样，属于自己个人的博客已经搭建起来，从现在开始，记录自己的生活吧~&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;博客源码地址：&lt;a href="https://github.com/cowfighting/cowfighting.github.io"&gt;https://github.com/cowfighting/cowfighting.github.io&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;博客主题地址：&lt;a href="https://github.com/cowfighting/xycoding-gum"&gt;https://github.com/cowfighting/xycoding-gum&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category></entry><entry><title>读研究生三个月有感</title><link href="http://www.xycoding.com/articles/2013/11/20/life-graduate/" rel="alternate"></link><updated>2013-11-20T08:25:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-20:articles/2013/11/20/life-graduate/</id><summary type="html">&lt;h3&gt;初进校园&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;博客源码地址：&lt;a href="https://github.com/xymelon/xymelon.github.io"&gt;https://github.com/xymelon/xymelon.github.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;博客主题地址：&lt;a href="https://github.com/xymelon/xycoding-gum"&gt;https://github.com/xymelon/xycoding-gum&lt;/a&gt;&lt;/p&gt;</content><category term="pelican"></category></entry><entry><title>读研究生三个月有感</title><link href="http://www.xycoding.com/articles/2013/11/20/life-graduate/" rel="alternate"></link><published>2013-11-20T08:25:00+08:00</published><updated>2013-11-20T08:25:00+08:00</updated><author><name>Cow</name></author><id>tag:www.xycoding.com,2013-11-20:/articles/2013/11/20/life-graduate/</id><summary type="html">&lt;h3&gt;初进校园&lt;/h3&gt;
+&lt;p&gt;北邮给人的感觉就是很小，还没进入学校之前，就听byr说过，如果你要带你朋友逛北邮校园，那么请带他来到主楼前，面朝西门。那么在你后面就是东门，左手边就是南门，前面就是西门，右手边就是北门~马上就介绍完毕，哈哈。不过麻雀虽小，五脏俱全~
+</summary><content type="html">&lt;h3&gt;初进校园&lt;/h3&gt;
 &lt;p&gt;北邮给人的感觉就是很小，还没进入学校之前，就听byr说过，如果你要带你朋友逛北邮校园，那么请带他来到主楼前，面朝西门。那么在你后面就是东门，左手边就是南门，前面就是西门，右手边就是北门~马上就介绍完毕，哈哈。不过麻雀虽小，五脏俱全~
 &lt;/p&gt;
 &lt;h3&gt;信息黄埔&lt;/h3&gt;
@@ -1878,4 +1933,4 @@ git push origin master
 &lt;h3&gt;研究生生活&lt;/h3&gt;
 &lt;p&gt;研究生生活基本都靠自己呢，毕竟都是好大的人呢，周围的人都很勤奋，在寝室里基本看不到身影，每个人都在为自己的目标而努力着。我的研究生方向不是那么的喜欢，看看论文，查查资料，更多的是和理论打交道，虽然说这本该是研究生该干的事，不过私以为还是喜欢有实践的感觉，不管怎样，毕业是要发论文的。&lt;/p&gt;
 &lt;p&gt;唯一让我郁闷的是我这导师从大实验室分出来单独给他的学生一个房间，这样就和大部队有点脱节，真不爽。不过这有什么办法啊，只有顺其自然呢，哎！！！&lt;/p&gt;
-&lt;p&gt;实验室不忙，每天都有属于自己的时间，我也还有很多书还没看，总感觉研究生时间不够，要学的太多，真为自己所荒废的本科而后悔。我也有自己的目标，正在为之而努力奋斗着，希望有很好的收获吧。&lt;/p&gt;</summary><category term="graduate"></category></entry></feed>
+&lt;p&gt;实验室不忙，每天都有属于自己的时间，我也还有很多书还没看，总感觉研究生时间不够，要学的太多，真为自己所荒废的本科而后悔。我也有自己的目标，正在为之而努力奋斗着，希望有很好的收获吧。&lt;/p&gt;</content><category term="graduate"></category></entry></feed>
