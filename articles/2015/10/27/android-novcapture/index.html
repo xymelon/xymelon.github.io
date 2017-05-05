@@ -115,10 +115,8 @@
 <ol>
 <li>
 <p>标签（图中虚线框容器）不能完全使用ViewGroup进行拼装，不然进行缩放、旋转、拖动时会出现两个问题：</p>
-<ul>
-<li>性能问题，会出现明显的卡顿现象;</li>
-<li>显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。</li>
-</ul>
+<p><strong>性能问题，会出现明显的卡顿现象;</strong></p>
+<p><strong>显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。</strong></p>
 <p>在本文中，<strong>关键解决方案在于将整个标签内容ViewGroup生成Bitmap，然后维护标签、删除、拖放按钮等的绘制矩阵，在onDraw中自定义绘画</strong>，非常灵活，性能很不错。</p>
 </li>
 <li>
@@ -306,11 +304,11 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/textview.html">TextView</a></li>
 			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/textview.html">TextView</a></li>
 		</ul>
 </div>
 

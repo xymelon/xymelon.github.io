@@ -4,7 +4,7 @@
 
 
 &lt;h2&gt;特性&lt;/h2&gt;
-&lt;ul&gt;
+&lt;ol&gt;
 &lt;li&gt;超链接点击 hyperlink click event (with pressed text and background color)&lt;/li&gt;
 &lt;li&gt;文本点击 click event (with pressed text and background color)&lt;/li&gt;
 &lt;li&gt;文本背景色 text background color&lt;/li&gt;
@@ -12,7 +12,7 @@
 &lt;li&gt;文本大小 text size&lt;/li&gt;
 &lt;li&gt;字体样式 text style (bold, italic)&lt;/li&gt;
 &lt;li&gt;字体 text font&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 &lt;p&gt;当然，本开源库扩展性非常强，你可以利用提供的api &lt;code&gt;addTypeSpan&lt;/code&gt;添加自定义span。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="image" src="/images/RichText.gif"&gt;&lt;/p&gt;
 &lt;p&gt;动态图中， &lt;code&gt;Rich Text Format&lt;/code&gt;为超链接，点击回调会返回当前链接，普通点击会返回当前word和word中心坐标；&lt;code&gt;Microsoft Corporation&lt;/code&gt;指定了不同字体；更多特性你可自行添加。&lt;/p&gt;
@@ -118,10 +118,8 @@
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;标签（图中虚线框容器）不能完全使用ViewGroup进行拼装，不然进行缩放、旋转、拖动时会出现两个问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;性能问题，会出现明显的卡顿现象;&lt;/li&gt;
-&lt;li&gt;显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;性能问题，会出现明显的卡顿现象;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;显示问题，当标签进行缩放时，其实标签左上删除、右下缩放与旋转按钮一直保持大小不变。若使用整体缩放，则会出现一起放大缩小，不符合效果；当然也可进行特殊处理，比如针对这俩按钮进行反比例缩放。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;在本文中，&lt;strong&gt;关键解决方案在于将整个标签内容ViewGroup生成Bitmap，然后维护标签、删除、拖放按钮等的绘制矩阵，在onDraw中自定义绘画&lt;/strong&gt;，非常灵活，性能很不错。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
