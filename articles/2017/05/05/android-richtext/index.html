@@ -1,0 +1,362 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+        <title>Android TextView富文本自定义标签</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="Android, Linux，pelican，github，github pages，数据结构，算法，编程语言，开源软件，互联网，程序员找工作，移动互联网，生活时尚，情感交流，研究生生活，技术博客">
+		
+        <meta charset="utf-8" />
+        <link href="http://www.xycoding.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Our World Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.xycoding.com/theme/pygment.css" />
+
+        <script src="http://www.xycoding.com/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+              <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-46026074-1', 'www.xycoding.com');
+                ga('send', 'pageview');
+
+              </script>
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+<!-- Fork me on github -->
+<a target="_blank" href="https://github.com/xymelon">
+	<img width="149px" height="149px" style="position: absolute; top: 0px; right: 0; border: 0;" src="http://www.xycoding.com/theme/icons/forkme.png" alt="Fork me on GitHub" />
+</a>
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="http://www.xycoding.com">Coding Our World <strong>Life is not fair -- Get used to it!</strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+					<!--<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>-->
+					<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+					<!--<li class="active"><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>-->
+					<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+				<li><a href="/functions/archives.html">Archives</a></li>
+				<li><a href="/functions/random.html">Random Article</a></li>
+				<!--
+					<li><a href="/functions/categories.html">Categories</a></li>
+					<li><a href="/functions/tags.html">Tags</a></li>
+					<li><a href="/functions/archives.html">Archives</a></li>
+					<li><a href="/functions/random.html">Random Article</a></li>
+				
+				-->
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="http://www.xycoding.com/articles/2017/05/05/android-richtext/" rel="bookmark"
+                   title="Permalink to Android TextView富文本自定义标签">Android TextView富文本自定义标签</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <!--
+			  <abbr class="published" title="2017-05-05T17:25:00+08:00">
+                Fri 05 May 2017
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="http://www.xycoding.com/author/xymelon.html">xymelon</a>
+              </address>
+			  -->
+			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
+				Fri 05 May 2017
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/xymelon.html">xymelon</a>
+					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
+	
+			  </address>
+			  <hr />			  
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>在Android开发中，经常会遇到UI同学的“奇思妙想”，比如同一行文本需要展示不同的样式（字体、颜色、背景、点击事件等），通常的做法当然是利用<code>TextView Spannable</code>针对不同的文本添加不同的span，而这个过程非常繁琐，所以利用空闲时间，写了个自定义富文本标签的开源库，欢迎大家拍砖并提出建议。</p>
+
+
+<h2>特性</h2>
+<ul>
+<li>超链接点击 hyperlink click event (with pressed text and background color)</li>
+<li>文本点击 click event (with pressed text and background color)</li>
+<li>文本背景色 text background color</li>
+<li>文本前景色 text foreground color</li>
+<li>文本大小 text size</li>
+<li>字体样式 text style (bold, italic)</li>
+<li>字体 text font</li>
+</ul>
+<p>当然，本开源库扩展性非常强，你可以利用提供的api <code>addTypeSpan</code>添加自定义span。</p>
+<p><img alt="image" src="/images/RichText.gif"></p>
+<p>动态图中， <code>Rich Text Format</code>为超链接，点击回调会返回当前链接，普通点击会返回当前word和word中心坐标；<code>Microsoft Corporation</code>指定了不同字体；更多特性你可自行添加。</p>
+<h2>安装</h2>
+<p>In your project level <code>build.gradle</code> :</p>
+<div class="highlight"><pre><span></span><span class="n">allprojects</span> <span class="o">{</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="o">...</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s">&quot;https://jitpack.io&quot;</span> <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>In your app level <code>build.gradle</code> :</p>
+<div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="err">&#39;</span><span class="n">com</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">xymelon</span><span class="o">:</span><span class="n">richtext</span><span class="o">:</span><span class="mf">1.0.4</span><span class="err">&#39;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>Demo</h2>
+<div class="highlight"><pre><span></span><span class="n">TextView</span> <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">textView</span><span class="o">);</span>
+
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">foregroundTextColor</span> <span class="o">=</span> <span class="n">ContextCompat</span><span class="o">.</span><span class="na">getColor</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">color</span><span class="o">.</span><span class="na">T1</span><span class="o">);</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">linkTextColor</span> <span class="o">=</span> <span class="n">ContextCompat</span><span class="o">.</span><span class="na">getColor</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">color</span><span class="o">.</span><span class="na">colorPrimary</span><span class="o">);</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">normalTextColor</span> <span class="o">=</span> <span class="n">ContextCompat</span><span class="o">.</span><span class="na">getColor</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">color</span><span class="o">.</span><span class="na">R1</span><span class="o">);</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">pressedTextColor</span> <span class="o">=</span> <span class="n">ContextCompat</span><span class="o">.</span><span class="na">getColor</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">color</span><span class="o">.</span><span class="na">W1</span><span class="o">);</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">pressedBackgroundColor</span> <span class="o">=</span> <span class="n">ContextCompat</span><span class="o">.</span><span class="na">getColor</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">color</span><span class="o">.</span><span class="na">B1</span><span class="o">);</span>
+<span class="kd">final</span> <span class="n">Typeface</span> <span class="n">georgiaTypeface</span> <span class="o">=</span> <span class="n">Typeface</span><span class="o">.</span><span class="na">createFromAsset</span><span class="o">(</span><span class="n">getAssets</span><span class="o">(),</span> <span class="s">&quot;fonts/Georgia Italic.ttf&quot;</span><span class="o">);</span>
+
+<span class="n">RichText</span> <span class="n">richText</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RichText</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+        <span class="c1">//&#39;c&#39;标签添加ClickSpan</span>
+        <span class="o">.</span><span class="na">addBlockTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">ClickSpan</span><span class="o">(</span>
+                <span class="n">normalTextColor</span><span class="o">,</span>
+                <span class="n">pressedTextColor</span><span class="o">,</span>
+                <span class="n">pressedBackgroundColor</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">ClickSpan</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">text</span><span class="o">,</span> <span class="kt">float</span> <span class="n">rawX</span><span class="o">,</span> <span class="kt">float</span> <span class="n">rawY</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="n">text</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">}),</span> <span class="s">&quot;c&quot;</span><span class="o">)</span>
+        <span class="c1">//&#39;f&#39;，&#39;t&#39;标签添加ForegroundColorSpan</span>
+        <span class="o">.</span><span class="na">addBlockTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">IStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="n">CharacterStyle</span> <span class="nf">getStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="n">ForegroundColorSpan</span><span class="o">(</span><span class="n">foregroundTextColor</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="s">&quot;f&quot;</span><span class="o">,</span> <span class="s">&quot;t&quot;</span><span class="o">)</span>
+        <span class="c1">//&#39;bi&#39;标签添加StyleSpan</span>
+        <span class="o">.</span><span class="na">addBlockTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">IStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="n">CharacterStyle</span> <span class="nf">getStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="n">StyleSpan</span><span class="o">(</span><span class="n">Typeface</span><span class="o">.</span><span class="na">BOLD_ITALIC</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="s">&quot;bi&quot;</span><span class="o">)</span>
+        <span class="c1">//&#39;s&#39;标签添加TextAppearanceSpan</span>
+        <span class="o">.</span><span class="na">addBlockTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">IStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="n">CharacterStyle</span> <span class="nf">getStyleSpan</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="n">TextAppearanceSpan</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">style</span><span class="o">.</span><span class="na">TextSize</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="s">&quot;s&quot;</span><span class="o">)</span>
+        <span class="c1">//&#39;t&#39;标签添加FontTypefaceSpan</span>
+        <span class="o">.</span><span class="na">addBlockTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">FontTypefaceSpan</span><span class="o">(</span><span class="n">georgiaTypeface</span><span class="o">),</span> <span class="s">&quot;t&quot;</span><span class="o">)</span>
+        <span class="c1">//超链接标签默认&#39;a&#39;</span>
+        <span class="o">.</span><span class="na">addLinkTypeSpan</span><span class="o">(</span><span class="k">new</span> <span class="n">LinkClickSpan</span><span class="o">(</span>
+                <span class="n">linkTextColor</span><span class="o">,</span>
+                <span class="n">pressedTextColor</span><span class="o">,</span>
+                <span class="n">pressedBackgroundColor</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinkClickSpan</span><span class="o">.</span><span class="na">OnLinkClickListener</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">})</span>
+        <span class="o">)</span>
+        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="c1">//notice: if set click span, you must invoke this method.</span>
+<span class="n">richText</span><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">textView</span><span class="o">);</span>
+
+<span class="c1">//不同标签，指定不同span。</span>
+<span class="n">String</span> <span class="n">tagString</span> <span class="o">=</span> <span class="s">&quot;The &lt;a href=&#39;https://en.wikipedia.org/wiki/Rich_Text_Format&#39;&gt;Rich Text Format&lt;/a&gt; &quot;</span> <span class="o">+</span>
+        <span class="s">&quot;is a &lt;c&gt;proprietary&lt;/c&gt; &lt;f&gt;document&lt;/f&gt; file format with published &lt;bi&gt;specification&lt;/bi&gt; &quot;</span> <span class="o">+</span>
+        <span class="s">&quot;developed by &lt;t&gt;Microsoft Corporation&lt;/t&gt; from 1987 until 2008 for &lt;s&gt;cross-platform&lt;/s&gt; document interchange &quot;</span> <span class="o">+</span>
+        <span class="s">&quot;with Microsoft products.&quot;</span><span class="o">;</span>
+<span class="n">textView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">richText</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">tagString</span><span class="o">));</span>
+</pre></div>
+
+
+<p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
+<p>Rich Text源码：<a href="https://github.com/xymelon/richtext.git" target="_blank">https://github.com/xymelon/richtext.git</a></p>
+            </div><!-- /.entry-content -->
+			
+			
+			<ul style="float:right;">
+				<li>
+					◄&nbsp;&nbsp;<a href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/">
+						Android仿腾讯新闻创意截屏
+					</a>
+				</li>
+			</ul>
+			
+			
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "articles/2017/05/05/android-richtext/";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://xycoding.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
+
+<div class="sidebarbg">
+	<h4>Pages</h4>
+	<ul>
+		  <li><a href="/functions/categories.html">Categories</a></li>
+		  <li><a href="/functions/tags.html">Tags</a></li>
+		  <li><a href="/functions/archives.html">Archives</a></li>
+		  <li><a href="/functions/random.html">Random Article</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+<h4>Categories</h4>
+	<ul>
+			<li><a href="http://www.xycoding.com/category/life.html">Life</a></li>
+			<li><a href="http://www.xycoding.com/category/technology.html">Technology</a></li>
+	</ul>
+</div>
+
+<div class="sidebarbg">
+	<h4>Tags</h4>
+		<ul>
+			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
+			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/textview.html">TextView</a></li>
+		</ul>
+</div>
+
+
+<div class="social sidebarbg">
+	<nav class="widget">
+	  <h4>Social</h4>
+	  <ul>
+		<li><a target="_blank" href="/feeds/all.atom.xml">RSS</a></li>
+		<li><a target="_blank" href="https://github.com/xymelon">GitHub</a></li>
+		<li><a target="_blank" href="http://stackoverflow.com/users/7881867">StackOverFlow</a></li>
+		<li><a target="_blank" href="http://weibo.com/u/1989085547">微博</a></li>
+	  </ul>
+	</nav>
+</div>
+
+<nav class="widget sidebarbg">
+  <h4>Links</h4>
+  <ul>
+	<li><a target="_blank" href="http://python.org/">Python</a></li>
+	<li><a target="_blank" href="http://docs.getpelican.com/">Pelican</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+				   <img alt="Welcome" height="77px" width="103px" src="http://www.xycoding.com/images/blogger.jpg" />												
+                   <address id="about" class="vcard body" style="margin-left:110px;margin-top:-80px">
+					知之者不如好之者，好之者不如乐之者<br/>
+					Email:xymelon@163.com&nbsp;<br/>
+					本博客使用Pelican+GitHub Pages搭建，详细请参考<a href="http://www.xycoding.com/articles/2013/11/21/blog-create/" class="active" target="_blank">教程</a>。
+				   </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+                <li><div class="btn primary"><a href="https://github.com/xymelon" target="_blank">Github</a></div></li>
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'xycoding';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="http://www.xycoding.com/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/libs/gumby.min.js"></script>
+  <script src="http://www.xycoding.com/theme/js/plugins.js"></script>
+	<script>
+	(function() {
+		var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+			.text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+				$("html, body").animate({ scrollTop: 0 }, 120);
+		}), $backToTopFun = function() {
+			var st = $(document).scrollTop(), winh = $(window).height();
+			(st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+			//IE6下的定位
+			if (!window.XMLHttpRequest) {
+				$backToTopEle.css("top", st + winh - 166);
+			}
+		};
+		$(window).bind("scroll", $backToTopFun);
+		$(function() { $backToTopFun(); });
+	})();
+	</script>
+</body>
+</html>

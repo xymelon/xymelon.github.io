@@ -1,5 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World - xymelon</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/xymelon.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2015-10-27T19:34:00+08:00</updated><entry><title>Android仿腾讯新闻创意截屏</title><link href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/" rel="alternate"></link><published>2015-10-27T19:34:00+08:00</published><updated>2015-10-27T19:34:00+08:00</updated><author><name>xymelon</name></author><id>tag:www.xycoding.com,2015-10-27:/articles/2015/10/27/android-novcapture/</id><summary type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Our World - xymelon</title><link href="http://www.xycoding.com/" rel="alternate"></link><link href="http://www.xycoding.com/feeds/xymelon.atom.xml" rel="self"></link><id>http://www.xycoding.com/</id><updated>2017-05-05T17:25:00+08:00</updated><entry><title>Android TextView富文本自定义标签</title><link href="http://www.xycoding.com/articles/2017/05/05/android-richtext/" rel="alternate"></link><published>2017-05-05T17:25:00+08:00</published><updated>2017-05-05T17:25:00+08:00</updated><author><name>xymelon</name></author><id>tag:www.xycoding.com,2017-05-05:/articles/2017/05/05/android-richtext/</id><summary type="html">&lt;p&gt;在Android开发中，经常会遇到UI同学的“奇思妙想”，比如同一行文本需要展示不同的样式（字体、颜色、背景、点击事件等），通常的做法当然是利用&lt;code&gt;TextView Spannable&lt;/code&gt;针对不同的文本添加不同的span，而这个过程非常繁琐，所以利用空闲时间，写了个自定义富文本标签的开源库，欢迎大家拍砖并提出建议。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;在Android开发中，经常会遇到UI同学的“奇思妙想”，比如同一行文本需要展示不同的样式（字体、颜色、背景、点击事件等），通常的做法当然是利用&lt;code&gt;TextView Spannable&lt;/code&gt;针对不同的文本添加不同的span，而这个过程非常繁琐，所以利用空闲时间，写了个自定义富文本标签的开源库，欢迎大家拍砖并提出建议。&lt;/p&gt;
+
+
+&lt;h2&gt;特性&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;超链接点击 hyperlink click event (with pressed text and background color)&lt;/li&gt;
+&lt;li&gt;文本点击 click event (with pressed text and background color)&lt;/li&gt;
+&lt;li&gt;文本背景色 text background color&lt;/li&gt;
+&lt;li&gt;文本前景色 text foreground color&lt;/li&gt;
+&lt;li&gt;文本大小 text size&lt;/li&gt;
+&lt;li&gt;字体样式 text style (bold, italic)&lt;/li&gt;
+&lt;li&gt;字体 text font&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然，本开源库扩展性非常强，你可以利用提供的api &lt;code&gt;addTypeSpan&lt;/code&gt;添加自定义span。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/RichText.gif"&gt;&lt;/p&gt;
+&lt;p&gt;动态图中， &lt;code&gt;Rich Text Format&lt;/code&gt;为超链接，点击回调会返回当前链接，普通点击会返回当前word和word中心坐标；&lt;code&gt;Microsoft Corporation&lt;/code&gt;指定了不同字体；更多特性你可自行添加。&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;In your project level &lt;code&gt;build.gradle&lt;/code&gt; :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;allprojects&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;repositories&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="o"&gt;...&lt;/span&gt;
+        &lt;span class="n"&gt;maven&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;https://jitpack.io&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In your app level &lt;code&gt;build.gradle&lt;/code&gt; :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;dependencies&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;compile&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;xymelon&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;richtext&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;1.0.4&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Demo&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;TextView&lt;/span&gt; &lt;span class="n"&gt;textView&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TextView&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;findViewById&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;textView&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;foregroundTextColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ContextCompat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;T1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;linkTextColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ContextCompat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;colorPrimary&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;normalTextColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ContextCompat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;R1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;pressedTextColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ContextCompat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;W1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;pressedBackgroundColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ContextCompat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;B1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;Typeface&lt;/span&gt; &lt;span class="n"&gt;georgiaTypeface&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Typeface&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createFromAsset&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getAssets&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fonts/Georgia Italic.ttf&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;RichText&lt;/span&gt; &lt;span class="n"&gt;richText&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;RichText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Builder&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+        &lt;span class="c1"&gt;//&amp;#39;c&amp;#39;标签添加ClickSpan&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addBlockTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClickSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+                &lt;span class="n"&gt;normalTextColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;pressedTextColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;pressedBackgroundColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClickSpan&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;OnClickListener&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+                    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;onClick&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CharSequence&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;rawX&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;rawY&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;makeText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MainActivity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LENGTH_SHORT&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;show&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}),&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;c&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;//&amp;#39;f&amp;#39;，&amp;#39;t&amp;#39;标签添加ForegroundColorSpan&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addBlockTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@Override&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;CharacterStyle&lt;/span&gt; &lt;span class="nf"&gt;getStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ForegroundColorSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foregroundTextColor&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;},&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;t&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;//&amp;#39;bi&amp;#39;标签添加StyleSpan&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addBlockTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@Override&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;CharacterStyle&lt;/span&gt; &lt;span class="nf"&gt;getStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;StyleSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Typeface&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BOLD_ITALIC&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;},&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;bi&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;//&amp;#39;s&amp;#39;标签添加TextAppearanceSpan&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addBlockTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@Override&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;CharacterStyle&lt;/span&gt; &lt;span class="nf"&gt;getStyleSpan&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;TextAppearanceSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MainActivity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;TextSize&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;},&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;//&amp;#39;t&amp;#39;标签添加FontTypefaceSpan&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addBlockTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FontTypefaceSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;georgiaTypeface&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;t&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;//超链接标签默认&amp;#39;a&amp;#39;&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addLinkTypeSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;LinkClickSpan&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+                &lt;span class="n"&gt;linkTextColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;pressedTextColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;pressedBackgroundColor&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;LinkClickSpan&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;OnLinkClickListener&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+                    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;onClick&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;makeText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MainActivity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LENGTH_SHORT&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;show&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;})&lt;/span&gt;
+        &lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//notice: if set click span, you must invoke this method.&lt;/span&gt;
+&lt;span class="n"&gt;richText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;with&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;textView&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;//不同标签，指定不同span。&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;tagString&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The &amp;lt;a href=&amp;#39;https://en.wikipedia.org/wiki/Rich_Text_Format&amp;#39;&amp;gt;Rich Text Format&amp;lt;/a&amp;gt; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;is a &amp;lt;c&amp;gt;proprietary&amp;lt;/c&amp;gt; &amp;lt;f&amp;gt;document&amp;lt;/f&amp;gt; file format with published &amp;lt;bi&amp;gt;specification&amp;lt;/bi&amp;gt; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;developed by &amp;lt;t&amp;gt;Microsoft Corporation&amp;lt;/t&amp;gt; from 1987 until 2008 for &amp;lt;s&amp;gt;cross-platform&amp;lt;/s&amp;gt; document interchange &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;with Microsoft products.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;textView&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;richText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tagString&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;有疑问或者觉得不对的地方还请指正，谢谢。&lt;/p&gt;
+&lt;p&gt;Rich Text源码：&lt;a href="https://github.com/xymelon/richtext.git" target="_blank"&gt;https://github.com/xymelon/richtext.git&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category><category term="TextView"></category></entry><entry><title>Android仿腾讯新闻创意截屏</title><link href="http://www.xycoding.com/articles/2015/10/27/android-novcapture/" rel="alternate"></link><published>2015-10-27T19:34:00+08:00</published><updated>2015-10-27T19:34:00+08:00</updated><author><name>xymelon</name></author><id>tag:www.xycoding.com,2015-10-27:/articles/2015/10/27/android-novcapture/</id><summary type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;前不久使用腾讯新闻的时候，偶然间发现一个很酷炫的功能——创意截屏，大概就是截取当前屏幕生成一张图片，然后可以在这张图片上添加多个自定义标签。功能支持多种手势操作，包括单手拖动、缩放、旋转、删除；双手缩放、旋转等，并可动态更改文字标签内容，使用过程中基本没有卡顿现象发生。本文主要就讲讲我是怎么实现创意截屏功能，当然条条大路通罗马，每个人可能都有自己的实现方式，欢迎大家拍砖并提出建议。&lt;/p&gt;
 
 

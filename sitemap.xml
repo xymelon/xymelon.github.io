@@ -5,9 +5,16 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.xycoding.com/</loc>
-<lastmod>2017-05-05T16:16:47-00:00</lastmod>
+<lastmod>2017-05-05T17:45:53-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.xycoding.com/articles/2017/05/05/android-richtext/</loc>
+<lastmod>2017-05-05T17:25:00+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -110,14 +117,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.xycoding.com/category/technology.html</loc>
-<lastmod>2015-10-27T19:34:00+08:06</lastmod>
+<lastmod>2017-05-05T17:25:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.xycoding.com/tag/android.html</loc>
-<lastmod>2015-10-27T19:34:00+08:06</lastmod>
+<lastmod>2017-05-05T17:25:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.xycoding.com/tag/textview.html</loc>
+<lastmod>2017-05-05T17:25:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -145,7 +159,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.xycoding.com/author/xymelon.html</loc>
-<lastmod>2015-10-27T19:34:00+08:06</lastmod>
+<lastmod>2017-05-05T17:25:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
