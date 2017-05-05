@@ -91,12 +91,12 @@
                 Tue 27 October 2015
               </abbr>
               <address class="vcard author">
-                By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+                By <a class="url fn" href="http://www.xycoding.com/author/xymelon.html">xymelon</a>
               </address>
 			  -->
 			  <address class="vcard author" style="font-style:italic;margin-bottom:-10px;">
 				Tue 27 October 2015
-					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/cow.html">Cow</a>
+					&nbsp;&nbsp;Write By <a class="url fn" href="http://www.xycoding.com/author/xymelon.html">xymelon</a>
 					&nbsp;&nbsp;<p style="color:red;">码字比码代码还辛苦，转载请注明来源<a href="http://www.xycoding.com/" target="_blank">Coding Our World</a></p>
 	
 			  </address>
@@ -108,14 +108,8 @@
 
 <h3>截屏预览</h3>
 <p>首先看看实现后的整个创意截屏的样子吧，最直观。PS：在我的几个测试机上基本没有卡顿现象，很流畅。</p>
-<p><img alt="image" src="/images/novcapture_1.png"></p>
-<p>（图1）打开APP后，显示主界面。</p>
-<p><img alt="image" src="/images/novcapture_2.png"></p>
-<p>（图2）点击图1中“截取屏幕”按钮，即可截取主界面并显示。</p>
-<p><img alt="image" src="/images/novcapture_3.png"></p>
-<p>（图3）点击屏幕下方“盖章”按钮，即可在截图中添加标签。</p>
-<p><img alt="image" src="/images/novcapture_4.png"></p>
-<p>（图4）点击添加的标签，即可更改文字内容。</p>
+<p><img alt="image" src="/images/novcapture.gif"></p>
+<p>（图1）打开APP后，截取屏幕进入添加标签即可体验。</p>
 <h3>关键细节</h3>
 <p>起初看到创意截屏这个功能，私以为比较简单，结果在进行编码过程中，才发现里面有很多细节需要进行考虑。</p>
 <ol>
@@ -131,13 +125,13 @@
 <p>缩放、旋转、拖动相关，其中每个功能都有多种实现方式，比如旋转可用库函数setRotation或canvas.rotate画布操作、拖动可动态改变margin或使用canvas.translate实现等。先不说使用库函数会遇到兼容低版本问题，而且对性能也有很大影响，如当缩放比例很大时，拖动过程中会出现非常明显的卡顿现象。在本文中，<strong>针对标签的使用场景（频繁缩放、旋转、拖动等）选用画布Canvas操作才是上策</strong>。</p>
 </li>
 <li>
-<p>事件分发，当容器中存在多个标签时（如图3），就会判断是哪个标签接收并处理事件。通过上段知道，我放弃使用库函数进行缩放、旋转、拖动，选用画布Canvas进行操作，同样，Canvas操作也带来了另外的问题，如：</p>
+<p>事件分发，当容器中存在多个标签时，就会判断是哪个标签接收并处理事件。通过上段知道，我放弃使用库函数进行缩放、旋转、拖动，选用画布Canvas进行操作，同样，Canvas操作也带来了另外的问题，如：</p>
 <ul>
 <li>事件接收的坐标点不会跟着Canvas改变，如View在A坐标canvas.translate移动到B坐标后，View接收事件的坐标点还是会停留在原A坐标。因此，我们还需<strong>手动维护虚线框、删除、缩放与旋转按钮的当前绘制矩阵，以便事件分发时判定</strong>。</li>
 <li>
-<p>当View旋转后，如何判定坐标是否在View区域内。如下面图5所示，假设蓝色矩形为我们维护的原始矩阵matrix，当我们调用matrix.postRotate进行旋转操作后，matrix会变成图5中的虚线框区域，而实际上应该为绿色区域，若不进行处理，则会判断错误。<strong>本文中使用了小技巧，即我们维护一个未旋转的matrix(包含缩放、拖动)和一个旋转角度变量rotation。当判断图中点A是否在绿色区域内，则可将其反向旋转rotation后变成点B，判断点B是否在蓝色矩形中即可</strong>。</p>
-<p><img alt="image" src="/images/novcapture_5.png"></p>
-<p>（图5）坐标点判断示例。</p>
+<p>当View旋转后，如何判定坐标是否在View区域内。如下面图2所示，假设蓝色矩形为我们维护的原始矩阵matrix，当我们调用matrix.postRotate进行旋转操作后，matrix会变成图2中的虚线框区域，而实际上应该为绿色区域，若不进行处理，则会判断错误。<strong>本文中使用了小技巧，即我们维护一个未旋转的matrix(包含缩放、拖动)和一个旋转角度变量rotation。当判断图中点A是否在绿色区域内，则可将其反向旋转rotation后变成点B，判断点B是否在蓝色矩形中即可</strong>。</p>
+<p><img alt="image" src="/images/novcapture_1.png"></p>
+<p>（图2）坐标点判断示例。</p>
 </li>
 </ul>
 </li>
@@ -164,11 +158,11 @@
 </li>
 </ol>
 <h3>代码分析</h3>
-<p><img alt="image" src="/images/novcapture_6.png"></p>
-<p>（图5）代码组织结构。</p>
-<p>先说说整个代码结构吧，核心在图5 labeller 库中的<code>CaptureView</code>和<code>DashFrameLayout</code>。</p>
+<p><img alt="image" src="/images/novcapture_2.png"></p>
+<p>（图2）代码组织结构。</p>
+<p>先说说整个代码结构吧，核心在图2 labeller 库中的<code>CaptureView</code>和<code>DashFrameLayout</code>。</p>
 <h4>CaptureView</h4>
-<p>本类主要负责整个创意截屏界面处理，即图2中绿色标题栏以下部分，包含内容、下方添加标签、输入框等区域。
+<p>本类主要负责整个创意截屏界面处理，包含内容、下方添加标签、输入框等区域。
 有个关键地方就是当设置完成图片内容后，内容区域的高宽度需要完全匹配图片大小，否则当进行拖动操作时，标签会移出图片，最后的保存操作时也会出现空白区域，非常不美观。关键代码如下：</p>
 <div class="highlight"><pre><span></span>    private void setImageBitmap(Bitmap bitmap) {
         mContainerLayout.getLayoutParams().width = bitmap.getWidth();
@@ -255,7 +249,7 @@
 
 <p>其他很关键的比如事件分发，因代码过长，不在此累述，请参考源代码中onTouchEvent实现方法。PS：单手旋转、缩放操作，可将其认为双手操作，只不过其中一只手固定在标签中心。</p>
 <p>有疑问或者觉得不对的地方还请指正，谢谢。</p>
-<p><a href="https://github.com/cowfighting/NovCapture" target="_blank">GitHub源码下载</a></p>
+<p>创意截屏源码：<a href="https://github.com/xymelon/nov-capture" target="_blank">https://github.com/xymelon/nov-capture</a></p>
             </div><!-- /.entry-content -->
 			
 			
@@ -307,10 +301,10 @@
 <div class="sidebarbg">
 	<h4>Tags</h4>
 		<ul>
-			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
+			<li class="tag-0"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 			<li class="tag-1"><a href="http://www.xycoding.com/tag/linux.html">Linux</a></li>
+			<li class="tag-4"><a href="http://www.xycoding.com/tag/graduate.html">graduate</a></li>
 			<li class="tag-2"><a href="http://www.xycoding.com/tag/pelican.html">pelican</a></li>
-			<li class="tag-1"><a href="http://www.xycoding.com/tag/android.html">Android</a></li>
 		</ul>
 </div>
 
