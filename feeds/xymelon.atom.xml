@@ -98,8 +98,7 @@
 &lt;span class="c1"&gt;//不同标签，指定不同span。&lt;/span&gt;
 &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;tagString&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The &amp;lt;a href=&amp;#39;https://en.wikipedia.org/wiki/Rich_Text_Format&amp;#39;&amp;gt;Rich Text Format&amp;lt;/a&amp;gt; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
         &lt;span class="s"&gt;&amp;quot;is a &amp;lt;c&amp;gt;proprietary&amp;lt;/c&amp;gt; &amp;lt;f&amp;gt;document&amp;lt;/f&amp;gt; file format with published &amp;lt;bi&amp;gt;specification&amp;lt;/bi&amp;gt; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;quot;developed by &amp;lt;t&amp;gt;Microsoft Corporation&amp;lt;/t&amp;gt; from 1987 until 2008 for &amp;lt;s&amp;gt;cross-platform&amp;lt;/s&amp;gt; document interchange &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
-        &lt;span class="s"&gt;&amp;quot;with Microsoft products.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;developed by &amp;lt;t&amp;gt;Microsoft Corporation&amp;lt;/t&amp;gt; from 1987 until 2008 for &amp;lt;s&amp;gt;cross-platform&amp;lt;/s&amp;gt; document interchange with Microsoft products.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;textView&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;richText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tagString&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
